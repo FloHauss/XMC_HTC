@@ -9,3 +9,5 @@
 --rw_loss 1 1 1  
 --embed_drops 0.3 0.3 0.4 
 --warmup 2
+2 GPUs
+20 CPUs
