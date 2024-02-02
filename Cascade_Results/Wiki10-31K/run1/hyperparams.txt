@@ -1,0 +1,11 @@
+--num_labels 30938 
+--num_epochs 15 
+--dataset Wiki10-31K 
+--batch_size 64 
+--max_len 256 
+--mn Cascade_Wiki10-31K 
+--topk 64 64 
+--cluster_name Eclusters_54.pkl 
+--rw_loss 1 1 1  
+--embed_drops 0.3 0.3 0.4 
+--warmup 2
