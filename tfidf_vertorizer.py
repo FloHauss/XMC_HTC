@@ -23,27 +23,36 @@ with open('./train_raw_texts.txt', 'r', encoding="utf-8") as file:
 corpus= [line.strip() for line in lines]
 file.close()
 
-text = corpus[0].lower()
-text_split = text.split(" ")
+def preprocessing(text):
+    text_split = text.lower().split(" ")
 
-filtered_text_split = []
-for word in text_split:
-    if not("'" in word or "-" in word or "’" in word or hasNumbers(word)):
-        filtered_text_split.append(word)
+    filtered_text_split = []
+    for word in text_split:
+        if not("'" in word or "-" in word or "’" in word or hasNumbers(word)):
+            filtered_text_split.append(word)
 
-filtered_text_string = listToString(filtered_text_split)
+    filtered_text_string = listToString(filtered_text_split)
 
-stop_words = set(stopwords.words('english') + list(string.punctuation) + ["``","''","’"])
-tokens = word_tokenize(filtered_text_string)
+    stop_words = set(stopwords.words('english') + list(string.punctuation) + ["``","''","’"])
+    tokens = word_tokenize(filtered_text_string)
 
-filtered_tokens = []
-for token in tokens:
-    if not (token in stop_words):
-        filtered_tokens.append(token)
+    filtered_tokens = []
+    for token in tokens:
+        if not (token in stop_words):
+            filtered_tokens.append(token)
 
-filtered_tokens_set = list(set(filtered_tokens))
-filtered_tokens_set.sort()
+    filtered_tokens_set = list(set(filtered_tokens))
+    filtered_tokens_set.sort()
 
-preprocessed_string = listToString(filtered_tokens_set)
+    preprocessed_string = listToString(filtered_tokens_set)
 
-print(preprocessed_string)
+    return preprocessed_string
+
+preprocessed_corpus = []
+for text in corpus:
+    preprocessed_corpus.append(preprocessing(text))
+
+with open("./text_preprocessed.txt", "w", encoding="utf-8") as file:
+    for element in preprocessed_corpus:
+        file.write(element + "\n")
+file.close()
