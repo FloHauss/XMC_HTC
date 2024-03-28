@@ -41,7 +41,7 @@ def preprocessing(text):
         if not (token in stop_words):
             filtered_tokens.append(token)
 
-    filtered_tokens_set = list(set(filtered_tokens))
+    filtered_tokens_set = list(filtered_tokens)
     filtered_tokens_set.sort()
 
     preprocessed_string = listToString(filtered_tokens_set)
