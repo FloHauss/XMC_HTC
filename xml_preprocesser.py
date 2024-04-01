@@ -50,7 +50,18 @@ def preprocessing(text):
 
 preprocessed_corpus = []
 for text in corpus:
-    preprocessed_corpus.append(preprocessing(text))
+        preprocessed_corpus.append(preprocessing(text))
+
+vocab = []
+for element in preprocessed_corpus:
+    vocab += element.split(" ")
+vocab = list(set(vocab))
+vocab.sort()
+
+with open("./vocab.txt", "w", encoding="utf-8") as file1:
+    for element in vocab:
+        file1.write(element + "\n")
+file1.close()
 
 with open("./text_preprocessed.txt", "w", encoding="utf-8") as file:
     for element in preprocessed_corpus:
