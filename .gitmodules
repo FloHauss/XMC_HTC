@@ -1,0 +1,6 @@
+[submodule "submodules"]
+	path = submodules
+	url = https://github.com/amzn/pecos.git
+[submodule "XMLmodels/pecos"]
+	path = XMLmodels/pecos
+	url = https://github.com/amzn/pecos.git
