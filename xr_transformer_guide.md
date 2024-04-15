@@ -61,11 +61,12 @@ python3 -m pecos.xmc.xtransformer.predict -t ./xmc-base/wiki10-31k/X.tst.txt -x 
 ### 7. Evaluate predictions (with specific Dataset)
 Run command in directory 'pecos'.
 
-Returns precision@k and recall@k for each value up to k. You can specify k as parameter after '-k' (here it is set to 10).
-
 Wiki10-31k:
 ```
 python3 -m pecos.xmc.xlinear.evaluate -y ./xmc-base/wiki10-31k/Y.tst.npz -p ./predictions/xr_prediction_wiki10-31k -k 10
 ```
+
+Returns precision@k and recall@k for each value up to k. You can specify k as parameter after '-k' (here it is set to 10).
+
 
 
