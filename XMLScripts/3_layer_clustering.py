@@ -1,35 +1,31 @@
-import numpy as np , math, torch 
-from sklearn.cluster import KMeans
 
 NUM_LABELS = 13330
 LAYER1_BF = 256
 NUM_LAYER1_META_LABELS = LAYER1_BF
 LAYER2_BF = 8
 NUM_LAYER2_META_LABELS = LAYER1_BF * LAYER2_BF
-dataset = "AmazonCat-13K"
+DATASET = "AmazonCat-13K"
 
-
-def splitArraykWays(array, k):
-    part_size = len(array) // k
-    rest = len(array) % k
+def split_array_k_ways(array_to_split, k):
+    part_size = len(array_to_split) // k
+    rest = len(array_to_split) % k
 
     parts = []
     start = 0
     for i in range(k):
         end = start + part_size + (1 if i < rest else 0)
-        parts.append(list(map(lambda x: x + (i,),array[start:end])))
+        parts.append(list(map(lambda x: x + (i,),array_to_split[start:end])))
         start = end
 
     return parts
 
-def getAccumulatedTfIdfValue(line):
-    result = 0 
-    seperated_line = line.split(" ")
+def get_accumulated_tfidf_value(datapoint):
+    result = 0
+    seperated_line = datapoint.split(" ")
     del seperated_line[0]
     for item in seperated_line:
         result += float(item.split(":")[1])
     return round(result,2)
-
 
 
 with open('./train.txt', 'r', encoding="utf-8") as file:
@@ -46,11 +42,10 @@ label_number_to_text_map = {}
 for index, label in enumerate(label_corpus):
     label_number_to_text_map[index] = label.replace(" ","_")
 
-
 value_list = [0] * NUM_LABELS
 
 for line in corpus:
-    tfidf_value = getAccumulatedTfIdfValue(line)
+    tfidf_value = get_accumulated_tfidf_value(line)
     relevant_lable_list = line.split(" ")[0].split(",")
     for relevant_label in relevant_lable_list:
         value_list[int(relevant_label)] += tfidf_value
@@ -59,27 +54,23 @@ enumerated_value_list = list(enumerate(value_list))
 
 sorted_enumerated_value_list = sorted(enumerated_value_list, key=lambda x: x[1])
 
-layer_1 = splitArraykWays(sorted_enumerated_value_list, LAYER1_BF)
-
+layer_1 = split_array_k_ways(sorted_enumerated_value_list, LAYER1_BF)
 
 layer2 = []
 for array in layer_1:
-    layer2.append(splitArraykWays(array, LAYER2_BF))
-
+    layer2.append(split_array_k_ways(array, LAYER2_BF))
 
 layer3 = []
 for layer in layer2:
     for entry in layer:
-        layer3.append(splitArraykWays(entry,len(entry)))
+        layer3.append(split_array_k_ways(entry,len(entry)))
 
-
-
-with open(f"./{dataset}_Clustering.txt", "w", encoding="utf-8") as file:
+with open(f"./{DATASET}_Clustering.txt", "w", encoding="utf-8") as file:
     file.write("root ")
     for index in range(LAYER1_BF):
         file.write(f"Meta_Label_{index} ")
     file.write("\n")
-    
+
     for index in range(NUM_LAYER1_META_LABELS):
         file.write(f"Meta_Label_{index} ")
         for index2 in range(LAYER2_BF):
