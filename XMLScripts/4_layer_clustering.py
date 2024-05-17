@@ -1,17 +1,15 @@
-import numpy as np , math, torch 
-from sklearn.cluster import KMeans
 
-NUM_LABELS = 2812281
+NUM_LABELS = 670091
 
 LAYER1_BF = 1024
-NUM_LAYER1_META_LABELS = LAYER1_BF 
+NUM_LAYER1_META_LABELS = LAYER1_BF
 
 LAYER2_BF = 8
 NUM_LAYER2_META_LABELS = LAYER1_BF * LAYER2_BF
 
 LAYER3_BF = 8
 NUM_LAYER3_META_LABELS = LAYER1_BF * LAYER2_BF * LAYER2_BF
-dataset = "Amazon-3M"
+DATASET = "Amazon670K"
 
 
 def splitArraykWays(array, k):
@@ -28,7 +26,7 @@ def splitArraykWays(array, k):
     return parts
 
 def getAccumulatedTfIdfValue(line):
-    result = 0 
+    result = 0
     seperated_line = line.split(" ")
     del seperated_line[0]
     for item in seperated_line:
@@ -37,7 +35,7 @@ def getAccumulatedTfIdfValue(line):
 
 
 
-with open('./train.txt', 'r', encoding="utf-8") as file:
+with open('./train.txt', 'r', encoding="latin-1") as file:
     lines = file.readlines()
 corpus = [line.strip() for line in lines]
 file.close()
@@ -49,7 +47,7 @@ file.close()
 
 label_number_to_text_map = {}
 for index, label in enumerate(label_corpus):
-    label_number_to_text_map[index] = label.replace(" ","_")
+    label_number_to_text_map[index] = label
 
 
 value_list = [0] * NUM_LABELS
@@ -83,36 +81,34 @@ for entry in layer3:
     for subarray in entry:
         layer4.append(splitArraykWays(subarray,len(subarray)))
 
-print(len(layer4))
-print(layer4[65535])
 
-with open(f"./{dataset}_Clustering.txt", "w", encoding="utf-8") as file:
+with open(f"./{DATASET}_Clustering.txt", "w", encoding="latin-1") as file:
     
     # Write root and children of root
-    file.write("root ")
+    file.write("root\t")
     for index in range(LAYER1_BF):
-        file.write(f"Meta_Label_{index} ")
+        file.write(f"Meta_Label_{index}\t")
     file.write("\n")
     
     # Write Layer 1 Meta Labels and children of Layer 1 Meta Labels
     for index in range(NUM_LAYER1_META_LABELS):
-        file.write(f"Meta_Label_{index} ")
+        file.write(f"Meta_Label_{index}\t")
         for index2 in range(LAYER2_BF):
-            file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+index*LAYER2_BF+index2} ")
+            file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+index*LAYER2_BF+index2}\t")
         file.write("\n")
 
     # Write Layer 2 Meta Labels and children of Layer 2 Meta Labels
     for index in range(NUM_LAYER2_META_LABELS):
-        file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+index} ")
+        file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+index}\t")
         for index2 in range(LAYER3_BF):
-            file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS + NUM_LAYER2_META_LABELS + index * LAYER3_BF + index2} ")
+            file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS + NUM_LAYER2_META_LABELS + index * LAYER3_BF + index2}\t")
         file.write("\n")
 
     # Write Layer 3 Meta Labels and full resolution label children
     for index in range(NUM_LAYER3_META_LABELS):
-        file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+NUM_LAYER2_META_LABELS+index} ")
+        file.write(f"Meta_Label_{NUM_LAYER1_META_LABELS+NUM_LAYER2_META_LABELS+index}\t")
         for entry in layer4[index]:
-            file.write(f"{label_number_to_text_map[entry[0][0]]} ")
+            file.write(f"{label_number_to_text_map[entry[0][0]]}\t")
         file.write("\n")
 
 """
