@@ -1,0 +1,45 @@
+wiki-500k
+UUID is 2024-05-07-17-23-11
+/var/spool/slurmd/job23551731/slurm_script: line 27: ./results/wiki-500k/2024-05-07-17-23-11: No such file or directory
+--- start training of bert ---
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 564, in <module>
+    do_train(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 440, in do_train
+    with open(args.params_path, "r") as fin:
+FileNotFoundError: [Errno 2] No such file or directory: './params/wiki-500k/bert/params.json'
+--- start prediction of bert ---
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 176, in <module>
+    do_predict(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 145, in do_predict
+    xtf = XTransformer.load(args.model_folder)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 195, in load
+    raise ValueError(f"load dir does not exist at: {load_dir}")
+ValueError: load dir does not exist at: ./trained-models/wiki-500k/bert
+--- start evaluation of bert ---
+/var/spool/slurmd/job23551731/slurm_script: line 41: ./results/wiki-500k/2024-05-07-17-23-11: No such file or directory
+/var/spool/slurmd/job23551731/slurm_script: line 42: ./results/wiki-500k/2024-05-07-17-23-11: No such file or directory
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n913
+Job ID: 23551731
+Cluster: uc2
+User/Group: ul_ruw26/ul_student
+State: FAILED (exit code 1)
+Nodes: 1
+Cores per node: 64
+CPU Utilized: 00:00:06
+CPU Efficiency: 0.08% of 02:00:32 core-walltime
+Job Wall-clock time: 00:01:53
+Memory Utilized: 249.81 MB
+Memory Efficiency: 0.05% of 498.05 GB

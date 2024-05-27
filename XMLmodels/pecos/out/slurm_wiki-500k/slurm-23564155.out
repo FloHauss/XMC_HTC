@@ -1,0 +1,47 @@
+wiki-500k
+UUID is 2024-05-10-18-03-42
+/var/spool/slurmd/job23564155/slurm_script: line 27: ./results/wiki-500k/2024-05-10-18-03-42: No such file or directory
+--- start training of bert1 ---
+05/10/2024 18:05:05 - INFO - __main__ - Setting random seed 0
+05/10/2024 18:05:12 - INFO - __main__ - Loaded training feature matrix with shape=(1779881, 2381304)
+05/10/2024 18:05:12 - INFO - __main__ - Loaded training label matrix with shape=(1779881, 501070)
+05/10/2024 18:05:34 - INFO - __main__ - Loaded 1779881 training sequences
+05/10/2024 18:09:09 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [64, 512, 4096, 32768, 501070]
+05/10/2024 18:09:09 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[64, 512, 4096, 32768]
+05/10/2024 18:09:09 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=64, avr_M_nnz=64
+05/10/2024 18:09:15 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+05/10/2024 18:09:15 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1779881 truncation=128*****
+05/10/2024 18:18:05 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=530.1786489486694 *****
+/var/spool/slurmd/job23564155/slurm_script: line 29: 851109 Killed                  python3 -m pecos.xmc.xtransformer.train -t ./xmc-base/$dataset/X.trn.txt -x ./xmc-base/$dataset/tfidf-attnxml/X.trn.npz -y ./xmc-base/$dataset/Y.trn.npz -m ./trained-models/$dataset/$model --params-path ./params/$dataset/$model/params.json
+--- start prediction of bert1 ---
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 176, in <module>
+    do_predict(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 145, in do_predict
+    xtf = XTransformer.load(args.model_folder)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 195, in load
+    raise ValueError(f"load dir does not exist at: {load_dir}")
+ValueError: load dir does not exist at: ./trained-models/wiki-500k/bert1
+--- start evaluation of bert1 ---
+/var/spool/slurmd/job23564155/slurm_script: line 41: ./results/wiki-500k/2024-05-10-18-03-42: No such file or directory
+/var/spool/slurmd/job23564155/slurm_script: line 42: ./results/wiki-500k/2024-05-10-18-03-42: No such file or directory
+slurmstepd: error: Detected 1 oom_kill event in StepId=23564155.batch. Some of the step tasks have been OOM Killed.
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n909
+Job ID: 23564155
+Cluster: uc2
+User/Group: ul_ruw26/ul_student
+State: OUT_OF_MEMORY (exit code 0)
+Nodes: 1
+Cores per node: 64
+CPU Utilized: 09:39:24
+CPU Efficiency: 43.25% of 22:19:44 core-walltime
+Job Wall-clock time: 00:20:56
+Memory Utilized: 492.60 GB
+Memory Efficiency: 98.91% of 498.05 GB
