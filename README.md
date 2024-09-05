@@ -13,7 +13,19 @@ For the NYT, RCV1-V2 and [WoS](https://data.mendeley.com/datasets/9rw3vkcfy4/6) 
 ## XR-Transformer
 
 # HTC models
-## HBGL
+## HBGL 
+HBGL requires 3 input files to run:
+- [dataset name]_test.json
+- [dataset_name]_train.json
+- [dataset_name]_val.json
+It is required that these files are located within a folder named [dataset_name] within the data folder of HBGL.
+Each dataset also requires a corresponding script file named [dataset_name].sh within the scripts folder of HBGL. Runs are also started from within this folder.
+- TODO: NYT UND RCV1 PREPROCESSING WAREN PROBLEMATISCH???
+
+### XML to HTC
+As HGCLR does not support larger datasets without heavy modifications, only HBGL makes use of the larger XML datasets.
+Of these, even with modifications within the HBGL source code to accomodate for larger datasets, only Wiki10-31k and Ammazoncat-13k are small enough to effectively run on them.
+- TODO: Ordner und Files einbinden und nochmal beschreiben
 
 ## HGCLR
 
