@@ -1,0 +1,604 @@
+------- Ensemble run at 2024-08-21 22:18:46 for amazoncat-13k ----------
+08/21/2024 22:20:09 - INFO - __main__ - Setting random seed 0
+08/21/2024 22:20:11 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/21/2024 22:20:11 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/21/2024 22:20:14 - INFO - __main__ - Loaded 1186239 training sequences
+08/21/2024 22:20:17 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/21/2024 22:20:17 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/21/2024 22:20:17 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+08/21/2024 22:20:22 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+08/21/2024 22:20:22 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/21/2024 22:22:16 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=113.69418358802795 *****
+08/21/2024 22:23:28 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23968513/tmpj1dbvh2d/X_trn.pt
+08/21/2024 22:23:31 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/21/2024 22:23:48 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/21/2024 22:27:01 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 344.0864 | train_loss 3.351100e-01 | lr 2.500000e-05
+08/21/2024 22:29:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 328.0274 | train_loss 6.372401e-02 | lr 5.000000e-05
+08/21/2024 22:32:57 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 327.9595 | train_loss 4.614919e-02 | lr 4.375000e-05
+08/21/2024 22:35:52 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 327.8739 | train_loss 4.059318e-02 | lr 3.750000e-05
+08/21/2024 22:38:47 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 327.7629 | train_loss 3.752303e-02 | lr 3.125000e-05
+08/21/2024 22:41:44 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 329.7777 | train_loss 3.580604e-02 | lr 2.500000e-05
+08/21/2024 22:44:40 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 330.0018 | train_loss 3.415933e-02 | lr 1.875000e-05
+08/21/2024 22:47:37 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 329.0542 | train_loss 3.318854e-02 | lr 1.250000e-05
+08/21/2024 22:50:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 329.8727 | train_loss 3.233852e-02 | lr 6.250000e-06
+08/21/2024 22:53:30 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 330.1254 | train_loss 3.109883e-02 | lr 0.000000e+00
+08/21/2024 22:53:30 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmp2zi46a07 at global_step 5000 ****
+08/21/2024 22:53:30 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/21/2024 22:53:32 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmp2zi46a07
+08/21/2024 22:53:33 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/21/2024 22:53:33 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/21/2024 23:32:09 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/21/2024 23:32:31 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/21/2024 23:36:15 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/21/2024 23:36:50 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.002184214142346
+08/21/2024 23:36:55 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+08/21/2024 23:38:21 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmpj1dbvh2d/X_trn.pt
+08/21/2024 23:38:21 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 00:04:18 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 00:04:19 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 00:04:20 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 00:04:22 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 440
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 00:05:13 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+08/22/2024 00:08:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/ 10000] |  499/18535 batches | ms/batch 346.3186 | train_loss 1.331941e-01 | lr 2.500000e-05
+08/22/2024 00:11:45 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/ 10000] |  999/18535 batches | ms/batch 332.2430 | train_loss 1.128429e-01 | lr 5.000000e-05
+08/22/2024 00:14:50 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/ 10000] | 1499/18535 batches | ms/batch 331.9329 | train_loss 1.095118e-01 | lr 4.722222e-05
+08/22/2024 00:17:54 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/ 10000] | 1999/18535 batches | ms/batch 333.1804 | train_loss 1.082347e-01 | lr 4.444444e-05
+08/22/2024 00:20:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/ 10000] | 2499/18535 batches | ms/batch 332.5020 | train_loss 1.074842e-01 | lr 4.166667e-05
+08/22/2024 00:24:02 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/ 10000] | 2999/18535 batches | ms/batch 332.2822 | train_loss 1.071029e-01 | lr 3.888889e-05
+08/22/2024 00:27:06 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/ 10000] | 3499/18535 batches | ms/batch 332.0406 | train_loss 1.063307e-01 | lr 3.611111e-05
+08/22/2024 00:30:09 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/ 10000] | 3999/18535 batches | ms/batch 330.7409 | train_loss 1.060798e-01 | lr 3.333333e-05
+08/22/2024 00:33:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/ 10000] | 4499/18535 batches | ms/batch 332.4017 | train_loss 1.058658e-01 | lr 3.055556e-05
+08/22/2024 00:36:18 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/ 10000] | 4999/18535 batches | ms/batch 334.0876 | train_loss 1.054427e-01 | lr 2.777778e-05
+08/22/2024 00:36:18 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpd9aufwul at global_step 5000 ****
+08/22/2024 00:36:20 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 00:39:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5500/ 10000] | 5499/18535 batches | ms/batch 332.0285 | train_loss 1.052971e-01 | lr 2.500000e-05
+08/22/2024 00:42:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6000/ 10000] | 5999/18535 batches | ms/batch 331.6057 | train_loss 1.049449e-01 | lr 2.222222e-05
+08/22/2024 00:45:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6500/ 10000] | 6499/18535 batches | ms/batch 333.2046 | train_loss 1.049000e-01 | lr 1.944444e-05
+08/22/2024 00:48:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7000/ 10000] | 6999/18535 batches | ms/batch 333.2838 | train_loss 1.047784e-01 | lr 1.666667e-05
+08/22/2024 00:51:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7500/ 10000] | 7499/18535 batches | ms/batch 334.0227 | train_loss 1.043705e-01 | lr 1.388889e-05
+08/22/2024 00:54:44 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8000/ 10000] | 7999/18535 batches | ms/batch 333.7051 | train_loss 1.040641e-01 | lr 1.111111e-05
+08/22/2024 00:57:49 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8500/ 10000] | 8499/18535 batches | ms/batch 334.2491 | train_loss 1.040623e-01 | lr 8.333333e-06
+08/22/2024 01:00:54 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9000/ 10000] | 8999/18535 batches | ms/batch 336.4670 | train_loss 1.038458e-01 | lr 5.555556e-06
+08/22/2024 01:03:58 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9500/ 10000] | 9499/18535 batches | ms/batch 332.1732 | train_loss 1.037472e-01 | lr 2.777778e-06
+08/22/2024 01:07:01 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][ 10000/ 10000] | 9999/18535 batches | ms/batch 335.1882 | train_loss 1.036373e-01 | lr 0.000000e+00
+08/22/2024 01:07:01 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpd9aufwul at global_step 10000 ****
+08/22/2024 01:07:01 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 01:07:04 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpd9aufwul
+08/22/2024 01:07:08 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 1024)) with avr_nnz=400.0
+08/22/2024 01:07:08 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 01:47:40 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/22/2024 01:48:05 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/22/2024 01:57:38 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/22/2024 01:58:14 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 2, nr_labels=13330, avr_M_nnz=50.04579094094866
+08/22/2024 01:58:22 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+08/22/2024 01:59:51 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmpj1dbvh2d/X_trn.pt
+08/22/2024 01:59:51 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 02:21:40 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 02:21:40 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 02:21:42 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 02:21:46 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 13330
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 781
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 2
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 02:22:50 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 30000
+08/22/2024 02:26:20 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][   500/ 30000] |  499/18535 batches | ms/batch 346.7826 | train_loss 1.885429e-01 | lr 2.500000e-05
+08/22/2024 02:29:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1000/ 30000] |  999/18535 batches | ms/batch 334.2736 | train_loss 1.849713e-01 | lr 5.000000e-05
+08/22/2024 02:32:24 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1500/ 30000] | 1499/18535 batches | ms/batch 333.1087 | train_loss 1.841213e-01 | lr 4.913793e-05
+08/22/2024 02:35:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2000/ 30000] | 1999/18535 batches | ms/batch 333.9610 | train_loss 1.827279e-01 | lr 4.827586e-05
+08/22/2024 02:38:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2500/ 30000] | 2499/18535 batches | ms/batch 331.6549 | train_loss 1.822983e-01 | lr 4.741379e-05
+08/22/2024 02:41:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3000/ 30000] | 2999/18535 batches | ms/batch 332.2627 | train_loss 1.818787e-01 | lr 4.655172e-05
+08/22/2024 02:44:29 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3500/ 30000] | 3499/18535 batches | ms/batch 335.1498 | train_loss 1.814204e-01 | lr 4.568966e-05
+08/22/2024 02:47:31 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4000/ 30000] | 3999/18535 batches | ms/batch 333.9775 | train_loss 1.811659e-01 | lr 4.482759e-05
+08/22/2024 02:50:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4500/ 30000] | 4499/18535 batches | ms/batch 334.1950 | train_loss 1.809560e-01 | lr 4.396552e-05
+08/22/2024 02:53:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5000/ 30000] | 4999/18535 batches | ms/batch 331.1840 | train_loss 1.808685e-01 | lr 4.310345e-05
+08/22/2024 02:56:31 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5500/ 30000] | 5499/18535 batches | ms/batch 330.8759 | train_loss 1.804287e-01 | lr 4.224138e-05
+08/22/2024 02:59:30 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6000/ 30000] | 5999/18535 batches | ms/batch 330.9227 | train_loss 1.801622e-01 | lr 4.137931e-05
+08/22/2024 03:02:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6500/ 30000] | 6499/18535 batches | ms/batch 330.4472 | train_loss 1.801738e-01 | lr 4.051724e-05
+08/22/2024 03:05:29 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7000/ 30000] | 6999/18535 batches | ms/batch 333.6276 | train_loss 1.798492e-01 | lr 3.965517e-05
+08/22/2024 03:08:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7500/ 30000] | 7499/18535 batches | ms/batch 330.5715 | train_loss 1.796341e-01 | lr 3.879310e-05
+08/22/2024 03:11:27 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8000/ 30000] | 7999/18535 batches | ms/batch 330.5825 | train_loss 1.795737e-01 | lr 3.793103e-05
+08/22/2024 03:14:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8500/ 30000] | 8499/18535 batches | ms/batch 330.4525 | train_loss 1.794009e-01 | lr 3.706897e-05
+08/22/2024 03:17:25 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9000/ 30000] | 8999/18535 batches | ms/batch 330.9796 | train_loss 1.792106e-01 | lr 3.620690e-05
+08/22/2024 03:20:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9500/ 30000] | 9499/18535 batches | ms/batch 330.7750 | train_loss 1.791433e-01 | lr 3.534483e-05
+08/22/2024 03:23:22 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10000/ 30000] | 9999/18535 batches | ms/batch 330.5492 | train_loss 1.791485e-01 | lr 3.448276e-05
+08/22/2024 03:23:22 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpwhpu00z4 at global_step 10000 ****
+08/22/2024 03:23:25 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 03:26:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10500/ 30000] | 10499/18535 batches | ms/batch 329.7807 | train_loss 1.788656e-01 | lr 3.362069e-05
+08/22/2024 03:29:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11000/ 30000] | 10999/18535 batches | ms/batch 331.6904 | train_loss 1.789795e-01 | lr 3.275862e-05
+08/22/2024 03:32:21 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11500/ 30000] | 11499/18535 batches | ms/batch 330.4682 | train_loss 1.786913e-01 | lr 3.189655e-05
+08/22/2024 03:35:20 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12000/ 30000] | 11999/18535 batches | ms/batch 330.5794 | train_loss 1.785155e-01 | lr 3.103448e-05
+08/22/2024 03:38:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12500/ 30000] | 12499/18535 batches | ms/batch 330.8344 | train_loss 1.786182e-01 | lr 3.017241e-05
+08/22/2024 03:41:18 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13000/ 30000] | 12999/18535 batches | ms/batch 331.2485 | train_loss 1.784848e-01 | lr 2.931034e-05
+08/22/2024 03:44:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13500/ 30000] | 13499/18535 batches | ms/batch 330.3060 | train_loss 1.782990e-01 | lr 2.844828e-05
+08/22/2024 03:47:15 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14000/ 30000] | 13999/18535 batches | ms/batch 330.8105 | train_loss 1.783075e-01 | lr 2.758621e-05
+08/22/2024 03:50:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14500/ 30000] | 14499/18535 batches | ms/batch 330.5847 | train_loss 1.781606e-01 | lr 2.672414e-05
+08/22/2024 03:53:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15000/ 30000] | 14999/18535 batches | ms/batch 330.7001 | train_loss 1.782073e-01 | lr 2.586207e-05
+08/22/2024 03:56:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15500/ 30000] | 15499/18535 batches | ms/batch 333.7389 | train_loss 1.781552e-01 | lr 2.500000e-05
+08/22/2024 03:59:12 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16000/ 30000] | 15999/18535 batches | ms/batch 329.9714 | train_loss 1.779164e-01 | lr 2.413793e-05
+08/22/2024 04:02:11 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16500/ 30000] | 16499/18535 batches | ms/batch 329.9350 | train_loss 1.778327e-01 | lr 2.327586e-05
+08/22/2024 04:05:10 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17000/ 30000] | 16999/18535 batches | ms/batch 330.6094 | train_loss 1.778511e-01 | lr 2.241379e-05
+08/22/2024 04:08:09 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17500/ 30000] | 17499/18535 batches | ms/batch 330.0406 | train_loss 1.777396e-01 | lr 2.155172e-05
+08/22/2024 04:11:08 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18000/ 30000] | 17999/18535 batches | ms/batch 330.5321 | train_loss 1.776210e-01 | lr 2.068966e-05
+08/22/2024 04:14:07 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18500/ 30000] | 18499/18535 batches | ms/batch 329.7591 | train_loss 1.775621e-01 | lr 1.982759e-05
+08/22/2024 04:17:33 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19000/ 30000] |  464/18535 batches | ms/batch 338.8497 | train_loss 1.765381e-01 | lr 1.896552e-05
+08/22/2024 04:20:32 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19500/ 30000] |  964/18535 batches | ms/batch 329.6683 | train_loss 1.765010e-01 | lr 1.810345e-05
+08/22/2024 04:23:30 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20000/ 30000] | 1464/18535 batches | ms/batch 329.6792 | train_loss 1.764559e-01 | lr 1.724138e-05
+08/22/2024 04:23:30 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpwhpu00z4 at global_step 20000 ****
+08/22/2024 04:23:33 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 04:26:35 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20500/ 30000] | 1964/18535 batches | ms/batch 335.5424 | train_loss 1.763696e-01 | lr 1.637931e-05
+08/22/2024 04:29:34 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21000/ 30000] | 2464/18535 batches | ms/batch 330.1960 | train_loss 1.763051e-01 | lr 1.551724e-05
+08/22/2024 04:32:33 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21500/ 30000] | 2964/18535 batches | ms/batch 330.2874 | train_loss 1.762368e-01 | lr 1.465517e-05
+08/22/2024 04:35:33 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22000/ 30000] | 3464/18535 batches | ms/batch 332.3009 | train_loss 1.762351e-01 | lr 1.379310e-05
+08/22/2024 04:38:32 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22500/ 30000] | 3964/18535 batches | ms/batch 330.2164 | train_loss 1.762256e-01 | lr 1.293103e-05
+08/22/2024 04:41:30 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23000/ 30000] | 4464/18535 batches | ms/batch 330.2853 | train_loss 1.762877e-01 | lr 1.206897e-05
+08/22/2024 04:44:44 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23500/ 30000] | 4964/18535 batches | ms/batch 352.8514 | train_loss 1.761164e-01 | lr 1.120690e-05
+08/22/2024 04:47:44 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24000/ 30000] | 5464/18535 batches | ms/batch 331.6564 | train_loss 1.759625e-01 | lr 1.034483e-05
+08/22/2024 04:50:42 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24500/ 30000] | 5964/18535 batches | ms/batch 330.1326 | train_loss 1.759666e-01 | lr 9.482759e-06
+08/22/2024 04:53:41 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25000/ 30000] | 6464/18535 batches | ms/batch 329.9339 | train_loss 1.760539e-01 | lr 8.620690e-06
+08/22/2024 04:56:40 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25500/ 30000] | 6964/18535 batches | ms/batch 329.9234 | train_loss 1.758437e-01 | lr 7.758621e-06
+08/22/2024 04:59:38 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26000/ 30000] | 7464/18535 batches | ms/batch 330.1620 | train_loss 1.758666e-01 | lr 6.896552e-06
+08/22/2024 05:02:37 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26500/ 30000] | 7964/18535 batches | ms/batch 329.6520 | train_loss 1.758106e-01 | lr 6.034483e-06
+08/22/2024 05:05:35 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27000/ 30000] | 8464/18535 batches | ms/batch 329.9549 | train_loss 1.757850e-01 | lr 5.172414e-06
+08/22/2024 05:08:34 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27500/ 30000] | 8964/18535 batches | ms/batch 329.9397 | train_loss 1.756433e-01 | lr 4.310345e-06
+08/22/2024 05:11:33 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28000/ 30000] | 9464/18535 batches | ms/batch 330.8129 | train_loss 1.755473e-01 | lr 3.448276e-06
+08/22/2024 05:14:32 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28500/ 30000] | 9964/18535 batches | ms/batch 329.9895 | train_loss 1.756288e-01 | lr 2.586207e-06
+08/22/2024 05:17:31 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29000/ 30000] | 10464/18535 batches | ms/batch 330.3599 | train_loss 1.755198e-01 | lr 1.724138e-06
+08/22/2024 05:20:30 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29500/ 30000] | 10964/18535 batches | ms/batch 330.8519 | train_loss 1.755356e-01 | lr 8.620690e-07
+08/22/2024 05:23:29 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 30000/ 30000] | 11464/18535 batches | ms/batch 329.8075 | train_loss 1.755920e-01 | lr 0.000000e+00
+08/22/2024 05:23:29 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpwhpu00z4 at global_step 30000 ****
+08/22/2024 05:23:32 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 05:23:35 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpwhpu00z4
+08/22/2024 05:23:43 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 13330)) with avr_nnz=650.6143104382844
+08/22/2024 05:23:44 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 06:04:14 - INFO - pecos.xmc.xtransformer.model - Constructed instance feature matrix with shape=(1186239, 204650)
+08/22/2024 06:04:20 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree for ranker: [128, 1024, 13330]
+08/22/2024 06:04:20 - INFO - pecos.xmc.xtransformer.model - Start training ranker...
+08/22/2024 06:04:22 - INFO - pecos.xmc.base - Training Layer 0 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/22/2024 06:06:42 - INFO - pecos.xmc.base - Training Layer 1 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/22/2024 06:08:02 - INFO - pecos.xmc.base - Training Layer 2 of 3 Layers in HierarchicalMLModel, neg_mining=tfn+man..
+08/22/2024 06:35:07 - INFO - pecos.xmc.xtransformer.model - Parameters saved to models/amazoncat-13k/bert/param.json
+08/22/2024 06:35:11 - INFO - pecos.xmc.xtransformer.model - Model saved to models/amazoncat-13k/bert
+08/22/2024 06:49:29 - INFO - __main__ - Setting random seed 0
+08/22/2024 06:49:31 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/22/2024 06:49:31 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/22/2024 06:49:34 - INFO - __main__ - Loaded 1186239 training sequences
+08/22/2024 06:49:37 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/22/2024 06:49:37 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/22/2024 06:49:37 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+Some weights of RobertaForXMC were not initialized from the model checkpoint at roberta-base and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+08/22/2024 06:49:42 - INFO - pecos.xmc.xtransformer.matcher - Downloaded roberta-base model from s3.
+08/22/2024 06:49:42 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/22/2024 06:51:47 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=125.20202112197876 *****
+08/22/2024 06:53:05 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23968513/tmpbo9jvmww/X_trn.pt
+08/22/2024 06:53:07 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 06:53:08 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/22/2024 06:56:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 331.8942 | train_loss 2.753723e-01 | lr 2.500000e-05
+08/22/2024 06:59:08 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 328.3952 | train_loss 5.542161e-02 | lr 5.000000e-05
+08/22/2024 07:02:04 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 328.6719 | train_loss 4.605262e-02 | lr 4.375000e-05
+08/22/2024 07:04:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 328.6103 | train_loss 4.120553e-02 | lr 3.750000e-05
+08/22/2024 07:07:54 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 328.6858 | train_loss 3.941423e-02 | lr 3.125000e-05
+08/22/2024 07:10:50 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 330.5005 | train_loss 3.769305e-02 | lr 2.500000e-05
+08/22/2024 07:13:45 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 329.5066 | train_loss 3.619906e-02 | lr 1.875000e-05
+08/22/2024 07:16:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 330.1769 | train_loss 3.456640e-02 | lr 1.250000e-05
+08/22/2024 07:19:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 329.5924 | train_loss 3.425918e-02 | lr 6.250000e-06
+08/22/2024 07:22:31 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 330.3067 | train_loss 3.303792e-02 | lr 0.000000e+00
+08/22/2024 07:22:31 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpnhl_k_k3 at global_step 5000 ****
+08/22/2024 07:22:32 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 07:22:34 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpnhl_k_k3
+08/22/2024 07:22:34 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/22/2024 07:22:34 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 08:00:23 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/22/2024 08:00:46 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/22/2024 08:04:46 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/22/2024 08:05:22 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.00252394332002
+Some weights of RobertaForXMC were not initialized from the model checkpoint at roberta-base and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+08/22/2024 08:05:29 - INFO - pecos.xmc.xtransformer.matcher - Downloaded roberta-base model from s3.
+08/22/2024 08:07:05 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmpbo9jvmww/X_trn.pt
+08/22/2024 08:07:05 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 08:34:38 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 08:34:38 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 08:34:41 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 08:34:43 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 432
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 08:35:38 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+08/22/2024 08:39:06 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/ 10000] |  499/18535 batches | ms/batch 346.8266 | train_loss 1.280985e-01 | lr 2.500000e-05
+08/22/2024 08:42:09 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/ 10000] |  999/18535 batches | ms/batch 333.3724 | train_loss 1.020442e-01 | lr 5.000000e-05
+08/22/2024 08:45:10 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/ 10000] | 1499/18535 batches | ms/batch 331.3344 | train_loss 9.995328e-02 | lr 4.722222e-05
+08/22/2024 08:48:11 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/ 10000] | 1999/18535 batches | ms/batch 332.1406 | train_loss 9.775454e-02 | lr 4.444444e-05
+08/22/2024 08:51:12 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/ 10000] | 2499/18535 batches | ms/batch 331.1001 | train_loss 9.655321e-02 | lr 4.166667e-05
+08/22/2024 08:54:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/ 10000] | 2999/18535 batches | ms/batch 331.1850 | train_loss 9.503536e-02 | lr 3.888889e-05
+08/22/2024 08:57:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/ 10000] | 3499/18535 batches | ms/batch 331.2824 | train_loss 9.405298e-02 | lr 3.611111e-05
+08/22/2024 09:00:15 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/ 10000] | 3999/18535 batches | ms/batch 331.4887 | train_loss 9.355326e-02 | lr 3.333333e-05
+08/22/2024 09:03:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/ 10000] | 4499/18535 batches | ms/batch 332.3737 | train_loss 9.283880e-02 | lr 3.055556e-05
+08/22/2024 09:06:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/ 10000] | 4999/18535 batches | ms/batch 331.0922 | train_loss 9.218585e-02 | lr 2.777778e-05
+08/22/2024 09:06:19 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmp7qjr245_ at global_step 5000 ****
+08/22/2024 09:06:21 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 09:09:22 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5500/ 10000] | 5499/18535 batches | ms/batch 332.1096 | train_loss 9.185523e-02 | lr 2.500000e-05
+08/22/2024 09:12:24 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6000/ 10000] | 5999/18535 batches | ms/batch 331.2027 | train_loss 9.149660e-02 | lr 2.222222e-05
+08/22/2024 09:15:25 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6500/ 10000] | 6499/18535 batches | ms/batch 331.6734 | train_loss 9.116129e-02 | lr 1.944444e-05
+08/22/2024 09:18:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7000/ 10000] | 6999/18535 batches | ms/batch 332.2347 | train_loss 9.070390e-02 | lr 1.666667e-05
+08/22/2024 09:21:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7500/ 10000] | 7499/18535 batches | ms/batch 332.9537 | train_loss 9.022297e-02 | lr 1.388889e-05
+08/22/2024 09:24:29 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8000/ 10000] | 7999/18535 batches | ms/batch 333.4985 | train_loss 9.005751e-02 | lr 1.111111e-05
+08/22/2024 09:27:30 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8500/ 10000] | 8499/18535 batches | ms/batch 333.1864 | train_loss 8.991679e-02 | lr 8.333333e-06
+08/22/2024 09:30:31 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9000/ 10000] | 8999/18535 batches | ms/batch 332.2787 | train_loss 8.974591e-02 | lr 5.555556e-06
+08/22/2024 09:33:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9500/ 10000] | 9499/18535 batches | ms/batch 332.2460 | train_loss 8.950356e-02 | lr 2.777778e-06
+08/22/2024 09:36:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][ 10000/ 10000] | 9999/18535 batches | ms/batch 332.2744 | train_loss 8.951425e-02 | lr 0.000000e+00
+08/22/2024 09:36:33 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmp7qjr245_ at global_step 10000 ****
+08/22/2024 09:36:34 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 09:36:36 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmp7qjr245_
+08/22/2024 09:36:40 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 1024)) with avr_nnz=400.0
+08/22/2024 09:36:40 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 10:16:27 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/22/2024 10:16:52 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/22/2024 10:27:00 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/22/2024 10:27:38 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 2, nr_labels=13330, avr_M_nnz=50.05081859557813
+Some weights of RobertaForXMC were not initialized from the model checkpoint at roberta-base and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+08/22/2024 10:27:48 - INFO - pecos.xmc.xtransformer.matcher - Downloaded roberta-base model from s3.
+08/22/2024 10:29:23 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmpbo9jvmww/X_trn.pt
+08/22/2024 10:29:23 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 10:53:01 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 10:53:01 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 10:53:04 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 10:53:09 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 13330
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 806
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 2
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 10:54:12 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 30000
+08/22/2024 10:57:37 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][   500/ 30000] |  499/18535 batches | ms/batch 340.1759 | train_loss 2.310994e-01 | lr 2.500000e-05
+08/22/2024 11:00:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1000/ 30000] |  999/18535 batches | ms/batch 332.7446 | train_loss 2.221369e-01 | lr 5.000000e-05
+08/22/2024 11:03:47 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1500/ 30000] | 1499/18535 batches | ms/batch 332.7019 | train_loss 2.204817e-01 | lr 4.913793e-05
+08/22/2024 11:06:52 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2000/ 30000] | 1999/18535 batches | ms/batch 333.2624 | train_loss 2.173995e-01 | lr 4.827586e-05
+08/22/2024 11:09:57 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2500/ 30000] | 2499/18535 batches | ms/batch 332.6512 | train_loss 2.156830e-01 | lr 4.741379e-05
+08/22/2024 11:13:02 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3000/ 30000] | 2999/18535 batches | ms/batch 332.9328 | train_loss 2.140926e-01 | lr 4.655172e-05
+08/22/2024 11:16:07 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3500/ 30000] | 3499/18535 batches | ms/batch 332.4155 | train_loss 2.130543e-01 | lr 4.568966e-05
+08/22/2024 11:19:12 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4000/ 30000] | 3999/18535 batches | ms/batch 333.0517 | train_loss 2.121378e-01 | lr 4.482759e-05
+08/22/2024 11:22:18 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4500/ 30000] | 4499/18535 batches | ms/batch 332.8816 | train_loss 2.115538e-01 | lr 4.396552e-05
+08/22/2024 11:25:22 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5000/ 30000] | 4999/18535 batches | ms/batch 332.7934 | train_loss 2.108018e-01 | lr 4.310345e-05
+08/22/2024 11:28:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5500/ 30000] | 5499/18535 batches | ms/batch 332.2079 | train_loss 2.102890e-01 | lr 4.224138e-05
+08/22/2024 11:31:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6000/ 30000] | 5999/18535 batches | ms/batch 332.3494 | train_loss 2.097214e-01 | lr 4.137931e-05
+08/22/2024 11:34:39 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6500/ 30000] | 6499/18535 batches | ms/batch 333.5344 | train_loss 2.093323e-01 | lr 4.051724e-05
+08/22/2024 11:37:43 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7000/ 30000] | 6999/18535 batches | ms/batch 333.2826 | train_loss 2.091004e-01 | lr 3.965517e-05
+08/22/2024 11:40:49 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7500/ 30000] | 7499/18535 batches | ms/batch 332.3238 | train_loss 2.089246e-01 | lr 3.879310e-05
+08/22/2024 11:43:53 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8000/ 30000] | 7999/18535 batches | ms/batch 332.4647 | train_loss 2.083631e-01 | lr 3.793103e-05
+08/22/2024 11:46:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8500/ 30000] | 8499/18535 batches | ms/batch 332.7183 | train_loss 2.083229e-01 | lr 3.706897e-05
+08/22/2024 11:50:04 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9000/ 30000] | 8999/18535 batches | ms/batch 332.0490 | train_loss 2.079242e-01 | lr 3.620690e-05
+08/22/2024 11:53:09 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9500/ 30000] | 9499/18535 batches | ms/batch 332.3867 | train_loss 2.076661e-01 | lr 3.534483e-05
+08/22/2024 11:56:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10000/ 30000] | 9999/18535 batches | ms/batch 332.5571 | train_loss 2.072826e-01 | lr 3.448276e-05
+08/22/2024 11:56:14 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpkoxmi01r at global_step 10000 ****
+08/22/2024 11:56:16 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 11:59:22 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10500/ 30000] | 10499/18535 batches | ms/batch 335.7688 | train_loss 2.072101e-01 | lr 3.362069e-05
+08/22/2024 12:02:30 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11000/ 30000] | 10999/18535 batches | ms/batch 336.6939 | train_loss 2.077414e-01 | lr 3.275862e-05
+08/22/2024 12:05:34 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11500/ 30000] | 11499/18535 batches | ms/batch 332.2242 | train_loss 2.066836e-01 | lr 3.189655e-05
+08/22/2024 12:08:39 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12000/ 30000] | 11999/18535 batches | ms/batch 332.7225 | train_loss 2.066740e-01 | lr 3.103448e-05
+08/22/2024 12:11:43 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12500/ 30000] | 12499/18535 batches | ms/batch 332.4992 | train_loss 2.065976e-01 | lr 3.017241e-05
+08/22/2024 12:14:47 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13000/ 30000] | 12999/18535 batches | ms/batch 332.4568 | train_loss 2.063630e-01 | lr 2.931034e-05
+08/22/2024 12:17:51 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13500/ 30000] | 13499/18535 batches | ms/batch 332.6900 | train_loss 2.062341e-01 | lr 2.844828e-05
+08/22/2024 12:20:55 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14000/ 30000] | 13999/18535 batches | ms/batch 333.1203 | train_loss 2.058842e-01 | lr 2.758621e-05
+08/22/2024 12:24:00 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14500/ 30000] | 14499/18535 batches | ms/batch 331.9888 | train_loss 2.057699e-01 | lr 2.672414e-05
+08/22/2024 12:27:04 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15000/ 30000] | 14999/18535 batches | ms/batch 332.0891 | train_loss 2.056434e-01 | lr 2.586207e-05
+08/22/2024 12:30:10 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15500/ 30000] | 15499/18535 batches | ms/batch 332.3484 | train_loss 2.054446e-01 | lr 2.500000e-05
+08/22/2024 12:33:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16000/ 30000] | 15999/18535 batches | ms/batch 332.8415 | train_loss 2.052695e-01 | lr 2.413793e-05
+08/22/2024 12:36:18 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16500/ 30000] | 16499/18535 batches | ms/batch 332.3215 | train_loss 2.052816e-01 | lr 2.327586e-05
+08/22/2024 12:39:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17000/ 30000] | 16999/18535 batches | ms/batch 332.7214 | train_loss 2.051599e-01 | lr 2.241379e-05
+08/22/2024 12:42:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17500/ 30000] | 17499/18535 batches | ms/batch 333.5511 | train_loss 2.050607e-01 | lr 2.155172e-05
+08/22/2024 12:45:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18000/ 30000] | 17999/18535 batches | ms/batch 332.5220 | train_loss 2.049044e-01 | lr 2.068966e-05
+08/22/2024 12:48:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18500/ 30000] | 18499/18535 batches | ms/batch 332.6412 | train_loss 2.047783e-01 | lr 1.982759e-05
+08/22/2024 12:51:55 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19000/ 30000] |  464/18535 batches | ms/batch 332.0097 | train_loss 2.043055e-01 | lr 1.896552e-05
+08/22/2024 12:55:00 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19500/ 30000] |  964/18535 batches | ms/batch 332.1201 | train_loss 2.041986e-01 | lr 1.810345e-05
+08/22/2024 12:58:05 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20000/ 30000] | 1464/18535 batches | ms/batch 332.0852 | train_loss 2.040302e-01 | lr 1.724138e-05
+08/22/2024 12:58:05 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpkoxmi01r at global_step 20000 ****
+08/22/2024 12:58:07 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 13:01:11 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20500/ 30000] | 1964/18535 batches | ms/batch 332.2301 | train_loss 2.040004e-01 | lr 1.637931e-05
+08/22/2024 13:04:16 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21000/ 30000] | 2464/18535 batches | ms/batch 335.6710 | train_loss 2.040869e-01 | lr 1.551724e-05
+08/22/2024 13:07:20 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21500/ 30000] | 2964/18535 batches | ms/batch 333.6963 | train_loss 2.039286e-01 | lr 1.465517e-05
+08/22/2024 13:10:24 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22000/ 30000] | 3464/18535 batches | ms/batch 332.5326 | train_loss 2.038688e-01 | lr 1.379310e-05
+08/22/2024 13:13:28 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22500/ 30000] | 3964/18535 batches | ms/batch 331.7354 | train_loss 2.037930e-01 | lr 1.293103e-05
+08/22/2024 13:16:30 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23000/ 30000] | 4464/18535 batches | ms/batch 332.0210 | train_loss 2.035425e-01 | lr 1.206897e-05
+08/22/2024 13:19:33 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23500/ 30000] | 4964/18535 batches | ms/batch 332.1119 | train_loss 2.037437e-01 | lr 1.120690e-05
+08/22/2024 13:22:36 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24000/ 30000] | 5464/18535 batches | ms/batch 332.8151 | train_loss 2.035541e-01 | lr 1.034483e-05
+08/22/2024 13:25:38 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24500/ 30000] | 5964/18535 batches | ms/batch 331.9757 | train_loss 2.033917e-01 | lr 9.482759e-06
+08/22/2024 13:28:42 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25000/ 30000] | 6464/18535 batches | ms/batch 331.9866 | train_loss 2.034535e-01 | lr 8.620690e-06
+08/22/2024 13:31:45 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25500/ 30000] | 6964/18535 batches | ms/batch 331.8117 | train_loss 2.032729e-01 | lr 7.758621e-06
+08/22/2024 13:34:49 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26000/ 30000] | 7464/18535 batches | ms/batch 332.4088 | train_loss 2.033041e-01 | lr 6.896552e-06
+08/22/2024 13:37:51 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26500/ 30000] | 7964/18535 batches | ms/batch 332.0707 | train_loss 2.033166e-01 | lr 6.034483e-06
+08/22/2024 13:40:55 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27000/ 30000] | 8464/18535 batches | ms/batch 332.0675 | train_loss 2.031967e-01 | lr 5.172414e-06
+08/22/2024 13:43:58 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27500/ 30000] | 8964/18535 batches | ms/batch 331.4719 | train_loss 2.031632e-01 | lr 4.310345e-06
+08/22/2024 13:47:02 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28000/ 30000] | 9464/18535 batches | ms/batch 332.8300 | train_loss 2.031362e-01 | lr 3.448276e-06
+08/22/2024 13:50:06 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28500/ 30000] | 9964/18535 batches | ms/batch 331.8314 | train_loss 2.030430e-01 | lr 2.586207e-06
+08/22/2024 13:53:09 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29000/ 30000] | 10464/18535 batches | ms/batch 331.7151 | train_loss 2.029814e-01 | lr 1.724138e-06
+08/22/2024 13:56:13 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29500/ 30000] | 10964/18535 batches | ms/batch 334.6152 | train_loss 2.029626e-01 | lr 8.620690e-07
+08/22/2024 13:59:16 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 30000/ 30000] | 11464/18535 batches | ms/batch 332.4713 | train_loss 2.029645e-01 | lr 0.000000e+00
+08/22/2024 13:59:16 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpkoxmi01r at global_step 30000 ****
+08/22/2024 13:59:18 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 13:59:21 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpkoxmi01r
+08/22/2024 13:59:29 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 13330)) with avr_nnz=650.7023298003185
+08/22/2024 13:59:29 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 14:40:05 - INFO - pecos.xmc.xtransformer.model - Constructed instance feature matrix with shape=(1186239, 204650)
+08/22/2024 14:40:12 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree for ranker: [128, 1024, 13330]
+08/22/2024 14:40:12 - INFO - pecos.xmc.xtransformer.model - Start training ranker...
+08/22/2024 14:40:13 - INFO - pecos.xmc.base - Training Layer 0 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/22/2024 14:42:49 - INFO - pecos.xmc.base - Training Layer 1 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/22/2024 14:44:18 - INFO - pecos.xmc.base - Training Layer 2 of 3 Layers in HierarchicalMLModel, neg_mining=tfn+man..
+08/22/2024 15:10:54 - INFO - pecos.xmc.xtransformer.model - Parameters saved to models/amazoncat-13k/roberta/param.json
+08/22/2024 15:10:58 - INFO - pecos.xmc.xtransformer.model - Model saved to models/amazoncat-13k/roberta
+08/22/2024 15:25:22 - INFO - __main__ - Setting random seed 0
+08/22/2024 15:25:23 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/22/2024 15:25:23 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/22/2024 15:25:26 - INFO - __main__ - Loaded 1186239 training sequences
+08/22/2024 15:25:29 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/22/2024 15:25:29 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/22/2024 15:25:29 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+08/22/2024 15:25:31 - INFO - pecos.xmc.xtransformer.matcher - Downloaded xlnet-base-cased model from s3.
+08/22/2024 15:25:31 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/22/2024 15:28:05 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=153.8865261077881 *****
+08/22/2024 15:29:28 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23968513/tmp9lnwalfe/X_trn.pt
+08/22/2024 15:29:31 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 15:29:32 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/22/2024 15:34:24 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 535.7643 | train_loss 2.299479e-01 | lr 2.500000e-05
+08/22/2024 15:39:02 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 528.9847 | train_loss 5.812078e-02 | lr 5.000000e-05
+08/22/2024 15:43:40 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 528.8964 | train_loss 4.818074e-02 | lr 4.375000e-05
+08/22/2024 15:48:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 528.8930 | train_loss 4.356235e-02 | lr 3.750000e-05
+08/22/2024 15:52:56 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 530.1618 | train_loss 4.047618e-02 | lr 3.125000e-05
+08/22/2024 15:57:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 529.1707 | train_loss 3.901479e-02 | lr 2.500000e-05
+08/22/2024 16:02:11 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 529.1484 | train_loss 3.726350e-02 | lr 1.875000e-05
+08/22/2024 16:06:49 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 529.3037 | train_loss 3.618411e-02 | lr 1.250000e-05
+08/22/2024 16:11:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 530.3813 | train_loss 3.518890e-02 | lr 6.250000e-06
+08/22/2024 16:16:06 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 529.3589 | train_loss 3.402053e-02 | lr 0.000000e+00
+08/22/2024 16:16:06 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpsfqes9pz at global_step 5000 ****
+08/22/2024 16:16:07 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 16:16:09 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpsfqes9pz
+08/22/2024 16:16:10 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/22/2024 16:16:10 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 17:17:23 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/22/2024 17:17:46 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/22/2024 17:21:43 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/22/2024 17:22:19 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.002421097266236
+08/22/2024 17:22:23 - INFO - pecos.xmc.xtransformer.matcher - Downloaded xlnet-base-cased model from s3.
+08/22/2024 17:24:03 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmp9lnwalfe/X_trn.pt
+08/22/2024 17:24:04 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 17:49:57 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 17:49:58 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 17:50:01 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 17:50:03 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 432
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 17:50:58 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+08/22/2024 17:56:08 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/ 10000] |  499/18535 batches | ms/batch 553.4423 | train_loss 1.459629e-01 | lr 2.500000e-05
+08/22/2024 18:00:46 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/ 10000] |  999/18535 batches | ms/batch 530.1265 | train_loss 1.093036e-01 | lr 5.000000e-05
+08/22/2024 18:05:24 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/ 10000] | 1499/18535 batches | ms/batch 529.9497 | train_loss 1.034383e-01 | lr 4.722222e-05
+08/22/2024 18:10:01 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/ 10000] | 1999/18535 batches | ms/batch 530.1139 | train_loss 1.002614e-01 | lr 4.444444e-05
+08/22/2024 18:14:39 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/ 10000] | 2499/18535 batches | ms/batch 530.1062 | train_loss 9.846706e-02 | lr 4.166667e-05
+08/22/2024 18:19:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/ 10000] | 2999/18535 batches | ms/batch 532.0826 | train_loss 9.764808e-02 | lr 3.888889e-05
+08/22/2024 18:23:58 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/ 10000] | 3499/18535 batches | ms/batch 531.0805 | train_loss 9.607619e-02 | lr 3.611111e-05
+08/22/2024 18:28:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/ 10000] | 3999/18535 batches | ms/batch 531.3848 | train_loss 9.544316e-02 | lr 3.333333e-05
+08/22/2024 18:33:16 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/ 10000] | 4499/18535 batches | ms/batch 531.9808 | train_loss 9.484437e-02 | lr 3.055556e-05
+08/22/2024 18:37:54 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/ 10000] | 4999/18535 batches | ms/batch 530.2546 | train_loss 9.422290e-02 | lr 2.777778e-05
+08/22/2024 18:37:54 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpasdq1rue at global_step 5000 ****
+08/22/2024 18:37:55 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 18:42:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5500/ 10000] | 5499/18535 batches | ms/batch 530.1176 | train_loss 9.387314e-02 | lr 2.500000e-05
+08/22/2024 18:47:12 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6000/ 10000] | 5999/18535 batches | ms/batch 531.3456 | train_loss 9.312354e-02 | lr 2.222222e-05
+08/22/2024 18:51:50 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  6500/ 10000] | 6499/18535 batches | ms/batch 530.8966 | train_loss 9.299101e-02 | lr 1.944444e-05
+08/22/2024 18:56:30 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7000/ 10000] | 6999/18535 batches | ms/batch 532.4348 | train_loss 9.296041e-02 | lr 1.666667e-05
+08/22/2024 19:01:20 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  7500/ 10000] | 7499/18535 batches | ms/batch 547.9965 | train_loss 9.224411e-02 | lr 1.388889e-05
+08/22/2024 19:05:58 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8000/ 10000] | 7999/18535 batches | ms/batch 529.8763 | train_loss 9.168702e-02 | lr 1.111111e-05
+08/22/2024 19:10:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  8500/ 10000] | 8499/18535 batches | ms/batch 529.6931 | train_loss 9.169558e-02 | lr 8.333333e-06
+08/22/2024 19:15:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9000/ 10000] | 8999/18535 batches | ms/batch 530.7381 | train_loss 9.151106e-02 | lr 5.555556e-06
+08/22/2024 19:19:53 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  9500/ 10000] | 9499/18535 batches | ms/batch 530.7658 | train_loss 9.120012e-02 | lr 2.777778e-06
+08/22/2024 19:24:31 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][ 10000/ 10000] | 9999/18535 batches | ms/batch 530.7414 | train_loss 9.111504e-02 | lr 0.000000e+00
+08/22/2024 19:24:31 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpasdq1rue at global_step 10000 ****
+08/22/2024 19:24:33 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 19:24:36 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpasdq1rue
+08/22/2024 19:24:41 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 1024)) with avr_nnz=400.0
+08/22/2024 19:24:41 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/22/2024 20:26:57 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/22/2024 20:27:29 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/22/2024 20:37:28 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/22/2024 20:38:04 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 2, nr_labels=13330, avr_M_nnz=50.04837052229778
+08/22/2024 20:38:10 - INFO - pecos.xmc.xtransformer.matcher - Downloaded xlnet-base-cased model from s3.
+08/22/2024 20:39:48 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23968513/tmp9lnwalfe/X_trn.pt
+08/22/2024 20:39:48 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/22/2024 21:02:31 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/22/2024 21:02:31 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/22/2024 21:02:33 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/22/2024 21:02:38 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 13330
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 796
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 2
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/22/2024 21:03:42 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 30000
+08/22/2024 21:08:52 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][   500/ 30000] |  499/18535 batches | ms/batch 548.4485 | train_loss 2.406593e-01 | lr 2.500000e-05
+08/22/2024 21:13:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1000/ 30000] |  999/18535 batches | ms/batch 531.6900 | train_loss 2.235422e-01 | lr 5.000000e-05
+08/22/2024 21:18:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  1500/ 30000] | 1499/18535 batches | ms/batch 532.5862 | train_loss 2.189759e-01 | lr 4.913793e-05
+08/22/2024 21:22:53 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2000/ 30000] | 1999/18535 batches | ms/batch 531.1684 | train_loss 2.147547e-01 | lr 4.827586e-05
+08/22/2024 21:27:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  2500/ 30000] | 2499/18535 batches | ms/batch 531.2081 | train_loss 2.114670e-01 | lr 4.741379e-05
+08/22/2024 21:32:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3000/ 30000] | 2999/18535 batches | ms/batch 531.0921 | train_loss 2.097549e-01 | lr 4.655172e-05
+08/22/2024 21:36:52 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  3500/ 30000] | 3499/18535 batches | ms/batch 532.3575 | train_loss 2.082893e-01 | lr 4.568966e-05
+08/22/2024 21:41:32 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4000/ 30000] | 3999/18535 batches | ms/batch 532.6299 | train_loss 2.072312e-01 | lr 4.482759e-05
+08/22/2024 21:46:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  4500/ 30000] | 4499/18535 batches | ms/batch 535.1742 | train_loss 2.063819e-01 | lr 4.396552e-05
+08/22/2024 21:50:53 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5000/ 30000] | 4999/18535 batches | ms/batch 531.1700 | train_loss 2.053681e-01 | lr 4.310345e-05
+08/22/2024 21:55:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  5500/ 30000] | 5499/18535 batches | ms/batch 531.7770 | train_loss 2.042839e-01 | lr 4.224138e-05
+08/22/2024 22:00:13 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6000/ 30000] | 5999/18535 batches | ms/batch 531.7759 | train_loss 2.038360e-01 | lr 4.137931e-05
+08/22/2024 22:04:53 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  6500/ 30000] | 6499/18535 batches | ms/batch 532.7935 | train_loss 2.031385e-01 | lr 4.051724e-05
+08/22/2024 22:09:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7000/ 30000] | 6999/18535 batches | ms/batch 536.0478 | train_loss 2.023566e-01 | lr 3.965517e-05
+08/22/2024 22:14:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  7500/ 30000] | 7499/18535 batches | ms/batch 533.2562 | train_loss 2.019310e-01 | lr 3.879310e-05
+08/22/2024 22:18:56 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8000/ 30000] | 7999/18535 batches | ms/batch 530.9789 | train_loss 2.013566e-01 | lr 3.793103e-05
+08/22/2024 22:23:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  8500/ 30000] | 8499/18535 batches | ms/batch 534.8395 | train_loss 2.007870e-01 | lr 3.706897e-05
+08/22/2024 22:28:16 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9000/ 30000] | 8999/18535 batches | ms/batch 532.2655 | train_loss 2.003642e-01 | lr 3.620690e-05
+08/22/2024 22:32:56 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][  9500/ 30000] | 9499/18535 batches | ms/batch 533.0603 | train_loss 2.004092e-01 | lr 3.534483e-05
+08/22/2024 22:37:36 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10000/ 30000] | 9999/18535 batches | ms/batch 531.3152 | train_loss 2.006577e-01 | lr 3.448276e-05
+08/22/2024 22:37:36 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpqcnyte93 at global_step 10000 ****
+08/22/2024 22:37:39 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/22/2024 22:42:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 10500/ 30000] | 10499/18535 batches | ms/batch 533.0798 | train_loss 1.995797e-01 | lr 3.362069e-05
+08/22/2024 22:46:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11000/ 30000] | 10999/18535 batches | ms/batch 531.3489 | train_loss 1.991317e-01 | lr 3.275862e-05
+08/22/2024 22:51:39 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 11500/ 30000] | 11499/18535 batches | ms/batch 532.3756 | train_loss 1.988096e-01 | lr 3.189655e-05
+08/22/2024 22:56:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12000/ 30000] | 11999/18535 batches | ms/batch 531.6018 | train_loss 1.982792e-01 | lr 3.103448e-05
+08/22/2024 23:00:59 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 12500/ 30000] | 12499/18535 batches | ms/batch 533.0502 | train_loss 1.981930e-01 | lr 3.017241e-05
+08/22/2024 23:05:39 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13000/ 30000] | 12999/18535 batches | ms/batch 533.6608 | train_loss 1.979629e-01 | lr 2.931034e-05
+08/22/2024 23:10:19 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 13500/ 30000] | 13499/18535 batches | ms/batch 533.8015 | train_loss 1.977569e-01 | lr 2.844828e-05
+08/22/2024 23:15:02 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14000/ 30000] | 13999/18535 batches | ms/batch 535.2792 | train_loss 1.976672e-01 | lr 2.758621e-05
+08/22/2024 23:19:48 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 14500/ 30000] | 14499/18535 batches | ms/batch 543.2613 | train_loss 1.974956e-01 | lr 2.672414e-05
+08/22/2024 23:24:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15000/ 30000] | 14999/18535 batches | ms/batch 531.6789 | train_loss 1.972837e-01 | lr 2.586207e-05
+08/22/2024 23:29:08 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 15500/ 30000] | 15499/18535 batches | ms/batch 532.0055 | train_loss 1.971086e-01 | lr 2.500000e-05
+08/22/2024 23:33:49 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16000/ 30000] | 15999/18535 batches | ms/batch 531.8397 | train_loss 1.968216e-01 | lr 2.413793e-05
+08/22/2024 23:38:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 16500/ 30000] | 16499/18535 batches | ms/batch 531.1586 | train_loss 1.965063e-01 | lr 2.327586e-05
+08/22/2024 23:43:08 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17000/ 30000] | 16999/18535 batches | ms/batch 531.3884 | train_loss 1.964254e-01 | lr 2.241379e-05
+08/22/2024 23:47:48 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 17500/ 30000] | 17499/18535 batches | ms/batch 531.6726 | train_loss 1.964172e-01 | lr 2.155172e-05
+08/22/2024 23:52:29 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18000/ 30000] | 17999/18535 batches | ms/batch 534.0750 | train_loss 1.962264e-01 | lr 2.068966e-05
+08/22/2024 23:57:09 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   2][ 18500/ 30000] | 18499/18535 batches | ms/batch 532.2353 | train_loss 1.960092e-01 | lr 1.982759e-05
+08/23/2024 00:02:08 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19000/ 30000] |  464/18535 batches | ms/batch 531.9842 | train_loss 1.953350e-01 | lr 1.896552e-05
+08/23/2024 00:06:50 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 19500/ 30000] |  964/18535 batches | ms/batch 533.2753 | train_loss 1.952736e-01 | lr 1.810345e-05
+08/23/2024 00:11:30 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20000/ 30000] | 1464/18535 batches | ms/batch 531.3775 | train_loss 1.952317e-01 | lr 1.724138e-05
+08/23/2024 00:11:30 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpqcnyte93 at global_step 20000 ****
+08/23/2024 00:11:32 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/23/2024 00:16:12 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 20500/ 30000] | 1964/18535 batches | ms/batch 532.4864 | train_loss 1.950383e-01 | lr 1.637931e-05
+08/23/2024 00:20:54 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21000/ 30000] | 2464/18535 batches | ms/batch 535.3985 | train_loss 1.947730e-01 | lr 1.551724e-05
+08/23/2024 00:25:35 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 21500/ 30000] | 2964/18535 batches | ms/batch 534.6307 | train_loss 1.947937e-01 | lr 1.465517e-05
+08/23/2024 00:30:15 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22000/ 30000] | 3464/18535 batches | ms/batch 533.7388 | train_loss 1.946614e-01 | lr 1.379310e-05
+08/23/2024 00:34:55 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 22500/ 30000] | 3964/18535 batches | ms/batch 534.9143 | train_loss 1.945536e-01 | lr 1.293103e-05
+08/23/2024 00:39:35 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23000/ 30000] | 4464/18535 batches | ms/batch 534.9277 | train_loss 1.945011e-01 | lr 1.206897e-05
+08/23/2024 00:44:14 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 23500/ 30000] | 4964/18535 batches | ms/batch 532.1362 | train_loss 1.943605e-01 | lr 1.120690e-05
+08/23/2024 00:48:54 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24000/ 30000] | 5464/18535 batches | ms/batch 533.6550 | train_loss 1.941572e-01 | lr 1.034483e-05
+08/23/2024 00:53:34 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 24500/ 30000] | 5964/18535 batches | ms/batch 532.8739 | train_loss 1.940894e-01 | lr 9.482759e-06
+08/23/2024 00:58:14 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25000/ 30000] | 6464/18535 batches | ms/batch 532.5688 | train_loss 1.942334e-01 | lr 8.620690e-06
+08/23/2024 01:02:56 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 25500/ 30000] | 6964/18535 batches | ms/batch 536.5265 | train_loss 1.938689e-01 | lr 7.758621e-06
+08/23/2024 01:07:36 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26000/ 30000] | 7464/18535 batches | ms/batch 533.0274 | train_loss 1.938893e-01 | lr 6.896552e-06
+08/23/2024 01:12:16 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 26500/ 30000] | 7964/18535 batches | ms/batch 533.6640 | train_loss 1.937643e-01 | lr 6.034483e-06
+08/23/2024 01:16:58 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27000/ 30000] | 8464/18535 batches | ms/batch 535.7017 | train_loss 1.936853e-01 | lr 5.172414e-06
+08/23/2024 01:21:38 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 27500/ 30000] | 8964/18535 batches | ms/batch 534.3159 | train_loss 1.934790e-01 | lr 4.310345e-06
+08/23/2024 01:26:24 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28000/ 30000] | 9464/18535 batches | ms/batch 545.7154 | train_loss 1.934217e-01 | lr 3.448276e-06
+08/23/2024 01:31:05 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 28500/ 30000] | 9964/18535 batches | ms/batch 535.3744 | train_loss 1.934567e-01 | lr 2.586207e-06
+08/23/2024 01:35:45 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29000/ 30000] | 10464/18535 batches | ms/batch 534.8710 | train_loss 1.932824e-01 | lr 1.724138e-06
+08/23/2024 01:40:25 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 29500/ 30000] | 10964/18535 batches | ms/batch 533.5566 | train_loss 1.931942e-01 | lr 8.620690e-07
+08/23/2024 01:45:05 - INFO - pecos.xmc.xtransformer.matcher - | [   2/   2][ 30000/ 30000] | 11464/18535 batches | ms/batch 534.8643 | train_loss 1.933862e-01 | lr 0.000000e+00
+08/23/2024 01:45:05 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23968513/tmpqcnyte93 at global_step 30000 ****
+08/23/2024 01:45:07 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/23/2024 01:45:11 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23968513/tmpqcnyte93
+08/23/2024 01:45:17 - INFO - pecos.xmc.xtransformer.matcher - Predict with csr_codes_next((1186239, 13330)) with avr_nnz=651.5335585830511
+08/23/2024 01:45:18 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/23/2024 02:51:58 - INFO - pecos.xmc.xtransformer.model - Constructed instance feature matrix with shape=(1186239, 204650)
+08/23/2024 02:52:04 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree for ranker: [32, 256, 13330]
+08/23/2024 02:52:04 - INFO - pecos.xmc.xtransformer.model - Start training ranker...
+08/23/2024 02:52:07 - INFO - pecos.xmc.base - Training Layer 0 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/23/2024 02:52:57 - INFO - pecos.xmc.base - Training Layer 1 of 3 Layers in HierarchicalMLModel, neg_mining=tfn..
+08/23/2024 02:53:41 - INFO - pecos.xmc.base - Training Layer 2 of 3 Layers in HierarchicalMLModel, neg_mining=tfn+man..
+08/23/2024 04:24:03 - INFO - pecos.xmc.xtransformer.model - Parameters saved to models/amazoncat-13k/xlnet/param.json
+08/23/2024 04:24:09 - INFO - pecos.xmc.xtransformer.model - Model saved to models/amazoncat-13k/xlnet
+==== evaluation results ====
+param: bert
+prec   = 96.36 90.56 82.91 75.35 67.23 59.76 53.58 48.46 44.17 40.55 37.46 34.79 32.47 30.42 28.62 27.00 25.56 24.25 23.08 22.00
+recall = 27.58 48.66 62.81 72.66 78.33 81.55 83.74 85.32 86.49 87.39 88.10 88.67 89.14 89.52 89.84 90.11 90.34 90.53 90.70 90.85
+psp    = 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+r_prec = 81.32
+param: roberta
+prec   = 96.18 90.43 82.92 75.44 67.37 59.96 53.82 48.72 44.47 40.86 37.79 35.12 32.80 30.76 28.95 27.34 25.89 24.59 23.40 22.33
+recall = 27.51 48.57 62.83 72.76 78.52 81.86 84.14 85.80 87.07 88.05 88.84 89.48 90.01 90.44 90.82 91.13 91.40 91.63 91.84 92.01
+psp    = 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+r_prec = 81.45
+param: xlnet
+prec   = 96.10 90.29 82.80 75.31 67.27 59.87 53.73 48.64 44.39 40.79 37.72 35.06 32.75 30.71 28.91 27.30 25.86 24.56 23.38 22.30
+recall = 27.48 48.48 62.73 72.65 78.42 81.75 84.04 85.70 86.97 87.95 88.73 89.37 89.90 90.35 90.73 91.05 91.32 91.56 91.76 91.94
+psp    = 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+r_prec = 81.28
+==== softmax_average ensemble results ====
+prec   = 96.54 90.89 83.38 75.87 67.76 60.27 54.05 48.88 44.56 40.90 37.78 35.08 32.74 30.68 28.86 27.23 25.77 24.45 23.26 22.17
+recall = 27.63 48.83 63.15 73.13 78.88 82.15 84.35 85.91 87.06 87.94 88.64 89.21 89.67 90.06 90.39 90.67 90.91 91.11 91.29 91.46
+psp    = 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00 0.00
+r_prec = 82.02
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n912
+Job ID: 23968513
+Cluster: uc2
+User/Group: ul_ruw26/ul_student
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 32
+CPU Utilized: 9-05:13:00
+CPU Efficiency: 22.58% of 40-19:39:12 core-walltime
+Job Wall-clock time: 1-06:36:51
+Memory Utilized: 151.23 GB
+Memory Efficiency: 61.94% of 244.14 GB

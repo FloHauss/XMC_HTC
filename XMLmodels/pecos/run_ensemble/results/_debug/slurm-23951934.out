@@ -1,0 +1,443 @@
+------- Ensemble run at 2024-08-15 06:33:29 for amazoncat-13k ----------
+08/15/2024 06:36:58 - INFO - __main__ - Setting random seed 0
+08/15/2024 06:37:01 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/15/2024 06:37:01 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/15/2024 06:37:04 - INFO - __main__ - Loaded 1186239 training sequences
+08/15/2024 06:37:08 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/15/2024 06:37:08 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/15/2024 06:37:08 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+08/15/2024 06:37:16 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+08/15/2024 06:37:16 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/15/2024 06:40:06 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=170.9222331047058 *****
+08/15/2024 06:41:41 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23951934/tmpc9beiizz/X_trn.pt
+08/15/2024 06:41:47 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 06:41:52 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 06:41:52 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 06:42:06 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/15/2024 06:45:55 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 382.3250 | train_loss 3.350765e-01 | lr 2.500000e-05
+08/15/2024 06:49:04 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 356.6714 | train_loss 6.367655e-02 | lr 5.000000e-05
+08/15/2024 06:52:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 360.0657 | train_loss 4.614703e-02 | lr 4.375000e-05
+08/15/2024 06:55:28 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 357.3493 | train_loss 4.060586e-02 | lr 3.750000e-05
+08/15/2024 06:58:40 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 357.0634 | train_loss 3.751541e-02 | lr 3.125000e-05
+08/15/2024 07:01:51 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 357.3673 | train_loss 3.580363e-02 | lr 2.500000e-05
+08/15/2024 07:05:03 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 357.2848 | train_loss 3.414898e-02 | lr 1.875000e-05
+08/15/2024 07:08:14 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 357.3762 | train_loss 3.317262e-02 | lr 1.250000e-05
+08/15/2024 07:11:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 357.2848 | train_loss 3.234728e-02 | lr 6.250000e-06
+08/15/2024 07:14:37 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 357.2790 | train_loss 3.109425e-02 | lr 0.000000e+00
+08/15/2024 07:14:37 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23951934/tmptr7sor0a at global_step 5000 ****
+08/15/2024 07:14:40 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/15/2024 07:14:43 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23951934/tmptr7sor0a
+08/15/2024 07:14:45 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/15/2024 07:14:45 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/15/2024 07:58:24 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/15/2024 07:59:28 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/15/2024 08:02:55 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/15/2024 08:03:37 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.00220866115513
+08/15/2024 08:03:50 - INFO - pecos.xmc.xtransformer.matcher - Downloaded bert-base-uncased model from s3.
+08/15/2024 08:05:32 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23951934/tmpc9beiizz/X_trn.pt
+08/15/2024 08:05:32 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/15/2024 08:30:06 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/15/2024 08:30:06 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 08:30:07 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 08:30:10 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 440
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 08:31:01 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 564, in <module>
+    do_train(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 548, in do_train
+    xtf = XTransformer.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 447, in train
+    res_dict = TransformerMatcher.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1390, in train
+    matcher.fine_tune_encoder(prob, val_prob=val_prob, val_csr_codes=val_csr_codes)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1130, in fine_tune_encoder
+    torch.nn.utils.clip_grad_norm_(
+  File "/opt/bwhpc/common/jupyter/tensorflow/2023-10-10/lib/python3.9/site-packages/torch/nn/utils/clip_grad.py", line 55, in clip_grad_norm_
+    norms.extend(torch._foreach_norm(grads, norm_type))
+NotImplementedError: Could not run 'aten::_foreach_norm.Scalar' with arguments from the 'SparseCUDA' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_foreach_norm.Scalar' is only available for these backends: [CPU, CUDA, BackendSelect, Python, FuncTorchDynamicLayerBackMode, Functionalize, Named, Conjugate, Negative, ZeroTensor, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradHIP, AutogradXLA, AutogradMPS, AutogradIPU, AutogradXPU, AutogradHPU, AutogradVE, AutogradLazy, AutogradMTIA, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, AutogradMeta, AutogradNestedTensor, Tracer, AutocastCPU, AutocastCUDA, FuncTorchBatched, FuncTorchVmapMode, Batched, VmapMode, FuncTorchGradWrapper, PythonTLSSnapshot, FuncTorchDynamicLayerFrontMode, PreDispatch, PythonDispatcher].
+
+CPU: registered at aten/src/ATen/RegisterCPU.cpp:31188 [kernel]
+CUDA: registered at aten/src/ATen/RegisterCUDA.cpp:44143 [kernel]
+BackendSelect: fallthrough registered at ../aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]
+Python: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:153 [backend fallback]
+FuncTorchDynamicLayerBackMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:498 [backend fallback]
+Functionalize: registered at ../aten/src/ATen/FunctionalizeFallbackKernel.cpp:290 [backend fallback]
+Named: registered at ../aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]
+Conjugate: registered at ../aten/src/ATen/ConjugateFallback.cpp:17 [backend fallback]
+Negative: registered at ../aten/src/ATen/native/NegateFallback.cpp:19 [backend fallback]
+ZeroTensor: registered at ../aten/src/ATen/ZeroTensorFallback.cpp:86 [backend fallback]
+ADInplaceOrView: fallthrough registered at ../aten/src/ATen/core/VariableFallbackKernel.cpp:86 [backend fallback]
+AutogradOther: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCUDA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHIP: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXLA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMPS: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradIPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradVE: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradLazy: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMTIA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse1: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse2: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse3: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMeta: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradNestedTensor: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+Tracer: registered at ../torch/csrc/autograd/generated/TraceType_2.cpp:17079 [kernel]
+AutocastCPU: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:382 [backend fallback]
+AutocastCUDA: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:249 [backend fallback]
+FuncTorchBatched: registered at ../aten/src/ATen/functorch/LegacyBatchingRegistrations.cpp:710 [backend fallback]
+FuncTorchVmapMode: fallthrough registered at ../aten/src/ATen/functorch/VmapModeRegistrations.cpp:28 [backend fallback]
+Batched: registered at ../aten/src/ATen/LegacyBatchingRegistrations.cpp:1075 [backend fallback]
+VmapMode: fallthrough registered at ../aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]
+FuncTorchGradWrapper: registered at ../aten/src/ATen/functorch/TensorWrapper.cpp:203 [backend fallback]
+PythonTLSSnapshot: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:161 [backend fallback]
+FuncTorchDynamicLayerFrontMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:494 [backend fallback]
+PreDispatch: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:165 [backend fallback]
+PythonDispatcher: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:157 [backend fallback]
+
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 176, in <module>
+    do_predict(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 145, in do_predict
+    xtf = XTransformer.load(args.model_folder)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 196, in load
+    text_encoder = TransformerMatcher.load(os.path.join(load_dir, "text_encoder"))
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 386, in load
+    raise ValueError(f"text_encoder does not exist at {encoder_dir}")
+ValueError: text_encoder does not exist at models/amazoncat-13k/bert/text_encoder/text_encoder
+08/15/2024 08:35:01 - INFO - __main__ - Setting random seed 0
+08/15/2024 08:35:04 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/15/2024 08:35:04 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/15/2024 08:35:07 - INFO - __main__ - Loaded 1186239 training sequences
+08/15/2024 08:35:10 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/15/2024 08:35:10 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/15/2024 08:35:10 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+Some weights of RobertaForXMC were not initialized from the model checkpoint at roberta-base and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+08/15/2024 08:35:17 - INFO - pecos.xmc.xtransformer.matcher - Downloaded roberta-base model from s3.
+08/15/2024 08:35:17 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/15/2024 08:38:17 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=179.5204894542694 *****
+08/15/2024 08:39:48 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23951934/tmpj8s50pzw/X_trn.pt
+08/15/2024 08:39:52 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 08:39:53 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 08:39:53 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 08:40:03 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/15/2024 08:43:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 372.0633 | train_loss 2.753058e-01 | lr 2.500000e-05
+08/15/2024 08:46:55 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 362.0740 | train_loss 5.535643e-02 | lr 5.000000e-05
+08/15/2024 08:50:10 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 363.1146 | train_loss 4.605877e-02 | lr 4.375000e-05
+08/15/2024 08:53:25 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 363.0194 | train_loss 4.110723e-02 | lr 3.750000e-05
+08/15/2024 08:56:41 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 362.9787 | train_loss 3.934012e-02 | lr 3.125000e-05
+08/15/2024 08:59:56 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 363.0901 | train_loss 3.772013e-02 | lr 2.500000e-05
+08/15/2024 09:03:11 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 363.1022 | train_loss 3.612251e-02 | lr 1.875000e-05
+08/15/2024 09:06:26 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 362.8350 | train_loss 3.450032e-02 | lr 1.250000e-05
+08/15/2024 09:09:42 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 362.8197 | train_loss 3.421464e-02 | lr 6.250000e-06
+08/15/2024 09:12:57 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 362.9393 | train_loss 3.300758e-02 | lr 0.000000e+00
+08/15/2024 09:12:57 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23951934/tmp4gnbtlh_ at global_step 5000 ****
+08/15/2024 09:12:58 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/15/2024 09:13:01 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23951934/tmp4gnbtlh_
+08/15/2024 09:13:01 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/15/2024 09:13:01 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/15/2024 09:56:45 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/15/2024 09:57:11 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/15/2024 10:00:44 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/15/2024 10:01:22 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.00251214131385
+Some weights of RobertaForXMC were not initialized from the model checkpoint at roberta-base and are newly initialized: ['roberta.pooler.dense.weight', 'roberta.pooler.dense.bias']
+You should probably TRAIN this model on a down-stream task to be able to use it for predictions and inference.
+08/15/2024 10:01:32 - INFO - pecos.xmc.xtransformer.matcher - Downloaded roberta-base model from s3.
+08/15/2024 10:03:14 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23951934/tmpj8s50pzw/X_trn.pt
+08/15/2024 10:03:14 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/15/2024 10:25:53 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/15/2024 10:25:54 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 10:25:57 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 10:26:02 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 440
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 10:26:53 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 564, in <module>
+    do_train(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 548, in do_train
+    xtf = XTransformer.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 447, in train
+    res_dict = TransformerMatcher.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1390, in train
+    matcher.fine_tune_encoder(prob, val_prob=val_prob, val_csr_codes=val_csr_codes)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1130, in fine_tune_encoder
+    torch.nn.utils.clip_grad_norm_(
+  File "/opt/bwhpc/common/jupyter/tensorflow/2023-10-10/lib/python3.9/site-packages/torch/nn/utils/clip_grad.py", line 55, in clip_grad_norm_
+    norms.extend(torch._foreach_norm(grads, norm_type))
+NotImplementedError: Could not run 'aten::_foreach_norm.Scalar' with arguments from the 'SparseCUDA' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_foreach_norm.Scalar' is only available for these backends: [CPU, CUDA, BackendSelect, Python, FuncTorchDynamicLayerBackMode, Functionalize, Named, Conjugate, Negative, ZeroTensor, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradHIP, AutogradXLA, AutogradMPS, AutogradIPU, AutogradXPU, AutogradHPU, AutogradVE, AutogradLazy, AutogradMTIA, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, AutogradMeta, AutogradNestedTensor, Tracer, AutocastCPU, AutocastCUDA, FuncTorchBatched, FuncTorchVmapMode, Batched, VmapMode, FuncTorchGradWrapper, PythonTLSSnapshot, FuncTorchDynamicLayerFrontMode, PreDispatch, PythonDispatcher].
+
+CPU: registered at aten/src/ATen/RegisterCPU.cpp:31188 [kernel]
+CUDA: registered at aten/src/ATen/RegisterCUDA.cpp:44143 [kernel]
+BackendSelect: fallthrough registered at ../aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]
+Python: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:153 [backend fallback]
+FuncTorchDynamicLayerBackMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:498 [backend fallback]
+Functionalize: registered at ../aten/src/ATen/FunctionalizeFallbackKernel.cpp:290 [backend fallback]
+Named: registered at ../aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]
+Conjugate: registered at ../aten/src/ATen/ConjugateFallback.cpp:17 [backend fallback]
+Negative: registered at ../aten/src/ATen/native/NegateFallback.cpp:19 [backend fallback]
+ZeroTensor: registered at ../aten/src/ATen/ZeroTensorFallback.cpp:86 [backend fallback]
+ADInplaceOrView: fallthrough registered at ../aten/src/ATen/core/VariableFallbackKernel.cpp:86 [backend fallback]
+AutogradOther: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCUDA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHIP: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXLA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMPS: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradIPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradVE: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradLazy: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMTIA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse1: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse2: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse3: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMeta: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradNestedTensor: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+Tracer: registered at ../torch/csrc/autograd/generated/TraceType_2.cpp:17079 [kernel]
+AutocastCPU: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:382 [backend fallback]
+AutocastCUDA: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:249 [backend fallback]
+FuncTorchBatched: registered at ../aten/src/ATen/functorch/LegacyBatchingRegistrations.cpp:710 [backend fallback]
+FuncTorchVmapMode: fallthrough registered at ../aten/src/ATen/functorch/VmapModeRegistrations.cpp:28 [backend fallback]
+Batched: registered at ../aten/src/ATen/LegacyBatchingRegistrations.cpp:1075 [backend fallback]
+VmapMode: fallthrough registered at ../aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]
+FuncTorchGradWrapper: registered at ../aten/src/ATen/functorch/TensorWrapper.cpp:203 [backend fallback]
+PythonTLSSnapshot: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:161 [backend fallback]
+FuncTorchDynamicLayerFrontMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:494 [backend fallback]
+PreDispatch: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:165 [backend fallback]
+PythonDispatcher: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:157 [backend fallback]
+
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 176, in <module>
+    do_predict(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 145, in do_predict
+    xtf = XTransformer.load(args.model_folder)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 196, in load
+    text_encoder = TransformerMatcher.load(os.path.join(load_dir, "text_encoder"))
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 386, in load
+    raise ValueError(f"text_encoder does not exist at {encoder_dir}")
+ValueError: text_encoder does not exist at models/amazoncat-13k/roberta/text_encoder/text_encoder
+08/15/2024 10:31:31 - INFO - __main__ - Setting random seed 0
+08/15/2024 10:31:35 - INFO - __main__ - Loaded training feature matrix with shape=(1186239, 203882)
+08/15/2024 10:31:36 - INFO - __main__ - Loaded training label matrix with shape=(1186239, 13330)
+08/15/2024 10:31:39 - INFO - __main__ - Loaded 1186239 training sequences
+08/15/2024 10:31:43 - INFO - pecos.xmc.xtransformer.model - Hierarchical label tree: [128, 1024, 13330]
+08/15/2024 10:31:43 - INFO - pecos.xmc.xtransformer.model - Fine-tune Transformers with nr_labels=[128, 1024, 13330]
+08/15/2024 10:31:43 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 0, nr_labels=128, avr_M_nnz=128
+08/15/2024 10:31:46 - INFO - pecos.xmc.xtransformer.matcher - Downloaded xlnet-base-cased model from s3.
+08/15/2024 10:31:46 - INFO - pecos.xmc.xtransformer.matcher - ***** Encoding data len=1186239 truncation=256*****
+08/15/2024 10:35:04 - INFO - pecos.xmc.xtransformer.matcher - ***** Finished with time cost=197.84356021881104 *****
+08/15/2024 10:36:36 - INFO - pecos.xmc.xtransformer.matcher - trn tensors saved to /scratch/slurm_tmpdir/job_23951934/tmpvu_ofhcq/X_trn.pt
+08/15/2024 10:36:40 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 10:36:41 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 10:36:41 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 128
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 10:36:50 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 5000
+08/15/2024 10:41:52 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][   500/  5000] |  499/18535 batches | ms/batch 538.1429 | train_loss 2.297450e-01 | lr 2.500000e-05
+08/15/2024 10:46:29 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1000/  5000] |  999/18535 batches | ms/batch 522.4360 | train_loss 5.809291e-02 | lr 5.000000e-05
+08/15/2024 10:51:07 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  1500/  5000] | 1499/18535 batches | ms/batch 522.7765 | train_loss 4.783437e-02 | lr 4.375000e-05
+08/15/2024 10:55:45 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2000/  5000] | 1999/18535 batches | ms/batch 522.1300 | train_loss 4.348446e-02 | lr 3.750000e-05
+08/15/2024 11:00:23 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  2500/  5000] | 2499/18535 batches | ms/batch 522.1342 | train_loss 4.042499e-02 | lr 3.125000e-05
+08/15/2024 11:05:00 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3000/  5000] | 2999/18535 batches | ms/batch 521.6812 | train_loss 3.891863e-02 | lr 2.500000e-05
+08/15/2024 11:09:40 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  3500/  5000] | 3499/18535 batches | ms/batch 522.8726 | train_loss 3.723127e-02 | lr 1.875000e-05
+08/15/2024 11:14:17 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4000/  5000] | 3999/18535 batches | ms/batch 522.0895 | train_loss 3.610203e-02 | lr 1.250000e-05
+08/15/2024 11:18:55 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  4500/  5000] | 4499/18535 batches | ms/batch 521.8733 | train_loss 3.509767e-02 | lr 6.250000e-06
+08/15/2024 11:23:33 - INFO - pecos.xmc.xtransformer.matcher - | [   1/   1][  5000/  5000] | 4999/18535 batches | ms/batch 521.9654 | train_loss 3.394426e-02 | lr 0.000000e+00
+08/15/2024 11:23:33 - INFO - pecos.xmc.xtransformer.matcher - | **** saving model (avg_prec=0) to /scratch/slurm_tmpdir/job_23951934/tmpmn_9ngq_ at global_step 5000 ****
+08/15/2024 11:23:34 - INFO - pecos.xmc.xtransformer.matcher - -----------------------------------------------------------------------------------------
+08/15/2024 11:23:37 - INFO - pecos.xmc.xtransformer.matcher - Reload the best checkpoint from /scratch/slurm_tmpdir/job_23951934/tmpmn_9ngq_
+08/15/2024 11:23:38 - INFO - pecos.xmc.xtransformer.matcher - Predict on input text tensors(torch.Size([1186239, 256])) in OVA mode
+08/15/2024 11:23:38 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+08/15/2024 12:31:28 - INFO - pecos.xmc.xtransformer.matcher - Concatenating instance embeddings with features...
+08/15/2024 12:31:59 - INFO - pecos.xmc.xtransformer.matcher - Start training concat_model of transformer matcher...
+08/15/2024 12:35:23 - INFO - pecos.xmc.xtransformer.matcher - Using concat-only for transformer/concat ensemble of pred_csr
+08/15/2024 12:36:06 - INFO - pecos.xmc.xtransformer.model - Fine-tuning XR-Transformer with tfn+man at level 1, nr_labels=1024, avr_M_nnz=50.00240339425697
+08/15/2024 12:36:15 - INFO - pecos.xmc.xtransformer.matcher - Downloaded xlnet-base-cased model from s3.
+08/15/2024 12:37:54 - INFO - pecos.xmc.xtransformer.matcher - trn tensors loaded_from /scratch/slurm_tmpdir/job_23951934/tmpvu_ofhcq/X_trn.pt
+08/15/2024 12:37:54 - INFO - pecos.xmc.xtransformer.matcher - Continue training form given text_encoder!
+08/15/2024 13:01:43 - INFO - pecos.xmc.xtransformer.matcher - Initialized transformer text_model with xlinear!
+08/15/2024 13:01:43 - INFO - pecos.utils.torch_util - Setting device to cuda, number of active GPUs: 2
+08/15/2024 13:01:50 - INFO - pecos.xmc.xtransformer.matcher - Start fine-tuning transformer matcher...
+08/15/2024 13:01:52 - INFO - pecos.xmc.xtransformer.module - Constructed XMCTextTensorizer, tokenized=True, len=1186239
+/home/ul/ul_student/ul_ruw26/.local/lib/python3.9/site-packages/transformers/optimization.py:429: FutureWarning: This implementation of AdamW is deprecated and will be removed in a future version. Use the PyTorch implementation torch.optim.AdamW instead, or set `no_deprecation_warning=True` to disable this warning
+  warnings.warn(
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher - ***** Running training *****
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Num examples = 1186239
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Num labels = 1024
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Num active labels per instance = 432
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Num Epochs = 1
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Learning Rate Schedule = linear
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Batch size = 64
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Gradient Accumulation steps = 1
+08/15/2024 13:02:46 - INFO - pecos.xmc.xtransformer.matcher -   Total optimization steps = 10000
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 564, in <module>
+    do_train(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/train.py", line 548, in do_train
+    xtf = XTransformer.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 447, in train
+    res_dict = TransformerMatcher.train(
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1390, in train
+    matcher.fine_tune_encoder(prob, val_prob=val_prob, val_csr_codes=val_csr_codes)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 1130, in fine_tune_encoder
+    torch.nn.utils.clip_grad_norm_(
+  File "/opt/bwhpc/common/jupyter/tensorflow/2023-10-10/lib/python3.9/site-packages/torch/nn/utils/clip_grad.py", line 55, in clip_grad_norm_
+    norms.extend(torch._foreach_norm(grads, norm_type))
+NotImplementedError: Could not run 'aten::_foreach_norm.Scalar' with arguments from the 'SparseCUDA' backend. This could be because the operator doesn't exist for this backend, or was omitted during the selective/custom build process (if using custom build). If you are a Facebook employee using PyTorch on mobile, please visit https://fburl.com/ptmfixes for possible resolutions. 'aten::_foreach_norm.Scalar' is only available for these backends: [CPU, CUDA, BackendSelect, Python, FuncTorchDynamicLayerBackMode, Functionalize, Named, Conjugate, Negative, ZeroTensor, ADInplaceOrView, AutogradOther, AutogradCPU, AutogradCUDA, AutogradHIP, AutogradXLA, AutogradMPS, AutogradIPU, AutogradXPU, AutogradHPU, AutogradVE, AutogradLazy, AutogradMTIA, AutogradPrivateUse1, AutogradPrivateUse2, AutogradPrivateUse3, AutogradMeta, AutogradNestedTensor, Tracer, AutocastCPU, AutocastCUDA, FuncTorchBatched, FuncTorchVmapMode, Batched, VmapMode, FuncTorchGradWrapper, PythonTLSSnapshot, FuncTorchDynamicLayerFrontMode, PreDispatch, PythonDispatcher].
+
+CPU: registered at aten/src/ATen/RegisterCPU.cpp:31188 [kernel]
+CUDA: registered at aten/src/ATen/RegisterCUDA.cpp:44143 [kernel]
+BackendSelect: fallthrough registered at ../aten/src/ATen/core/BackendSelectFallbackKernel.cpp:3 [backend fallback]
+Python: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:153 [backend fallback]
+FuncTorchDynamicLayerBackMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:498 [backend fallback]
+Functionalize: registered at ../aten/src/ATen/FunctionalizeFallbackKernel.cpp:290 [backend fallback]
+Named: registered at ../aten/src/ATen/core/NamedRegistrations.cpp:7 [backend fallback]
+Conjugate: registered at ../aten/src/ATen/ConjugateFallback.cpp:17 [backend fallback]
+Negative: registered at ../aten/src/ATen/native/NegateFallback.cpp:19 [backend fallback]
+ZeroTensor: registered at ../aten/src/ATen/ZeroTensorFallback.cpp:86 [backend fallback]
+ADInplaceOrView: fallthrough registered at ../aten/src/ATen/core/VariableFallbackKernel.cpp:86 [backend fallback]
+AutogradOther: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradCUDA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHIP: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXLA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMPS: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradIPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradXPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradHPU: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradVE: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradLazy: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMTIA: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse1: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse2: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradPrivateUse3: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradMeta: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+AutogradNestedTensor: registered at ../torch/csrc/autograd/generated/VariableType_2.cpp:18610 [autograd kernel]
+Tracer: registered at ../torch/csrc/autograd/generated/TraceType_2.cpp:17079 [kernel]
+AutocastCPU: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:382 [backend fallback]
+AutocastCUDA: fallthrough registered at ../aten/src/ATen/autocast_mode.cpp:249 [backend fallback]
+FuncTorchBatched: registered at ../aten/src/ATen/functorch/LegacyBatchingRegistrations.cpp:710 [backend fallback]
+FuncTorchVmapMode: fallthrough registered at ../aten/src/ATen/functorch/VmapModeRegistrations.cpp:28 [backend fallback]
+Batched: registered at ../aten/src/ATen/LegacyBatchingRegistrations.cpp:1075 [backend fallback]
+VmapMode: fallthrough registered at ../aten/src/ATen/VmapModeRegistrations.cpp:33 [backend fallback]
+FuncTorchGradWrapper: registered at ../aten/src/ATen/functorch/TensorWrapper.cpp:203 [backend fallback]
+PythonTLSSnapshot: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:161 [backend fallback]
+FuncTorchDynamicLayerFrontMode: registered at ../aten/src/ATen/functorch/DynamicLayer.cpp:494 [backend fallback]
+PreDispatch: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:165 [backend fallback]
+PythonDispatcher: registered at ../aten/src/ATen/core/PythonFallbackKernel.cpp:157 [backend fallback]
+
+Traceback (most recent call last):
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 197, in _run_module_as_main
+    return _run_code(code, main_globals, None,
+  File "/home/ul/ul_student/ul_ruw26/miniconda3/envs/xr_transformer_env/lib/python3.9/runpy.py", line 87, in _run_code
+    exec(code, run_globals)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 176, in <module>
+    do_predict(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/predict.py", line 145, in do_predict
+    xtf = XTransformer.load(args.model_folder)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/model.py", line 196, in load
+    text_encoder = TransformerMatcher.load(os.path.join(load_dir, "text_encoder"))
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/xmc/xtransformer/matcher.py", line 386, in load
+    raise ValueError(f"text_encoder does not exist at {encoder_dir}")
+ValueError: text_encoder does not exist at models/amazoncat-13k/xlnet/text_encoder/text_encoder
+Traceback (most recent call last):
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/run_ensemble/./ensemble_evaluate.py", line 73, in <module>
+    do_evaluation(args)
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/run_ensemble/./ensemble_evaluate.py", line 59, in do_evaluation
+    Y_pred = [sorted_csr(load_matrix(pp).tocsr()) for pp in args.pred_path]
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/run_ensemble/./ensemble_evaluate.py", line 59, in <listcomp>
+    Y_pred = [sorted_csr(load_matrix(pp).tocsr()) for pp in args.pred_path]
+  File "/pfs/data5/home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/pecos/utils/smat_util.py", line 117, in load_matrix
+    mat = np.load(src)
+  File "/opt/bwhpc/common/jupyter/tensorflow/2023-10-10/lib/python3.9/site-packages/numpy/lib/npyio.py", line 427, in load
+    fid = stack.enter_context(open(os_fspath(file), "rb"))
+FileNotFoundError: [Errno 2] No such file or directory: 'models/amazoncat-13k/bert/Pt.npz'
+
+============================= JOB FEEDBACK =============================
+
+NodeName=uc2n904
+Job ID: 23951934
+Cluster: uc2
+User/Group: ul_ruw26/ul_student
+State: COMPLETED (exit code 0)
+Nodes: 1
+Cores per node: 32
+CPU Utilized: 1-23:40:47
+CPU Efficiency: 22.76% of 8-17:30:08 core-walltime
+Job Wall-clock time: 06:32:49
+Memory Utilized: 211.16 GB
+Memory Efficiency: 86.49% of 244.14 GB
