@@ -8,7 +8,8 @@
 
 # script params:
 dataset="wiki10-31k"
-ens_models="bert roberta xlnet"
+# ens_models="bert roberta xlnet"
+ens_models="bert"
 
 
 # ---- no changes needed below ----
@@ -23,7 +24,7 @@ rm -rf trained-models/$dataset
 mkdir -p ./predictions/$dataset/$UUID
 mkdir -p ./results/$dataset
 
-echo "dataset is §dataset"
+echo "dataset is $dataset"
 echo "UUID is $UUID"
 
 echo -e "*** Run at $NOW for ensemble of $ens_models ***\n" >>./results/$dataset/$UUID

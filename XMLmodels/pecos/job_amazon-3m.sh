@@ -1,14 +1,47 @@
 #!/bin/bash
-#SBATCH --partition=gpu_4
-#SBATCH --time=24:00:00
-#SBATCH --mem=80000
+#SBATCH --partition=gpu_4_a100
+#SBATCH --time=48:00:00
+#SBATCH --mem=510000
 #SBATCH --job-name=amazon-3m
-#SBATCH --gres=gpu:4
+#SBATCH --gres=gpu:2
 #SBATCH --dependency=singleton
+
+# ---- script params ----
+
+dataset="amazon-3m"
+# ens_models="bert roberta xlnet"
+# ens_models="bert1 bert2 bert3"
+ens_models="bert1"
+
+
+# ---- no changes needed below ----
+
+NOW=$(date "+%Y-%m-%d %H:%M:%S")
+UUID=$(date "+%Y-%m-%d-%H-%M-%S")
 
 source /home/ul/ul_student/ul_ruw26/.bashrc
 conda activate xr_transformer_env
 
-python3 -m pecos.xmc.xtransformer.train -t ./xmc-base/amazon-3m/X.trn.txt -x ./xmc-base/amazon-3m/tfidf-attnxml/X.trn.npz -y ./xmc-base/amazon-3m/Y.trn.npz -m ./trained-models/xr_model_amazon-3m
+rm -rf trained-models/$dataset
+mkdir -p ./predictions/$dataset/$UUID
+mkdir -p ./results/$dataset
 
-python3 -m pecos.xmc.xtransformer.predict -t ./xmc-base/amazon-3m/X.tst.txt -x ./xmc-base/amazon-3m/tfidf-attnxml/X.tst.npz -m ./trained-models/xr_model_amazon-3m -o ./predictions/xr_prediction_amazon-3m
+echo "dataset is $dataset"
+echo "UUID is $UUID"
+
+echo -e "*** Run at $NOW for ensemble of $ens_models ***\n" >>./results/$dataset/$UUID
+
+for model in $ens_models; do
+    # --- train ----
+    echo "--- start training of $model ---"
+    python3 -m pecos.xmc.xtransformer.train -t ./xmc-base/$dataset/X.trn.txt -x ./xmc-base/$dataset/tfidf-attnxml/X.trn.npz -y ./xmc-base/$dataset/Y.trn.npz -m ./trained-models/$dataset/$model --params-path ./params/$dataset/$model/params.json
+
+    # --- predict ---
+    echo "--- start prediction of $model ---"
+    python3 -m pecos.xmc.xtransformer.predict -t ./xmc-base/$dataset/X.tst.txt -x ./xmc-base/$dataset/tfidf-attnxml/X.tst.npz -m ./trained-models/$dataset/$model -o ./predictions/$dataset/$UUID/$model
+
+    # --- evaluate ---
+    echo "--- start evaluation of $model ---"
+    echo -e "\n*** results from $model ***\n" >>./results/$dataset/$UUID
+    python3 -m pecos.xmc.xlinear.evaluate -y ./xmc-base/$dataset/Y.tst.npz -p ./predictions/$dataset/$UUID/$model -k 10 >>./results/$dataset/$UUID
+done

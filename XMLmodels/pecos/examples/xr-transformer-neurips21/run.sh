@@ -1,3 +1,4 @@
+#!/bin/bash
 data=$1
 data_dir="./xmc-base/${data}/"
 
@@ -35,9 +36,10 @@ done
 
 Y_tst=${data_dir}/Y.tst.npz # test label matrix
 
-python ensemble_evaluate.py \
+python3 ensemble_evaluate.py \
 	-y ${Y_tst} \
 	-p ${Preds} \
 	--tags ${Tags} \
 	--ens-method ${ens_method} \
+	--dataset ${data_dir}
     |& tee models/${data}/ensemble.log
