@@ -923,7 +923,7 @@ class CsrEnsembler(object):
         return ret
 
     @staticmethod
-    def print_ens(Ytrue, pred_set, param_set, ens_method="rank_average", topk=10):
+    def print_ens(Ytrue, pred_set, param_set, prop_scores=None, ens_method="rank_average", topk=20):
         """Print metrics before and after ensemble
 
         Args:
@@ -932,11 +932,14 @@ class CsrEnsembler(object):
             param_set (iterable): parameters or model names associated with pred_set
             ens_method (list or str): list of ensemble methods or single str. Default 'rank_average'
             topk (int, optional): only generate topk prediction. Default 10
+
+            @psp
+            prop_scores (list): propensity score for each label
         """
 
         for param, pred in zip(param_set, pred_set):
             print("param: {}".format(param))
-            print(Metrics.generate(Ytrue, pred, topk=topk))
+            print(Metrics.generate(Ytrue, pred, prop_scores, topk=topk))
 
         if not isinstance(ens_method, list):
             ens_method = [ens_method]
@@ -944,10 +947,10 @@ class CsrEnsembler(object):
             ens = getattr(CsrEnsembler, ens_name)
             cur_pred = ens(*pred_set)
             print(f"==== {ens_name} ensemble results ====")
-            print(Metrics.generate(Ytrue, cur_pred, topk=topk))
+            print(Metrics.generate(Ytrue, cur_pred, prop_scores, topk=topk))
 
 
-class Metrics(collections.namedtuple("Metrics", ["prec", "recall"])):
+class Metrics(collections.namedtuple("Metrics", ["prec", "recall", "psp", "r_prec"])):
     """The metrics (precision, recall) for multi-label classification problems."""
 
     __slots__ = ()
@@ -956,6 +959,8 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall"])):
         """Format printing"""
 
         def fmt(key):
+            if key == "r_prec":
+                return "{:4.2f}".format(100 * getattr(self, key))
             return " ".join("{:4.2f}".format(100 * v) for v in getattr(self, key)[:])
 
         return "\n".join("{:7}= {}".format(key, fmt(key)) for key in self._fields)
@@ -963,10 +968,10 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall"])):
     @classmethod
     def default(cls):
         """Default dummy metric"""
-        return cls(prec=[], recall=[])
+        return cls(prec=[], recall=[], psp=[], r_prec=0)
 
     @classmethod
-    def generate(cls, tY, pY, topk=10):
+    def generate(cls, tY, pY, prop_scores=None, topk=10):
         """Compute the metrics with given prediction and ground truth.
 
         Args:
@@ -974,24 +979,67 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall"])):
             pY (csr_matrix): predicted logits
             topk (int, optional): only generate topk prediction. Default 10
 
+            @psp
+            prop_scores (list): propensity score for each label
+
         Returns:
             Metrics
         """
         assert isinstance(tY, smat.csr_matrix), type(tY)
         assert isinstance(pY, smat.csr_matrix), type(pY)
         assert tY.shape == pY.shape, "tY.shape = {}, pY.shape = {}".format(tY.shape, pY.shape)
-        pY = sorted_csr(pY)
+        pY = sorted_csr(pY) # sort predictions for each row/instance in descending order
         total_matched = np.zeros(topk, dtype=np.uint64)
+        total_matched_psp = np.zeros(topk, dtype=np.single)
+        total_r_prec = 0
         recall = np.zeros(topk, dtype=np.float64)
-        for i in range(tY.shape[0]):
-            truth = tY.indices[tY.indptr[i] : tY.indptr[i + 1]]
-            matched = np.isin(pY.indices[pY.indptr[i] : pY.indptr[i + 1]][:topk], truth)
-            cum_matched = np.cumsum(matched, dtype=np.uint64)
-            total_matched[: len(cum_matched)] += cum_matched
-            recall[: len(cum_matched)] += cum_matched / max(len(truth), 1)
-            if len(cum_matched) != 0:
+        for i in range(tY.shape[0]): # Iterate Over Rows: The loop iterates over each row in the true labels matrix tY.
+            truth = tY.indices[tY.indptr[i] : tY.indptr[i + 1]] #Extract True Labels: truth contains the indices of the true labels for the current row.
+            
+            r = len(truth) # R-Precision: safe the no. of labels in the ground truth for the current row/instance
+            
+            # list of length k containing prop_scores for first k predicted labels
+            if not (prop_scores is None):
+                target_psp = prop_scores[(pY.indices[pY.indptr[i] : pY.indptr[i + 1]][:topk])]
+            
+            matched = np.isin(pY.indices[pY.indptr[i] : pY.indptr[i + 1]][:topk], truth) #Find Matches: matched is a boolean array indicating whether the top k predicted labels (pY) are in the true labels (truth).
+
+            matched_r = np.isin(pY.indices[pY.indptr[i] : pY.indptr[i + 1]][:r], truth) #Find matches up to r similar to "matched" --> boolean array
+
+
+            # mask psp scores according to matched labels from ground truth
+            if not (prop_scores is None):
+                matched_psp = [(1/b) for a, b in zip(matched, target_psp) if a]
+
+            cum_matched = np.cumsum(matched, dtype=np.uint64) #cum_matched calculates the cumulative sum of the matches.
+
+            # calculate cumulative sum as list of relevant psp scores
+            if not (prop_scores is None):
+                cum_matched_psp = np.cumsum(matched_psp)
+
+            cum_matched_r = np.cumsum(matched_r, dtype=np.float64) # R-Precision: similar to cum_matched. Each entry shoes how many matches have been made up to this point (label)
+
+            total_matched[: len(cum_matched)] += cum_matched #total_matched is updated with the cumulative matches.
+
+            total_r_prec += cum_matched_r[-1]/r
+
+            # equivalent to above
+            if not (prop_scores is None):
+                total_matched_psp[: len(cum_matched_psp)] += cum_matched_psp
+        
+            recall[: len(cum_matched)] += cum_matched / max(len(truth), 1) #Update Recall: recall is updated with the cumulative recall.
+            if len(cum_matched) != 0: # Handle Remaining Positions: If there are cumulative matches, update the remaining positions in total_matched and recall.
                 total_matched[len(cum_matched) :] += cum_matched[-1]
                 recall[len(cum_matched) :] += cum_matched[-1] / max(len(truth), 1)
-        prec = total_matched / tY.shape[0] / np.arange(1, topk + 1)
+            if not (prop_scores is None):
+                if len(cum_matched_psp) != 0:
+                    total_matched_psp[len(cum_matched_psp) :] += cum_matched_psp[-1]
+            # if len(cum_matched_r) != 0:
+            #     total_r_prec += cum_matched_r[-1]/r
+        prec = total_matched / tY.shape[0] / np.arange(1, topk + 1) # Precision: prec is calculated by dividing total_matched by the number of rows and the range [1, topk + 1].
         recall = recall / tY.shape[0]
-        return cls(prec=prec, recall=recall)
+        psp = total_matched_psp
+        if not (prop_scores is None):
+                psp = total_matched_psp / tY.shape[0] / np.arange(1, topk + 1)
+        r_prec = total_r_prec / tY.shape[0]
+        return cls(prec=prec, recall=recall, psp=psp, r_prec=r_prec)

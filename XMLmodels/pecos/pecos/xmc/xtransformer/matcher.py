@@ -1111,6 +1111,14 @@ class TransformerMatcher(pecos.BaseClass):
                 logging_elapsed += time.time() - start_time
                 total_train_time += time.time() - start_time
                 if (batch_cnt + 1) % train_params.gradient_accumulation_steps == 0:
+                    # parameters = [p for p in self.text_encoder.parameters() if p.grad is not None]
+                    # for p in parameters:
+                    #     if p.grad.is_sparse:
+                    #         p.grad = p.grad.to_dense()
+                    # torch.nn.utils.clip_grad_norm_(
+                    #      parameters, train_params.max_grad_norm
+                    #  )
+
                     torch.nn.utils.clip_grad_norm_(
                         self.text_encoder.parameters(), train_params.max_grad_norm
                     )
