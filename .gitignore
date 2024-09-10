@@ -1,1 +1,13 @@
-**/xmc-base
+XMLmodels/pecos/xmc-base
+XMLmodels/pecos/htc-base
+XMLmodels/pecos/pytorch/
+XMLmodels/pecos/run_ensemble/models
+XMLmodels/pecos/predictions
+XMLmodels/pecos/trained-models
+XMLmodels/pecos/.eggs
+XMLmodels/pecos/libpecos.egg-info
+XMLmodels/pecos**/__pycache__/
+XMLmodels/pecos/_archive
+XMLmodels/pecos/build
+XMLmodels/pecospecos/core/libpecos_float32.cpython-39-x86_64-linux-gnu.so
+XMLmodels/pecospecos/_version.py
