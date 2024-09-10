@@ -1,9 +1,10 @@
 #!/bin/bash
 # data="wiki10-31k"
 # data="amazoncat-13k"
-data="amazon-670k"
+path="htc-base"
+data="wos"
 
-data_dir="./../xmc-base/${data}/"
+data_dir="./../${path}/${data}/"
 
 if [ ${data} == "eurlex-4k" ]; then
 	models=(bert roberta xlnet)
@@ -23,6 +24,15 @@ elif [ ${data} == "amazon-670k" ]; then
 elif [ ${data} == "amazon-3m" ]; then
 	models=(bert1 bert2 bert3)
 	ens_method=rank_average
+elif [ ${data} == "nyt" ] || [ ${data} == "nyt_leaves" ]; then
+	models=(bert roberta xlnet)
+	ens_method=softmax_average
+elif [ ${data} == "wos" ] || [ ${data} == "wos_leaves" ]; then
+	models=(bert roberta xlnet)
+	ens_method=softmax_average
+elif [ ${data} == "rcv1" ] || [ ${data} == "rcv1_leaves" ]; then
+	models=(bert roberta xlnet)
+	ens_method=softmax_average
 else
 	echo Unknown dataset $1!
 	exit
