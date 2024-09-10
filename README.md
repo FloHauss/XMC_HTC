@@ -13,6 +13,29 @@ The NYT, RCV1-V2 and [WoS](https://data.mendeley.com/datasets/9rw3vkcfy4/6) data
 
 Alternatively, for custom datasets, these train.txt files can be created manually by untilising the scripts in the CascadeXML/preprocessing folder. To do this, donwload the folder, place the train_raw_texts.txt file and Y.trn.txt files for your dataset in the same folder and then run the xml_prepocessor.py file. This should create 2 more files named text_preprocessed.txt and vocab.txt. When these are created, run the vectorizer.py file. This should then create the train.txt file for your dataset. Note that the vectorizer.py script may take several hours to terminate. 
 ## XR-Transformer
+XR-Transformer requieres six files to run: \
+X.trn.txt - This file contains all the texts used for training. Texts are seperated by a newline character.\
+X.trn.npz - This file is a CSR npz or Row-majored npy file of the training feature matrix with shape N x d (N: number of training intances, d: number of feauture dimensions).\
+Y.trn.npz - This file is a CSR npz files of the training label matrix containing the ground truth label assignment for the training. Shape: N x L (L: number of labels in label space).\
+X.tst.txt - This file contains all the texts used for testing/prediction. Texts are seperated by a newline character.\
+X.tst.npz - This file is a CSR npz or Row-majored npy file of the testing feature matrix with shape N x d.
+Y.tst.npz - This file is a CSR npz files of the testing label matrix containing the ground truth label assignment for the test data. Shape N x L.\
+
+The datasets from the XML world are provided by the authors of XR-Transformer and can be downloaded [here](https://ia902308.us.archive.org/21/items/pecos-dataset/xmc-base/).
+
+**HTC dataset TODO**
+
+In order to use the scripts we provided, the datasets need to be stored in XMLmodels/pecos like this:
+```
+|-- xmc-base
+|   |-- tfidf-attnxml
+|   |   |-- X.trn.npz
+|   |   |-- X.tst.npz
+|   |-- X.trn.txt
+|   |-- X.tst.txt
+|   |-- Y.trn.txt
+|   |-- Y.tst.txt
+````
 
 # HTC models
 ## HBGL 
