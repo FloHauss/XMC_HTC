@@ -23,7 +23,7 @@ Y.tst.npz - This file is a CSR npz files of the testing label matrix containing 
 
 The datasets from the XML world are provided by the authors of XR-Transformer and can be downloaded [here](https://ia902308.us.archive.org/21/items/pecos-dataset/xmc-base/).
 
-**HTC dataset TODO**
+The HTC Datasets (NYT, RCV1-V2 and WoS) can be preprocessed using the provided XR-Transformer preprocessing script. The scripts input are the following files: "train_raw_texts.txt" and "test_raw_texts.txt" containing the raw text train and test data, as well as "train_labels.txt" and "test_labels.txt" containing the train and test labels. All of these are the same files that CascadeXML needs for its input ("train_labels.txt" = "Y.trn.txt", "test_labels.txt" = "Y.tst.txt"). The .npz files needed for the execution of XR-Transfomrer are then output by the script and just need to be renamed. 
 
 In order to use the scripts we provided, the datasets need to be stored in XMLmodels/pecos like this:
 ```
