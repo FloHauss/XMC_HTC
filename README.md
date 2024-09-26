@@ -53,9 +53,12 @@ Of these, even with modifications within the HBGL source code to accomodate for 
 - TODO: Ordner und Files einbinden und nochmal beschreiben
 
 ## HGCLR
-HGCLR requires  input files to run:\
+HGCLR requires 2 input files to run:\
 tok.txt: This file contains tokenized text data. Each number in the file represents a token ID corresponding to words or subwords from the original dataset.\
 Y.txt: This file contains all hierarchical labels. Each line contains the label vector for a single instance. 
+
+It is necessary that the files for each dataset are located in their respective directories. For example, files for the WoS dataset should be stored in the wos folder, and files for the RCV1 dataset should be stored in the rcv1 folder. This ensures that the scripts can correctly access the required data.\
+The optimal training parameters for each dataset can be found in the [here](https://github.com/wzh9969/contrastive-htc). 
 
 
 
