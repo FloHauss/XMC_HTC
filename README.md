@@ -55,7 +55,10 @@ Of these, even with modifications within the HBGL source code to accomodate for 
 ## HGCLR
 HGCLR requires  input files to run:\
 tok.txt: This file contains tokenized text data. Each number in the file represents a token ID corresponding to words or subwords from the original dataset.\
-Y.txt: This file contains all hierarchical labels. Each line contains the label vector for a single instance. \
+Y.txt: This file contains all hierarchical labels. Each line contains the label vector for a single instance. 
+
+
+
 
 
 
