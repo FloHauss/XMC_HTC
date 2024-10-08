@@ -1,11 +1,11 @@
 # XML models
 ## CascadeXML
-CascadeXML requires five input files to run: \
-train_raw_texts.txt - This file contains all the texts used for training. Texts are seperated by a newline character.\
-test_raw_texts.txt - This file contains all the texts used for testing. Texts are seperated by a newline character.\
-Y.trn.txt - This file contains all the labels used for training. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the train_raw_texts file.\
-Y.tst.txt - This file contains all the labels used for testing. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the test_raw_texts file.\
-train.txt - An additional input file used for clustering. For each data point, it contains the numbers of all relevant labels, followed by TFIDF feature representations of the input text.
+CascadeXML requires five input files to run:
+- **train_raw_texts.txt** - This file contains all the texts used for training. Texts are seperated by a newline character.
+- **test_raw_texts.txt** - This file contains all the texts used for testing. Texts are seperated by a newline character.
+- **Y.trn.txt** - This file contains all the labels used for training. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the train_raw_texts file.
+- **Y.tst.txt** - This file contains all the labels used for testing. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the test_raw_texts file.
+- **train.txt** - An additional input file used for clustering. For each data point, it contains the numbers of all relevant labels, followed by TFIDF feature representations of the input text.
 
 For datasets from the world of XML, the first four files can be downloaded from [here](https://github.com/yourh/AttentionXML). The train.txt file can be downloaded from [The Extreme Classification Repository](http://manikvarma.org/downloads/XC/XMLRepository.html), by selecting the "BOW Features" mirror for the desired dataset. 
 
@@ -24,9 +24,9 @@ XR-Transformer requires six input files:
 
 The datasets from the XML world are provided by the authors of XR-Transformer and can be downloaded [here](https://ia902308.us.archive.org/21/items/pecos-dataset/xmc-base/).
 
-### Preprocessing of foreign datasets 
+#### Preprocessing of foreign datasets 
 
-The HTC datasets (NYT, RCV1-V2 and WoS) can be preprocessed using the provided XR-Transformer [preprocessing.py](https://github.com/FloHauss/XMC_HTC/blob/main/XR-Transformer/preprocessing/preprocess.py) script in /XR-Transformer/preprocessing. The scripts input are the following files: "train_raw_texts.txt" and "test_raw_texts.txt" containing the raw text train and test data, as well as "train_labels.txt" and "test_labels.txt" containing the train and test labels. Note, that these files are similar to the inputs of the CascadeXML model ("train_labels.txt" = "Y.trn.txt", "test_labels.txt" = "Y.tst.txt"). The outputs of the preprocessing script are the .npz files required for the execution of XR-Transformer. They need to be renamed and structured as described below.
+The HTC datasets (NYT, RCV1-V2 and WoS) can be preprocessed using the provided XR-Transformer [preprocessing.py](https://github.com/FloHauss/XMC_HTC/blob/main/XR-Transformer/preprocessing/preprocess.py) script in /XR-Transformer/preprocessing. The script needs the following input files: "train_raw_texts.txt" and "test_raw_texts.txt" containing the raw text train and test data, as well as "train_labels.txt" and "test_labels.txt" containing the train and test labels. Note, that these files are similar to the inputs of the CascadeXML model ("train_labels.txt" = "Y.trn.txt", "test_labels.txt" = "Y.tst.txt"). The outputs of the preprocessing script are the .npz files required for the execution of XR-Transformer. They need to be renamed and structured as described below.
 
 In order to use the scripts we provided, the datasets need to be stored in XMLmodels/pecos like this:
 ```
@@ -39,7 +39,7 @@ In order to use the scripts we provided, the datasets need to be stored in XMLmo
 |   |-- Y.trn.txt
 |   |-- Y.tst.txt
 ````
-### Start experiments
+#### Start experiments
 
 First XR-Transformer needs to be installed ([see xr_transformer_guide](https://github.com/FloHauss/XMC_HTC/blob/main/xr_transformer_guide.md)). To conduct our experiments we used [run_ensemble/run.sh](https://github.com/FloHauss/XMC_HTC/blob/main/XMLmodels/pecos/run_ensemble/run.sh). It can be called like this:
 ```sh
@@ -49,7 +49,7 @@ bash run.sh ${DATASET} ${PATH_TO_DATASET}
 # PATH_TO_DATASET: folder in which the dataset folder is stored (e.g. "xmc-base" or "htc-base")
 ```
 
-### Results
+#### Results
 The logs and results of our experiments can be found in [run_ensemble/results/](https://github.com/FloHauss/XMC_HTC/tree/main/XMLmodels/pecos/run_ensemble/results).
 
 # HTC models
