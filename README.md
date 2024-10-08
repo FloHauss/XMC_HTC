@@ -52,6 +52,9 @@ bash run.sh ${DATASET} ${PATH_TO_DATASET}
 #### Results
 The logs and results of our experiments can be found in [run_ensemble/results/](https://github.com/FloHauss/XMC_HTC/tree/main/XMLmodels/pecos/run_ensemble/results).
 
+#### Adjustments of the model
+The changes we made in comparison to the XR-Tranformer model by amazon are mainly due to introducing the R-Precision metric, introduced in [precos/utils/smat_util.py](https://github.com/FloHauss/XMC_HTC/blob/main/XMLmodels/pecos/pecos/utils/smat_util.py). They are marked in the code with comments in the format "changed: ...". 
+
 # HTC models
 ## HBGL 
 HBGL requires 3 input files to run:
