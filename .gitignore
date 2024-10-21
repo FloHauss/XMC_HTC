@@ -1,6 +1,7 @@
 XMLmodels/pecos/xmc-base
 XMLmodels/pecos/htc-base
 XMLmodels/pecos/pytorch/
+XMLmodels/pecos/test
 XMLmodels/pecos/run_ensemble/models
 XMLmodels/pecos/predictions
 XMLmodels/pecos/trained-models
