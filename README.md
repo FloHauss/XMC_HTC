@@ -39,21 +39,36 @@ In order to use the scripts we provided, the datasets need to be stored in XMLmo
 
 # HTC models
 ## HBGL 
-HBGL requires 3 input files to run:
-- [dataset name]_test.json
-- [dataset_name]_train.json
-- [dataset_name]_val.json
-It is required that these files are located within a folder named [dataset_name] within the data folder of HBGL.
-Each dataset also requires a corresponding script file named [dataset_name].sh within the scripts folder of HBGL. Runs are also started from within this folder.
-- TODO: NYT UND RCV1 PREPROCESSING WAREN PROBLEMATISCH???
+HBGL requires 4 input files to run:
+- {dataset_name}.taxonomy
+- {dataset name}_test.json
+- {dataset_name}_train.json
+- {dataset_name}_val.json
 
-### XML to HTC
+It is required that these files are located within a folder named {dataset_name} within the data folder of HBGL.
+Each dataset also requires a corresponding script file named {dataset_name}.sh within the scripts folder of HBGL. HBGL runs are also started from within this folder.
+
+### HTC datasets for HBGL
+We follow the same preprocessing procedure as described by [HBGL](https://github.com/kongds/HBGL).
+Use the respective preprocessing files within the corresponding dataset folder.
+We made some minor adjustments, as otherwise the preprocessing will not work:
+- For WoS this includes an additional preprocessing file that has to run before the actual preprocess. This is because the seperator within the dataset file is not recognized properly
+- For NYT no additional changes were required
+- For RCV1 we adjusted the preprocessing file to properly work with the respective file paths
+
+### XML datasets for HBGL
 As HGCLR does not support larger datasets without heavy modifications, only HBGL makes use of the larger XML datasets.
 Of these, even with modifications within the HBGL source code to accomodate for larger datasets, only Wiki10-31k and Ammazoncat-13k are small enough to effectively run on them.
-- TODO: Ordner und Files einbinden und nochmal beschreiben
+
+So while our frameworks supports conversion for these larger datasets. The model will not effectively run on them. Look 
+
+
+
 
 ## HGCLR
 
+- TODO
+
 # Guides
-- use BwUniCluster: [guide here](bw_uni_cluster.md)
+- use BwUniCluster: [guide here](bw_uni_cluster.md) (written in german, and only for members of applicable universaties)
 - install and run XR-Transformer: [guide here](xr_transformer_guide.md)

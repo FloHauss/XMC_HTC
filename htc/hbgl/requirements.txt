@@ -1,0 +1,9 @@
+numpy
+boto3
+pandas
+requests
+tqdm
+wandb
+sentencepiece
+scikit-learn
+transformers==4.21
