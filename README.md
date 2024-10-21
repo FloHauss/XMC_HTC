@@ -56,6 +56,13 @@ The logs and results of our experiments can be found in [run_ensemble/results/](
 The changes we made in comparison to the XR-Tranformer model by amazon are mainly due to introducing the R-Precision metric, introduced in [precos/utils/smat_util.py](https://github.com/FloHauss/XMC_HTC/blob/main/XMLmodels/pecos/pecos/utils/smat_util.py). They are marked in the code with comments in the format "changed: ...". 
 
 # HTC models
+
+### XML datasets for HTC
+As HGCLR does not support larger datasets without heavy modifications, only HBGL makes use of the larger XML datasets.
+Of these, even with modifications within the HBGL source code to accomodate for larger datasets, only Wiki10-31k and Ammazoncat-13k are small enough to effectively run on them.
+
+So while our frameworks supports conversion for these larger datasets the model wills not effectively run on them.
+
 ## HBGL 
 HBGL requires 4 input files to run:
 - {dataset_name}.taxonomy
@@ -75,13 +82,18 @@ We made some minor adjustments, as otherwise the preprocessing will not work:
 - For RCV1 we adjusted the preprocessing file to properly work with the respective file paths
 
 ### XML datasets for HBGL
-As HGCLR does not support larger datasets without heavy modifications, only HBGL makes use of the larger XML datasets.
-Of these, even with modifications within the HBGL source code to accomodate for larger datasets, only Wiki10-31k and Ammazoncat-13k are small enough to effectively run on them.
+Within the data_transfer folder the specific XML dataset has to be inserted within the specific input/xml/{dataset_name} folder.
+6 files are required:
+- {dataset_name}.taxonomy
+- {dataset_name}_label_map.txt
+- {dataset_name}_test_labels.txt
+- {dataset_name}_test_texts.txt
+- {dataset_name}_train_labels.txt
+- {dataset_name}_train_texts.txt
 
-So while our frameworks supports conversion for these larger datasets. The model will not effectively run on them. Look 
-
-
-
+The test and train files are the same files used in Cascade XML just renamed.
+The taxonomies can be found [here](https://drive.google.com/drive/folders/18qnFBX67E1lldpJNPXZa8_I0Tylpl_cU). The labels are clustered using k-means and these clusters then provide the hierachical structure.
+The label map file contains all labels sorted alphabetically. This [repository](http://manikvarma.org/downloads/XC/XMLRepository.html) contains most the relevant XML datasets where this file is typically named something like 'Y.txt'.
 
 ## HGCLR
 HGCLR requires 2 input files to run:\
@@ -90,14 +102,6 @@ Y.txt: This file contains all hierarchical labels. Each line contains the label 
 
 It is necessary that the files for each dataset are located in their respective directories. For example, files for the WoS dataset should be stored in the wos folder, and files for the RCV1 dataset should be stored in the rcv1 folder. This ensures that the scripts can correctly access the required data.\
 The optimal training parameters for each dataset can be found in the [here](https://github.com/wzh9969/contrastive-htc). 
-
-
-
-
-
-
-
-- TODO
 
 # Guides
 - use BwUniCluster: [guide here](bw_uni_cluster.md) (written in german, and only for members of applicable universaties)
