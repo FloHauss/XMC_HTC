@@ -1,5 +1,5 @@
 BERT_PRETRAINED_MODEL_ARCHIVE_MAP = {
-    "bert-base-uncased": "https://cdn.huggingface.co/bert-base-uncased-pytorch_model.bin",
+    "bert-base-uncased": "https://huggingface.co/bert-base-uncased/resolve/main/pytorch_model.bin",
     "bert-large-uncased": "https://cdn.huggingface.co/bert-large-uncased-pytorch_model.bin",
     "bert-base-cased": "https://cdn.huggingface.co/bert-base-cased-pytorch_model.bin",
     "bert-large-cased": "https://cdn.huggingface.co/bert-large-cased-pytorch_model.bin",

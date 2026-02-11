@@ -3,6 +3,7 @@ from collections import defaultdict
 import torch
 
 from transformers import AdamW
+#from torch.optim import AdamW
 
 def training_cpt(args, tokenizer, input_ids, attention_mask,  position_ids, _init_label_emb, num_hiers, reversed_hiers, pos_to_idx):
     from transformers import BertForMaskedLM
@@ -83,7 +84,7 @@ def training_cpt(args, tokenizer, input_ids, attention_mask,  position_ids, _ini
                                 bce_l[i][j] = 1
                     _bce_labels.append(bce_l)
                 bce_labels = torch.cat(_bce_labels, dim=0)
-                print(bce_labels.sum())
+              #  print(bce_labels.sum())
             masked_lm_loss = loss_fct(prediction_scores[mask_tokens], bce_labels)
         else:
             loss_fct = CrossEntropyLoss()  # -100 index = padding token
@@ -93,6 +94,6 @@ def training_cpt(args, tokenizer, input_ids, attention_mask,  position_ids, _ini
         cpt_optimizer.step()
         model.zero_grad()
         init_label_emb.grad = None
-        print(f'step {step}', masked_lm_loss.item())
+      #  print(f'step {step}', masked_lm_loss.item())
     torch.save(init_label_emb.cpu(), 'after.pt')
     return init_label_emb

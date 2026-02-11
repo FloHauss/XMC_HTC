@@ -1,9 +1,9 @@
 numpy
 boto3
-pandas
 requests
 tqdm
 wandb
 sentencepiece
+torch==2.5.1
+transformers==4.17
 scikit-learn
-transformers==4.21

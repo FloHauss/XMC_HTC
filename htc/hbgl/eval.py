@@ -91,7 +91,7 @@ def evaluate(epoch_predicts, epoch_labels, id2label, logger, threshold=0.5, top_
     right_total, predict_total, gold_total = 0, 0, 0
 
     for i, label in id2label.items():
-        print(f'i: {i}, label: {label}')
+       # print(f'i: {i}, label: {label}')
         #label = label + '_' + str(i)
         #precision_dict[label], recall_dict[label], fscore_dict[label] = _precision_recall_f1(right_count_list[i],
         #                                                                                     predicted_count_list[i],

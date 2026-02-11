@@ -106,7 +106,8 @@ def train(args, training_features, model, tokenizer, logger):
 
         train_iterator = tqdm.tqdm(
             train_dataloader, initial=global_step * args.gradient_accumulation_steps,
-            desc="Iter (loss=X.XXX, lr=X.XXXXXXX)", disable=args.local_rank not in [-1, 0])
+            desc="Iter (loss=X.XXX, lr=X.XXXXXXX)", disable=args.local_rank not in [-1, 0],
+            mininterval=10)
 
         model.train()
         model.zero_grad()
@@ -180,7 +181,7 @@ def train(args, training_features, model, tokenizer, logger):
                 global_step += 1
 
                 if args.local_rank in [-1, 0] and args.logging_steps > 0 and global_step % args.logging_steps == 0:
-                    logger.info("")
+              #      logger.info("")
                     logger.info(" Step [%d ~ %d]: %.2f", global_step - args.logging_steps, global_step, logging_loss)
                     logging_loss = 0.0
 
@@ -230,14 +231,22 @@ def train(args, training_features, model, tokenizer, logger):
                     if args.label_cpt_decodewithpos:
                         flags.append('--target_no_offset')
 
+                    if args.job_id:
+                        flags.append('--job_id')
+                        flags.append(str(args.job_id))
+
+                    flags.append('--seed')
+                    flags.append(str(args.seed))
+
                     if args.model_type == 'roberta':
                         del flags[flags.index('--do_lower_case')]
 
+               #     flags = [str(f) for f in flags]
                     out = main(flags)
                     if args.wandb:
                         wandb.log({'eval/macro_f1': out['macro_f1'], 'eval/micro_f1': out['micro_f1']})
 
-                    logger.info('Geht noch 1')
+                   # logger.info('Geht noch 1')
                     keep_save_model = False
                     if out['macro_f1'] > best_macro_f1:
                         best_macro_f1 = out['macro_f1']
@@ -249,7 +258,7 @@ def train(args, training_features, model, tokenizer, logger):
                         best_macro_f1_path = save_path
                         keep_save_model = True
 
-                    logger.info('Geht noch 2')
+                  #  logger.info('Geht noch 2')
 
                     if out['micro_f1'] > best_micro_f1:
                         best_micro_f1 = out['micro_f1']
@@ -261,7 +270,7 @@ def train(args, training_features, model, tokenizer, logger):
                         best_micro_f1_path = save_path
                         keep_save_model = True
 
-                    logger.info('Geht noch 3')
+                #    logger.info('Geht noch 3')
 
                     if not keep_save_model:
                         try:

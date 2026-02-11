@@ -124,6 +124,9 @@ def main(flags=None):
 
     parser.add_argument('--ignore_meta_label', action='store_true')
 
+    parser.add_argument('--job_id', type=str, default="default_run",
+                        help="Unique identifier for the current execution run.")
+
     if flags:
         print(flags)
         args = parser.parse_args(flags)
@@ -138,6 +141,7 @@ def main(flags=None):
         "cuda" if torch.cuda.is_available() else "cpu")
     n_gpu = torch.cuda.device_count()
 
+    actual_seed = args.seed
     if args.seed > 0:
         random.seed(args.seed)
         np.random.seed(args.seed)
@@ -146,6 +150,7 @@ def main(flags=None):
             torch.cuda.manual_seed_all(args.seed)
     else:
         random_seed = random.randint(0, 10000)
+        actual_seed = random_seed
         logger.info("Set random seed as: {}".format(random_seed))
         random.seed(random_seed)
         np.random.seed(random_seed)
@@ -368,7 +373,8 @@ def main(flags=None):
             predict_labels = [roberta_token_to_id(i) for i in output_lines]
         else:
             predict_labels = [i.replace("\n", '').split(' ') for i in output_lines]
-            predict_labels = [list(set([token_to_id(j) for j  in i])) for i in predict_labels]
+          #  predict_labels = [list(set([token_to_id(j) for j  in i])) for i in predict_labels]
+            predict_labels = [list(dict.fromkeys([token_to_id(j) for j in i])) for i in predict_labels]
         with open(args.input_file) as f:
             gd_labels = [json.loads(i)['tgt'] for i in f]
             gd_labels = [[token_to_id(j) for j  in i.split(' ')] for i in gd_labels]
@@ -388,23 +394,41 @@ def main(flags=None):
             gd_labels = [[label for label in l if label in valid_labels] for l in gd_labels]
             id2label = {k: v for k, v in id2label.items() if k in valid_labels}
 
+        output_dir = "results"
+        if not os.path.exists(output_dir):
+            os.makedirs(output_dir)
+
+        # 2. Get the dataset name correctly (fixing the tuple error)
+        # os.path.splitext returns (root, ext), so we take [0]
+        dataset_base = os.path.basename(args.input_file)
+        dataset_name = os.path.splitext(dataset_base)[0]
+
+        # 3. Construct the filename
+        # This will result in something like: wos_test_generated_run_1_s42.txt
+        results_filename = f"{dataset_name}_{args.seed}.txt"
+        save_path = os.path.join(output_dir, results_filename)
+
         results_RP = evaluate_RP(predict_labels, gd_labels)
         logger.info(f'RP_Precision: {results_RP}')
-        with open('results.txt', 'a+') as f:
-            f.write(f'RP_Precision: {results_RP}\n')
+
 
         K = [1,2,3,5,10,25,50] # set Ks
         results = evaluate_PK(predict_labels, gd_labels, K=K)
         logger.info(f'Precision at K Results: {results}')
-        with open('results.txt', 'a+') as f:
-            f.write(f'Precision at K Results: {results}\n')
+
 
         out = evaluate(predict_labels, gd_labels, id2label, logger=logger, as_sample=True) 
         del out['full']
         print(out)
-        with open('results.txt', 'a+') as f:
-            f.write(f'{out}\n')
-            f.write('---\n')
+
+
+        with open(save_path, "a+", encoding="utf-8") as fout:
+            fout.write(f"\n{'='*30}\n")
+            fout.write(f"Model Checkpoint: {model_recover_path}\n")
+            fout.write(f"Seed: {args.seed}\n")
+            fout.write(f"RP_Precision: {results_RP}\n")
+            fout.write(f"Precision at K: {results}\n")
+            fout.write(f"Metrics: {out}\n")
 
         return out
 
@@ -413,4 +437,5 @@ def main(flags=None):
 
 
 if __name__ == "__main__":
-    print(main())
+    main()
+    #print(main())

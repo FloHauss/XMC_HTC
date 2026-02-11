@@ -1,9 +1,9 @@
 # Exploiting Global and Local Hierarchies for Hierarchical Text Classifications
 
 
-## Preprocess
+## Preprocessing
 
-We follow the  repositories  of [contrastive-htc](https://github.com/wzh9969/contrastive-htc) and [HDLTex](https://github.com/kk7nc/HDLTex) to get the preprocessed datasets in json format file {'token': List[str], 'label': List[str]}.
+We follow the  repositories  of [contrastive-htc](https://github.com/wzh9969/contrastive-htc) and [HDLTex](https://github.com/kk7nc/HDLTex) to get the preprocessed datasets in json format file {'token': str, 'label': List[str]}.
 
 Please download the origin datasets and pre-process them using the code in the corresponding folder:
 
@@ -13,12 +13,13 @@ Please download the origin datasets and pre-process them using the code in the c
 
 ## Train & Evaluation
 
+# HTC
 ``` shell
-bash run_rcv1.sh
-
 bash run_wos.sh
 
 bash run_nyt.sh
+
+bash run_rcv1.sh
 ```
 
 

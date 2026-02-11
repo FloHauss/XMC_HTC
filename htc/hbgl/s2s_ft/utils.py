@@ -433,7 +433,7 @@ def load_and_cache_examples_fast(
 
     return features
 
-def load_and_cache_examples(
+def load_and_cache_examplesORIG(
         example_file, tokenizer, local_rank, cached_features_file, shuffle=True, 
         lmdb_cache=None, lmdb_dtype='h', eval_mode=False, soft_label=False):
     # Make sure only the first process in distributed training process the dataset, and the others will use the cache
@@ -530,6 +530,142 @@ def load_and_cache_examples(
                 torch.save(features, cached_features_file)
 
     # Make sure only the first process in distributed training process the dataset, and the others will use the cache
+    if local_rank == 0:
+        torch.distributed.barrier()
+
+    return features
+
+### CUSTOM 
+
+import os
+import json
+import torch
+import collections
+import tqdm
+import random
+from multiprocessing import Pool, cpu_count
+from functools import partial
+
+# 1. HELPER FUNCTION (Must be defined at the top level)
+def _process_row(example, tokenizer, soft_label, eval_mode):
+    """
+    Worker function to process a single example. 
+    Returns raw data (source_ids, target_ids) to avoid pickling complex objects.
+    """
+    if soft_label:
+        source_tokens = tokenizer.tokenize(example["src"])
+        source_ids = tokenizer.convert_tokens_to_ids(source_tokens)
+        target_ids = [tokenizer.convert_tokens_to_ids([j.lower() for j in i]) for i in example['tgt']]
+    else:
+        if isinstance(example["src"], list):
+            source_tokens = example["src"]
+            target_tokens = [] if eval_mode else example["tgt"]
+        else:
+            source_tokens = tokenizer.tokenize(example["src"])
+            target_tokens = [] if eval_mode else tokenizer.tokenize(example["tgt"])
+        
+        source_ids = tokenizer.convert_tokens_to_ids(source_tokens)
+        target_ids = tokenizer.convert_tokens_to_ids(target_tokens)
+        
+    return source_ids, target_ids
+
+# 2. OPTIMIZED MAIN FUNCTION
+def load_and_cache_examples(
+        example_file, tokenizer, local_rank, cached_features_file, shuffle=True, 
+        lmdb_cache=None, lmdb_dtype='h', eval_mode=False, soft_label=False):
+
+    # Make sure only the first process in distributed training processes the dataset
+    if local_rank not in [-1, 0]:
+        torch.distributed.barrier()
+
+    if cached_features_file is not None and os.path.isfile(cached_features_file):
+        logger.info("Loading features from cached file %s", cached_features_file)
+        features = torch.load(cached_features_file)
+    elif cached_features_file is not None and os.path.isdir(cached_features_file) \
+        and os.path.exists(os.path.join(cached_features_file, 'lock.mdb')):
+        logger.info("Loading features from cached LMDB %s", cached_features_file)
+        features = DocDB(cached_features_file)
+    else:
+        logger.info("Creating features from dataset file at %s", example_file)
+
+        # Fast loading of JSON lines
+        with open(example_file, mode="r", encoding="utf-8") as reader:
+            examples = [json.loads(line) for line in reader]
+
+        features = []
+        slc = collections.defaultdict(int)
+        tlc = collections.defaultdict(int)
+
+        # --- PARALLEL PROCESSING START ---
+        # Use almost all available cores
+        num_processes = max(1, cpu_count() - 1)
+        logger.info(f"Tokenizing using {num_processes} processes...")
+
+        # Create a partial function to freeze constant arguments
+        process_func = partial(
+            _process_row, 
+            tokenizer=tokenizer, 
+            soft_label=soft_label, 
+            eval_mode=eval_mode
+        )
+
+        with Pool(num_processes) as pool:
+            # imap handles ordering and lazy processing
+            # chunksize=100 reduces IPC overhead (sending data between cores)
+            results = list(tqdm.tqdm(
+                pool.imap(process_func, examples, chunksize=100), 
+                total=len(examples),
+                desc="Tokenizing"
+            ))
+        # --- PARALLEL PROCESSING END ---
+
+        # Post-processing loop (very fast, as it just assigns objects)
+        logger.info("Aggregating results...")
+        for i, (source_ids, target_ids) in enumerate(results):
+            slc[len(source_ids)] += 1
+            tlc[len(target_ids)] += 1
+
+            features.append(
+                TrainingExample(
+                    source_ids=source_ids,
+                    target_ids=target_ids,
+                    example_id=i,  # Use index as ID
+                )
+            )
+
+        if shuffle:
+            random.shuffle(features)
+            logger.info("Shuffle the features !")
+
+        logger.info("Source length:")
+        report_length(slc, total_count=len(examples))
+        logger.info("Target length:")
+        report_length(tlc, total_count=len(examples))
+
+        # --- CACHING LOGIC (Unchanged) ---
+        if local_rank in [-1, 0] and cached_features_file is not None:
+            if lmdb_cache:
+                db = lmdb.open(cached_features_file, readonly=False, map_async=True)
+                for idx, feature in enumerate(features):
+                    write_to_lmdb(
+                        db, b"src_ids_%d" % idx, 
+                        serialize_array(feature["source_ids"], dtype=lmdb_dtype))
+                    write_to_lmdb(
+                        db, b"tgt_ids_%d" % idx,
+                        serialize_array(feature["target_ids"], dtype=lmdb_dtype))
+                write_to_lmdb(db, b"__start__", serialize_str(0))
+                write_to_lmdb(db, b"__size__", serialize_str(len(features)))
+                write_to_lmdb(db, b"__dtype__", serialize_str(lmdb_dtype))
+                db.sync()
+                db.close()
+                logger.info("db_key_idx = %d" % len(features))
+                del features
+                features = cached_features_file
+                logger.info("Saving features into cached lmdb dir %s", cached_features_file)
+            else:
+                logger.info("Saving features into cached file %s", cached_features_file)
+                torch.save(features, cached_features_file)
+
     if local_rank == 0:
         torch.distributed.barrier()
 

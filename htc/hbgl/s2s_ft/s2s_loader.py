@@ -135,7 +135,8 @@ class Preprocess4Seq2seqDecoder(Pipeline):
             # print("Vocab size = %d" % len(self.vocab_words))
             # for tk_id in input_ids:
             #     print(u"trans %d -> %s" % (tk_id, self.vocab_words[tk_id]))
-            logger.info(u"Input src = %s" % " ".join((self.vocab_words[tk_id]) for tk_id in input_ids))
+            #logger.info(u"Input src = %s" % " ".join((self.vocab_words[tk_id]) for tk_id in input_ids))
+            pass
 
         # Zero Padding
         input_mask = torch.zeros(

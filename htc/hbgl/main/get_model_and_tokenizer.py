@@ -86,13 +86,13 @@ def get_model_and_tokenizer(args, logger):
                 one_by_one_label_init_map = {}
                 for i in _label_dict:
                     one_by_one_label_init_map[i] = '/'.join(_loop(i)[::-1])
-                print(f'map {lk} to {one_by_one_label_init_map[lk]}')
+            #    print(f'map {lk} to {one_by_one_label_init_map[lk]}')
                 label_name_tensors.append(tokenizer.encode(one_by_one_label_init_map[lk], add_special_tokens=False))
             elif args.nyt_only_last_label_init:
-                print(f'map {lk} to {lk.split("/")[-1]}')
+             #   print(f'map {lk} to {lk.split("/")[-1]}')
                 label_name_tensors.append(tokenizer.encode(lk.split("/")[-1], add_special_tokens=False))
             elif args.rcv1_expand:
-                print(f'map {lk} to {rcv1_label_expand[lk]}')
+               # print(f'map {lk} to {rcv1_label_expand[lk]}')
                 label_name_tensors.append(tokenizer.encode(rcv1_label_expand[lk], add_special_tokens=False))
             else:
                 label_name_tensors.append(tokenizer.encode(lk, add_special_tokens=False))
@@ -110,156 +110,153 @@ def get_model_and_tokenizer(args, logger):
         if args.label_cpt:
             # for compare with same seed
             rng_state = torch.get_rng_state()
+            if os.path.exists('trained_label_embeddings.pt'):
+                checkpoint = torch.load('trained_label_embeddings.pt')
+                init_label_emb = checkpoint['embeddings']
+            else:
+                from collections import defaultdict
+                hiera = defaultdict(set)
+                _label_dict = {}
+                with open(args.label_cpt) as f:
+                    _label_dict['Root'] = -1
+                    for line in f.readlines():
+                        line = line.strip().split('\t')
+                        for i in line[1:]:
+                            if i not in _label_dict:
+                                _label_dict[i] = len(_label_dict) - 1
+                            hiera[line[0]].add(i)
+                    _label_dict.pop('Root')
+                r_hiera = {}
+                for i in hiera:
+                    for j in list(hiera[i]):
+                        r_hiera[j] = i
 
-            from collections import defaultdict
-            hiera = defaultdict(set)
-            _label_dict = {}
-            with open(args.label_cpt) as f:
-                _label_dict['Root'] = -1
-                for line in f.readlines():
-                    line = line.strip().split('\t')
-                    for i in line[1:]:
-                        if i not in _label_dict:
-                            _label_dict[i] = len(_label_dict) - 1
-                        hiera[line[0]].add(i)
-                _label_dict.pop('Root')
-            r_hiera = {}
-            for i in hiera:
-                for j in list(hiera[i]):
-                    r_hiera[j] = i
+                def _loop(a):
+                    if r_hiera[a] != 'Root':
+                        return [a,] + _loop(r_hiera[a])
+                    else:
+                        return [a]
 
-            def _loop(a):
-                if r_hiera[a] != 'Root':
-                    return [a,] + _loop(r_hiera[a])
-                else:
-                    return [a]
+                label_class = {}
+                for i in _label_dict:
+                    label_class[i] = len(_loop(i))
+                # cls l1 l2 l3 sep
+                attention_mask = torch.zeros((len(label_tokens) + 2, len(label_tokens) + 2))
+                num_hiers = defaultdict(set)
+                reversed_hiers = {}
+                for hi in hiera:
+                    for hj in list(hiera[hi]):
+                        def _label_map_f(x):
+                            if x == 'Root': return -1
+                            return int(label_map[x].replace('[A_', '').replace(']', ''))
+                        attention_mask[_label_map_f(hi) + 1][_label_map_f(hj) + 1] = 1
+                        num_hiers[_label_map_f(hi) + 1].add(_label_map_f(hj) + 1)
+                        reversed_hiers[_label_map_f(hj) + 1] = _label_map_f(hi) + 1
 
-            label_class = {}
-            for i in _label_dict:
-                label_class[i] = len(_loop(i))
-            # cls l1 l2 l3 sep
-            attention_mask = torch.zeros((len(label_tokens) + 2, len(label_tokens) + 2))
-            num_hiers = defaultdict(set)
-            reversed_hiers = {}
-            for hi in hiera:
-                for hj in list(hiera[hi]):
-                    def _label_map_f(x):
-                        if x == 'Root': return -1
-                        return int(label_map[x].replace('[A_', '').replace(']', ''))
-                    attention_mask[_label_map_f(hi) + 1][_label_map_f(hj) + 1] = 1
-                    num_hiers[_label_map_f(hi) + 1].add(_label_map_f(hj) + 1)
-                    reversed_hiers[_label_map_f(hj) + 1] = _label_map_f(hi) + 1
+                        if args.label_cpt_use_bce:
+                            attention_mask[_label_map_f(hj) + 1][_label_map_f(hi) + 1] = 1
+                        if args.self_attention:
+                            attention_mask[_label_map_f(hi) + 1][_label_map_f(hi) + 1] = 1
+                input_ids = torch.LongTensor(tokenizer.encode(' '.join(label_map.values()).lower()))
+                cls = input_ids[0]
+                assert len(input_ids) == len(labels_key) + 2
+                position_ids = torch.LongTensor([0, ] + [label_class[i] for i in labels_key] + [max(label_class.values()) + 1,])
 
-                    if args.label_cpt_use_bce:
-                        attention_mask[_label_map_f(hj) + 1][_label_map_f(hi) + 1] = 1
-                    if args.self_attention:
-                        attention_mask[_label_map_f(hi) + 1][_label_map_f(hi) + 1] = 1
-            input_ids = torch.LongTensor(tokenizer.encode(' '.join(label_map.values()).lower()))
-            cls = input_ids[0]
-            assert len(input_ids) == len(labels_key) + 2
-            position_ids = torch.LongTensor([0, ] + [label_class[i] for i in labels_key] + [max(label_class.values()) + 1,])
+                ### CUSTOM
+                leaf_trees = ts.find_leaf_trees('Root', hiera)
+                hierarchies = ts.k_merger(500, leaf_trees)
 
-            ### CUSTOM
-            leaf_trees = ts.find_leaf_trees('Root', hiera)
-            hierarchies = ts.k_merger(500, leaf_trees)
+                SPLIT_ids = []
+                SPLIT_input_ids = []
+                SPLIT_attention_masks = []
+                SPLIT_position_ids = []
+                SPLIT_init_label_emb = []
+                SPLIT_num_hiers = []
+                SPLIT_reversed_hiers = []
+                SPLIT_pos_to_idx = []
 
-            SPLIT_ids = []
-            SPLIT_input_ids = []
-            SPLIT_attention_masks = []
-            SPLIT_position_ids = []
-            SPLIT_init_label_emb = []
-            SPLIT_num_hiers = []
-            SPLIT_reversed_hiers = []
-            SPLIT_pos_to_idx = []
+                label_to_pos = {label: int(label_map[label].replace('[A_', '').replace(']', '')) + 1 for label in label_map}
+                label_to_pos['Root'] = 0
+                r_id_hiera = {label_to_pos[child]: label_to_pos[parent] for child, parent in r_hiera.items()}
 
-            label_to_pos = {label: int(label_map[label].replace('[A_', '').replace(']', '')) + 1 for label in label_map}
-            label_to_pos['Root'] = 0
-            #r_id_hiera = {label_to_id[child]: [label_to_id[parent]] for child, parent in r_hiera.items()}
-            r_id_hiera = {label_to_pos[child]: label_to_pos[parent] for child, parent in r_hiera.items()}
+                for hierarchy in hierarchies:
+                    labels = ts.flatten_tree(hierarchy)
+                    if 'Root' in labels:
+                        labels.remove('Root')
 
-            #print(input_ids)
-            for hierarchy in hierarchies:
-                labels = ts.flatten_tree(hierarchy)
-                #print(labels)
-                labels.remove('Root')
+                    # Build local ID list: [CLS] + sorted_labels + [SEP]
+                    ids = sorted([label_to_pos[label] for label in labels])
+                    # We assume 0 is CLS and -1 is the last token (SEP) from the original input_ids
+                    ids = [0] + ids + [len(input_ids) - 1] 
+                    SPLIT_ids.append(ids)
 
-                #ids = [0] + [label_to_idx[label] for label in labels] + [max(label_class.values()) + 1]
-                ids = [label_to_pos[label] for label in labels] # perverse
-                ids.sort()
-                ids = [0] + ids + [-1]
-                #print('ids:')
-                #print(ids)
-                SPLIT_ids.append(ids)
+                    # Slice tensors based on selected IDs for this chunk
+                    sub_attention_mask = attention_mask[ids][:, ids]
+                    sub_input_ids = input_ids[ids]
+                    sub_position_ids = position_ids[ids]
+                    
+                    # Filter init_label_emb: 
+                    # We need to map the global label position to the correct row in init_label_emb
+                    # Assuming init_label_emb corresponds to labels_key (1-to-1)
+                    sub_init_label_emb = init_label_emb[[i - 1 for i in ids[1:-1]]] 
+                    
+                    pos_to_idx = {num: index for index, num in enumerate(ids)}
 
-                sub_attention_mask = attention_mask[ids][:,ids]
-                #sub_input_ids = torch.cat((torch.unsqueeze(input_ids[0], dim=0), input_ids[ids], torch.unsqueeze(input_ids[-1], dim=0)))
-                sub_input_ids = input_ids[ids]
-                sub_position_ids = position_ids[ids]
-                sub_init_label_emb = init_label_emb[[id - 1 for id in ids[1:-1]]] # ignore CLS and SEP embedding, shift index one to the left for zero-based access
-                
-                #idx = [id - 1 for id in ids[1:-1]]
-                pos_to_idx = {num: index for index, num in enumerate(ids)}
-                #print('pos_to_idx:')
-                #print(pos_to_idx)
+                    sub_num_hiers = defaultdict(set)
+                    for parent, children in hierarchy.items():
+                        for child in children:
+                            sub_num_hiers[label_to_pos[parent]].add(label_to_pos[child])
 
-                #sub_num_hiers = {pos_to_idx[label_to_pos[parent]]: [pos_to_idx[label_to_pos[child]] for child in children] for parent, children in hierarchy.items()}
-                #sub_num_hiers = {label_to_pos[parent]: {label_to_pos[child] for child in children} for parent, children in hierarchy.items()}
-                sub_num_hiers = defaultdict(set)
-                for parent, children in hierarchy.items():
-                    for child in children:
-                        sub_num_hiers[label_to_pos[parent]].add(label_to_pos[child])
+                    sub_reversed_hiers = {child: parent for parent, children in sub_num_hiers.items() for child in children}
 
-                sub_reversed_hiers = {}
-                for parent, children in sub_num_hiers.items():
-                    for child in children:
-                        sub_reversed_hiers[child] = parent
+                    # Append to SPLIT lists
+                    SPLIT_input_ids.append(sub_input_ids)
+                    SPLIT_attention_masks.append(sub_attention_mask)
+                    SPLIT_position_ids.append(sub_position_ids)
+                    SPLIT_init_label_emb.append(sub_init_label_emb)
+                    SPLIT_num_hiers.append(sub_num_hiers)
+                    SPLIT_reversed_hiers.append(sub_reversed_hiers)
+                    SPLIT_pos_to_idx.append(pos_to_idx)
 
+    #           # --- TRAINING STEP ---
+                logger.info(f"Starting Conceptual Pre-training on {len(SPLIT_init_label_emb)} hierarchy splits.")
 
-                #sub_num_hiers {pos_to_idx[parent]: [pos_to_idx[child] for child in children] for parent, children in sub_num_hiers.items()}
+                for i in range(len(SPLIT_init_label_emb)):
+                    # Log current progress
+                    if (i + 1) % 10 == 0 or i == 0: # Log every 10th split to avoid clutter
+                        logger.info(f"Processing split {i+1}/{len(SPLIT_init_label_emb)}...")
+                    
+                    SPLIT_init_label_emb[i] = training_cpt(
+                        args, tokenizer, SPLIT_input_ids[i], SPLIT_attention_masks[i],
+                        SPLIT_position_ids[i], SPLIT_init_label_emb[i], 
+                        SPLIT_num_hiers[i], SPLIT_reversed_hiers[i], SPLIT_pos_to_idx[i]
+                    ).detach().cpu()
 
-          #      print('---------------------------------')
-         #       print(sub_input_ids.shape)
-         #       print(sub_input_ids)
-          #      print(sub_attention_mask.shape)
-          #      print(sub_attention_mask[0])
-          #      print(sub_position_ids.shape)
-           #     print(sub_position_ids)
-          #      print(sub_init_label_emb.shape)
-                #print(sub_init_label_emb[0])
-          #      print('sub_num_hiers:')
-          #      print(sub_num_hiers)
-          #      print('sub_reversed_hiers:')
-         #      print(sub_reversed_hiers)
-          #      print('------------------------------')
-         #       print(reversed_hiers)
-         #       print('------------------------------')
-         #       print(r_id_hiera)
+                logger.info("CPT Training complete. Aggregating embeddings...")
 
-                SPLIT_input_ids.append(sub_input_ids)
-                SPLIT_attention_masks.append(sub_attention_mask)
-                SPLIT_position_ids.append(sub_position_ids)
-                SPLIT_init_label_emb.append(sub_init_label_emb)
-                SPLIT_num_hiers.append(sub_num_hiers)
-                SPLIT_reversed_hiers.append(sub_reversed_hiers)
-                SPLIT_pos_to_idx.append(pos_to_idx)
-                break
-            ### CUSTOM END
+                # --- AGGREGATION STEP ---
+                # Use a count tensor to average embeddings for nodes that appear in multiple splits
+                label_embeddings = torch.zeros(len(label_tokens), config.hidden_size)
+                counts = torch.zeros(len(label_tokens), 1)
 
-#            init_label_emb = training_cpt(args, tokenizer, input_ids, attention_mask,
-#                                            position_ids, init_label_emb, num_hiers, reversed_hiers).detach().cpu()
-            for i in range(len(SPLIT_init_label_emb)):
-                SPLIT_init_label_emb[i] = training_cpt(args, tokenizer, SPLIT_input_ids[i], SPLIT_attention_masks[i],
-                                            SPLIT_position_ids[i], SPLIT_init_label_emb[i], SPLIT_num_hiers[i], SPLIT_reversed_hiers[i], SPLIT_pos_to_idx[i]).detach().cpu()
-                #SPLIT_init_label_emb[i] = training_cpt(args, tokenizer, SPLIT_input_ids[i], SPLIT_attention_masks[i],
-                #                            SPLIT_position_ids[i], SPLIT_init_label_emb[i], SPLIT_num_hiers[i], reversed_hiers).detach().cpu()
+                for i in range(len(SPLIT_init_label_emb)):
+                    # ids[1:-1] excludes CLS and SEP to map back to label_embeddings correctly
+                    current_split_indices = SPLIT_ids[i][1:-1]
+                    sub_emb = SPLIT_init_label_emb[i]
+                    
+                    for local_idx, global_pos in enumerate(current_split_indices):
+                        # global_pos - 1 because label_embeddings is likely 0-indexed for labels
+                        label_embeddings[global_pos - 1] += sub_emb[local_idx]
+                        counts[global_pos - 1] += 1
 
-            label_embeddings = torch.zeros(len(label_tokens), config.hidden_size)
-            for i in range(len(SPLIT_init_label_emb)):
-                ids = SPLIT_ids[i]
-                sub_init_label_emb = SPLIT_init_label_emb[i]
-                for idx, emb in enumerate(sub_init_label_emb):
-                    label_embeddings[ids[idx]] += emb
-                #label_embeddings[ids] += sub_init_label_emb### CURRENT
+                # Avoid division by zero for labels not present in any split
+                init_label_emb = label_embeddings / counts.clamp(min=1)
+
+                # After the aggregation step
+                torch.save({
+                    'embeddings': init_label_emb,
+                    'label_map': _label_dict
+                }, 'trained_label_embeddings.pt')
 
             # for compare with same seed
             torch.set_rng_state(rng_state)

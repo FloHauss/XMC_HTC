@@ -1,3 +1,4 @@
+# XML
 XMLmodels/pecos/xmc-base
 XMLmodels/pecos/htc-base
 XMLmodels/pecos/pytorch/
@@ -12,3 +13,25 @@ XMLmodels/pecos/_archive
 XMLmodels/pecos/build
 XMLmodels/pecospecos/core/libpecos_float32.cpython-39-x86_64-linux-gnu.so
 XMLmodels/pecospecos/_version.py
+
+# HTC
+htc/hbgl/logs/
+htc/hbgl/models/
+
+htc/hbgl/scripts/*
+!htc/hbgl/scripts/*.sh
+
+htc/hbgl/data/*/*_*
+!htc/hbgl/data/nyt/nyt_label.vocab
+htc/hbgl/data/wos/Meta-data/
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Global Python Cache (Ignores __pycache__ in any directory)
+__pycache__/
+*.py[cod]
