@@ -21,8 +21,10 @@ htc/hbgl/models/
 htc/hbgl/scripts/*
 !htc/hbgl/scripts/*.sh
 
-htc/hbgl/data/
-!htc/hbgl/data/*/preprocess
+htc/hbgl/data/**/*
+!htc/hbgl/data/**/
+!htc/hbgl/data/*/preprocess/**
+htc/hbgl/data/*/preprocess/Meta-data/
 !htc/hbgl/data/*/*.taxonomy
 !htc/hbgl/data/rcv1/rcv1.topics.hier.expanded
 
