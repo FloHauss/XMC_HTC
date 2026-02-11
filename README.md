@@ -104,5 +104,4 @@ It is necessary that the files for each dataset are located in their respective 
 The optimal training parameters for each dataset can be found in the [here](https://github.com/wzh9969/contrastive-htc). 
 
 # Guides
-- use BwUniCluster: [guide here](bw_uni_cluster.md) (written in german, and only for members of applicable universaties)
 - install and run XR-Transformer: [guide here](xr_transformer_guide.md)

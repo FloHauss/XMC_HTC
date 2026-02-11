@@ -41,7 +41,7 @@ if [ ! -f "$TRAIN_FILE" ]; then
 fi
 
 # 7. Stacked Run Loop
-SEEDS=(2 3 4)
+SEEDS=(42 1 2 3 4)
 
 for i in "${!SEEDS[@]}"
 do

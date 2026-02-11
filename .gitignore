@@ -21,9 +21,10 @@ htc/hbgl/models/
 htc/hbgl/scripts/*
 !htc/hbgl/scripts/*.sh
 
-htc/hbgl/data/*/*_*
-!htc/hbgl/data/nyt/nyt_label.vocab
-htc/hbgl/data/wos/Meta-data/
+htc/hbgl/data/
+!htc/hbgl/data/*/preprocess
+!htc/hbgl/data/*/*.taxonomy
+!htc/hbgl/data/rcv1/rcv1.topics.hier.expanded
 
 # Python Virtual Environments
 venv/
