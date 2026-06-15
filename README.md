@@ -103,5 +103,9 @@ Y.txt: This file contains all hierarchical labels. Each line contains the label 
 It is necessary that the files for each dataset are located in their respective directories. For example, files for the WoS dataset should be stored in the wos folder, and files for the RCV1 dataset should be stored in the rcv1 folder. This ensures that the scripts can correctly access the required data.\
 The optimal training parameters for each dataset can be found in the [here](https://github.com/wzh9969/contrastive-htc). 
 
+## RADAr
+RADAr follows HBGL regarding the input format. However it requires a slightly different preprocessing that splits the texts from labels into separate files.
+Follow the instructions of the [RADAr](https://github.com/yousef-younes/RADAr) source code.
+
 # Guides
 - install and run XR-Transformer: [guide here](xr_transformer_guide.md)
