@@ -88,15 +88,17 @@ python xml_to_htc.py wiki10-31k \
 
 The train/validation split is deterministic and is made once over the complete
 training set. The historical script silently truncated outputs to 30,000 train
-and 5,000 validation records; truncation is now opt-in:
+and 5,000 validation records. This was not intentional in the paper experiments
+and is treated as a converter defect. Truncation is now opt-in for explicitly
+bounded experiments only:
 
 ```bash
 python xml_to_htc.py wiki10-31k \
   --max-train 30000 --max-validation 5000
 ```
 
-Record any truncation in the experiment metadata because it changes the study
-dataset.
+Record any truncation in the experiment metadata because it does not reproduce
+the paper's intended full-dataset protocol.
 
 ## HTC leaf-only variant
 

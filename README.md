@@ -116,10 +116,19 @@ continuous integration.
 
 ## Attribution
 
-Please cite the original paper for every model used. Per-integration provenance
-and upstream licences or permissions will be retained with the corresponding
-code; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). A citation for the
-cross-domain study will be added when the publication metadata is final.
+If you use this repository, please cite:
+
+> Florian Hauss, Tom Speier, Nerijus Bertalis, Paul Granse, Ferhat Gül, Leon
+> Menkel, David Schüler, Lukas Galke Poech, and Ansgar Scherp. *On the
+> Transferability Between Extreme Multi-Label and Hierarchical Text
+> Classification*. [doi:10.1145/3820755.3832808](https://doi.org/10.1145/3820755.3832808).
+
+Florian Hauss and Tom Speier contributed equally to this research.
+Machine-readable metadata is available in [`CITATION.cff`](CITATION.cff).
+
+Please also cite the original paper for every model used. Per-integration
+provenance and upstream licences or permissions are retained with the
+corresponding code; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
 Substantial implementation and experiment work in this repository was conducted
 as part of a student group project. The Git history is preserved so those

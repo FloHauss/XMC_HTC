@@ -52,9 +52,11 @@ The publication release should meet the following minimum standard:
 2. The repository contains a full copied PECOS tree. Its former submodule base
    and study modifications are now documented; broader reduction is deferred.
 3. At the audited baseline there was no top-level licence, citation file,
-   third-party notice or automated CI. A notice and bounded CI now exist; the
-   study licence and final citation metadata remain open.
-4. `XMLmodels/CascadeXML/requirements.txt` is empty.
+   third-party notice or automated CI. A citation file, notice and bounded CI
+   now exist; the study licence remains open.
+4. At the audited baseline `XMLmodels/CascadeXML/requirements.txt` was empty. It
+   now records the upstream-derived package inventory, explicitly labelled as
+   reconstructed and not yet installation-verified.
 5. `XMLmodels/CascadeXML/main_inference.py` imports the absent `Runner_accelerate` module.
 6. The root README contains stale paths, including `XMLmodels/CascadeXML/src`.
 7. Generated scheduler output, notebook checkpoints and a platform-specific compiled
@@ -64,10 +66,10 @@ The publication release should meet the following minimum standard:
    still require a redistribution review.
 9. No fresh-clone end-to-end execution has yet been recorded for the current tree.
 
-Resolution notes: the third-party notice and CI portions of item 3 and items 5-7
-have been corrected on the release-preparation branch. CascadeXML's missing
-environment remains open; its bounded upstream diff, entry-point fixes and
-limitations are recorded in
+Resolution notes: the citation, third-party notice and CI portions of item 3 and
+items 5-7 have been corrected on the release-preparation branch. CascadeXML's
+missing environment remains open; its bounded upstream diff, entry-point fixes
+and limitations are recorded in
 [`CASCADEXML_MODIFICATIONS.md`](CASCADEXML_MODIFICATIONS.md).
 
 The XR-Transformer former submodule base, post-conversion changes, corrected

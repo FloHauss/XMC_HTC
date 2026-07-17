@@ -1,0 +1,91 @@
+cff-version: 1.2.0
+message: "If you use this repository, please cite the associated paper and the original model implementations."
+type: software
+title: "On the Transferability Between Extreme Multi-Label and Hierarchical Text Classification"
+repository-code: "https://github.com/FloHauss/XMC_HTC"
+abstract: >-
+  Research software for a cross-domain study of established extreme multi-label
+  and hierarchical text classification models, including dataset conversion,
+  model integration, evaluation and reproducibility utilities.
+keywords:
+  - extreme multi-label classification
+  - hierarchical text classification
+  - transferability
+  - cross-domain evaluation
+authors:
+  - given-names: Florian
+    family-names: Hauss
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0008-5561-6773"
+  - given-names: Tom
+    family-names: Speier
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0006-2691-5921"
+  - given-names: Nerijus
+    family-names: Bertalis
+    affiliation: "Ulm University"
+  - given-names: Paul
+    family-names: Granse
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0009-7813-5312"
+  - given-names: Ferhat
+    family-names: Gül
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0003-0601-8949"
+  - given-names: Leon
+    family-names: Menkel
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0004-6058-7541"
+  - given-names: David
+    family-names: Schüler
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0009-0000-7665-9707"
+  - given-names: Lukas
+    family-names: Galke Poech
+    affiliation: "University of Southern Denmark"
+    orcid: "https://orcid.org/0000-0001-6124-1092"
+  - given-names: Ansgar
+    family-names: Scherp
+    affiliation: "Ulm University"
+    orcid: "https://orcid.org/0000-0002-2653-9245"
+preferred-citation:
+  type: conference-paper
+  title: "On the Transferability Between Extreme Multi-Label and Hierarchical Text Classification"
+  doi: "10.1145/3820755.3832808"
+  status: in-press
+  authors:
+    - given-names: Florian
+      family-names: Hauss
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0008-5561-6773"
+    - given-names: Tom
+      family-names: Speier
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0006-2691-5921"
+    - given-names: Nerijus
+      family-names: Bertalis
+      affiliation: "Ulm University"
+    - given-names: Paul
+      family-names: Granse
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0009-7813-5312"
+    - given-names: Ferhat
+      family-names: Gül
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0003-0601-8949"
+    - given-names: Leon
+      family-names: Menkel
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0004-6058-7541"
+    - given-names: David
+      family-names: Schüler
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0009-0000-7665-9707"
+    - given-names: Lukas
+      family-names: Galke Poech
+      affiliation: "University of Southern Denmark"
+      orcid: "https://orcid.org/0000-0001-6124-1092"
+    - given-names: Ansgar
+      family-names: Scherp
+      affiliation: "Ulm University"
+      orcid: "https://orcid.org/0000-0002-2653-9245"

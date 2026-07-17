@@ -3,3 +3,4 @@
 numpy==2.2.6
 scipy
 scikit-learn
+PyYAML
