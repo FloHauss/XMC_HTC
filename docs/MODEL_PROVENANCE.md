@@ -59,22 +59,19 @@ of every historical experiment unless explicitly stated.
 ### HGCLR
 
 - Repository: <https://github.com/wzh9969/contrastive-htc>
-- Working fork: server-side `contrastive-htc` checkout, branch `main`.
+- Working fork: historical `contrastive-htc` checkout, branch `main`.
 - Upstream reference inspected and reported by both audits on 2026-07-17:
   `322a7ff2d83c878534bed25bb288cf4479d00363`
 - Licence: MIT.
-- The working tree has four modified tracked files (`eval.py`, `utils.py`,
+- The working tree had four modified tracked files (`eval.py`, `utils.py`,
   `train.py`, and `test.py`) plus source-only preprocessing, seed-sweep,
   aggregation and cluster-support additions.
 - The modifications add P@1/P@3/P@5 and R-Precision, cost instrumentation,
-  H100/modern-stack compatibility, sequential five-seed execution and result
+  modern-stack compatibility, sequential five-seed execution and result
   aggregation.
-- About 14 GB of checkpoints and 770 MB of generated binarised data are present
-  on the server and must not be imported into Git.
-- The uncommitted source additions and binary patch of tracked modifications
-  were preserved in the intake archive before integration.
-- Intake archive SHA-256:
-  `eda8b6f236739820489626dae18923379f34c91fbc9fd0e677bef310bf5b3bc7`.
+- Generated checkpoints, binarised datasets and machine-local state were
+  excluded from the public repository.
+- The source changes were preserved during release intake before integration.
 
 ### RADAr
 
@@ -82,8 +79,8 @@ of every historical experiment unless explicitly stated.
 - Current upstream reference inspected on 2026-07-17:
   `5cb2b785dd488cab422ac1d3a2d7744ed925c648`
 - No top-level licence was detected in the inspected upstream checkout.
-- The project works directly with the repository owner. Credit and permission
-  should be recorded before the final public release.
+- Credit and redistribution permission should be recorded before the final
+  public release.
 - Upstream `requirements.txt` contains machine-specific `file:///` references;
   the release integration needs a portable environment specification.
 - Access to the implementation used in the study is currently unavailable.
