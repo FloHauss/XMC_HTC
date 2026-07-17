@@ -1,8 +1,8 @@
 # Paper-result reconciliation
 
 This record compares the author-supplied final paper tables with compact
-historical outputs retained in the repository. It does not treat a historical
-match as a fresh verification run.
+historical outputs examined during release preparation. It does not treat a
+historical match as a fresh verification run.
 
 ## Authoritative paper record
 
@@ -13,15 +13,20 @@ the best-performing methods stated in the paper text.
 
 ## HGCLR
 
-The five-seed JSON aggregates under `integrations/hgclr/results/candidate` match
-the WOS, NYT and RCV1-V2 paper rows across all six metrics. Candidate means and
-population standard deviations, converted to percentage points, differ from the
-displayed table entries by no more than 0.01.
+Candidate five-seed aggregates examined during release intake matched the WOS,
+NYT and RCV1-V2 paper rows across all six metrics. Candidate means and population
+standard deviations, converted to percentage points, differed from the displayed
+table entries by no more than 0.01.
 
-This establishes that these are the historical aggregates underlying, or
-numerically consistent with, the paper table. They remain labelled candidate
-because the historical empty-gold R-Precision audit was explicitly deferred and
-they are not new runs from the release tree.
+This establishes that the historical aggregates were underlying, or numerically
+consistent with, the paper table. The aggregate files are intentionally not
+published in this repository because they also contained non-authoritative cost
+and machine-specific audit data. The public release retains this reconciliation
+record and the authoritative paper table instead.
+
+The evidence remains historical rather than freshly verified because the
+empty-gold R-Precision audit was explicitly deferred and no new model run was
+performed from the release tree.
 
 ## XR-Transformer
 
