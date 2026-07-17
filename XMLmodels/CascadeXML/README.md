@@ -9,8 +9,8 @@ by this project.
 - Inspected base commit: `ce701f688aaf5d5c8abe979d192f9c8f224aec90`
 - Original paper: *CascadeXML: Rethinking Transformers for End-to-end
   Multi-resolution Training in Extreme Multi-label Classification* (2022)
-- Verification status: **Documented** - conversion helpers and source syntax are
-  tested, but no fresh GPU training run has been completed from this checkout.
+- Repository note: the adapted source and conversion helpers are included. The
+  exact historical runtime environment was not preserved.
 
 See [the modification record](../../docs/CASCADEXML_MODIFICATIONS.md) for the
 bounded upstream diff, result-affecting changes, fixes, and known limitations.

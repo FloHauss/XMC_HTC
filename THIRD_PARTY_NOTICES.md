@@ -18,8 +18,8 @@ follow the terms of each upstream project and cite the corresponding papers.
 - Upstream: <https://github.com/amzn/pecos>
 - Licence in the retained source tree: Apache-2.0
 - Retained licence: [`XMLmodels/pecos/LICENSE`](XMLmodels/pecos/LICENSE)
-- The repository contains study-specific execution and evaluation changes. Their
-  exact diff is still being isolated.
+- The repository contains study-specific execution and evaluation changes,
+  documented in [`docs/XR_TRANSFORMER_MODIFICATIONS.md`](docs/XR_TRANSFORMER_MODIFICATIONS.md).
 
 ## CascadeXML
 
@@ -42,7 +42,7 @@ follow the terms of each upstream project and cite the corresponding papers.
 
 - Upstream: <https://github.com/yousef-younes/RADAr>
 - The implementation used in the study is currently unavailable, so no RADAr
-  source is redistributed in this release-preparation tree.
+  source is redistributed in this repository.
 - The project works directly with the upstream owner and will preserve explicit
   credit if the study integration is added later.
 

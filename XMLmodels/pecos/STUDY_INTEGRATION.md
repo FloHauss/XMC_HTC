@@ -49,8 +49,9 @@ and test matrices.
 
 The ensemble launch scripts provide their own `--help` or usage output. They
 expect a working PECOS/XR-Transformer environment and the preprocessed dataset
-layout used by the historical workflow. They have been syntax-checked, but a
-fresh GPU training run has not yet been completed during release preparation.
+layout used by the study workflow. See
+[`xr_transformer_guide.md`](../../xr_transformer_guide.md) for the reconstructed
+environment constraints.
 
 ## Evaluation semantics
 
@@ -63,9 +64,9 @@ prediction support. This is not equivalent to thresholding a dense score matrix
 at a paper-selected decision threshold. These F1 values must therefore be
 described as support F1 unless a separate threshold protocol is specified.
 
-## Verification status
+## Repository note
 
-**Documented.** The provenance, parameter syntax, preprocessing invariants,
-metric edge cases and shell syntax have bounded automated checks. The full
-legacy environment, GPU training path and historical paper aggregates have not
-been independently reproduced from a fresh checkout.
+The provenance, parameter syntax, preprocessing invariants, metric edge cases
+and shell syntax are covered by repository checks. The retained compact XR
+outputs are archival and mostly do not correspond to the final paper tables;
+use [`RESULTS.md`](../../RESULTS.md) for the reported results.

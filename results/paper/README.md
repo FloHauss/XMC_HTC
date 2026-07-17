@@ -4,6 +4,9 @@
 of the two final paper tables supplied by the authors. It is the authoritative
 record of values reported in the paper, not output from a new release run.
 
+Most readers should use the formatted, explanatory tables in
+[`RESULTS.md`](../../RESULTS.md).
+
 ## Schema
 
 - `domain` is the source dataset family: `HTC` or `XML`.

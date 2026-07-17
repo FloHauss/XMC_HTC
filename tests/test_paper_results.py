@@ -56,6 +56,16 @@ class PaperResultTests(unittest.TestCase):
             ]
             self.assertEqual(actual, winners)
 
+    def test_human_readable_results_contain_every_reported_value(self):
+        rendered = (REPOSITORY_ROOT / "RESULTS.md").read_text(encoding="utf-8")
+        for row in self.rows:
+            if row["status"] == "did_not_complete":
+                self.assertIn(f'| {row["method"]}† | - | - | - | - | - | - |', rendered)
+                continue
+            for metric in METRICS:
+                value = f'{row[f"{metric}_mean"]} ± {row[f"{metric}_std"]}'
+                self.assertIn(value, rendered)
+
     def test_hgclr_candidates_match_paper_at_display_precision(self):
         aliases = {"WOS": "WebOfScience", "NYT": "nyt", "RCV1-V2": "rcv1"}
         candidate_keys = {

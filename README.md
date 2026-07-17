@@ -1,125 +1,80 @@
-# Cross-domain evaluation of XMC and HTC models
+# On the Transferability Between Extreme Multi-Label and Hierarchical Text Classification
 
-This repository accompanies a study of how established hierarchical text
-classification (HTC) and extreme multi-label classification (XMC) models behave
-when applied to datasets from the other domain.
+This repository accompanies our study of whether established extreme
+multi-label classification (XML) and hierarchical text classification (HTC)
+methods transfer effectively to datasets from the other domain.
 
-The evaluated models were developed by their respective original authors. This
-project does **not** claim ownership of CascadeXML, XR-Transformer, HBGL, HGCLR
-or RADAr. Its contribution is the cross-domain integration: dataset conversion,
-hierarchy preparation, configurations, evaluation, cost measurement and
-empirical comparison.
+We evaluate five existing methods - CascadeXML, XR-Transformer, HBGL, HGCLR and
+RADAr - on three HTC datasets (WOS, NYT and RCV1-V2) and two XML datasets
+(Wiki10-31K and AmazonCat-13K). The models were developed by their respective
+original authors. Our contribution is the cross-domain evaluation, including
+dataset conversion, model adaptation, evaluation and empirical comparison.
 
-> **Release status:** preparation in progress. Historical code and results are
-> being consolidated into an honest research artefact. A component marked
-> **Documented** is present but has not necessarily completed a new end-to-end
-> run from a fresh checkout.
+## At a glance
 
-## Evaluated methods
+- [Read the paper](https://doi.org/10.1145/3820755.3832808)
+- [Read the final results](RESULTS.md)
+- [Convert datasets between HTC and XML formats](dataset_transfer/README.md)
+- [Set up an individual model integration](#model-integrations)
+- [See authors and acknowledgements](AUTHORS.md)
+- [Cite the paper](#citation)
 
-| Method | Original implementation | Repository integration | Status |
+## Main findings
+
+- XML methods transfer strongly to HTC datasets and are competitive with native
+  HTC methods across ranking and F1 metrics.
+- HTC methods are less effective on the XML datasets, particularly on ranking
+  metrics.
+- HGCLR could not complete training on the XML datasets because its dense label
+  representations become prohibitively memory-intensive at XML label-set sizes.
+- No single method dominates every dataset and metric: ranking and F1 performance
+  often favour different model families.
+
+The complete values, including deviations over runs, are presented in
+[`RESULTS.md`](RESULTS.md).
+
+## Model integrations
+
+| Method | Original implementation | Study integration | Availability |
 | --- | --- | --- | --- |
-| CascadeXML | [xmc-aalto/cascadexml](https://github.com/xmc-aalto/cascadexml) | [`XMLmodels/CascadeXML`](XMLmodels/CascadeXML) | Documented |
-| XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos/STUDY_INTEGRATION.md) | Documented |
-| HBGL | [kongds/HBGL](https://github.com/kongds/HBGL) | [`htc/hbgl`](htc/hbgl) | Documented |
-| HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`integrations/hgclr`](integrations/hgclr) | Documented |
-| RADAr | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | Not currently available | Deferred |
+| CascadeXML | [xmc-aalto/cascadexml](https://github.com/xmc-aalto/cascadexml) | [`XMLmodels/CascadeXML`](XMLmodels/CascadeXML/README.md) | Included |
+| XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos/STUDY_INTEGRATION.md) | Included |
+| HBGL | [kongds/HBGL](https://github.com/kongds/HBGL) | [`htc/hbgl`](htc/hbgl/README.md) | Included |
+| HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`integrations/hgclr`](integrations/hgclr/README.md) | Included |
+| RADAr | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | Study code unavailable | Not included |
 
-The status definitions and evidence requirements are recorded in
-[`docs/RELEASE_READINESS.md`](docs/RELEASE_READINESS.md). Model provenance is
-tracked in [`docs/MODEL_PROVENANCE.md`](docs/MODEL_PROVENANCE.md).
+RADAr results are included in the paper and in [`RESULTS.md`](RESULTS.md), but
+the implementation used for the study is not currently available in this
+repository.
 
-## What this repository provides
+## Using the repository
 
-- conversion between the HTC JSONL and XMC text/label representations;
-- hierarchy and taxonomy preparation used for cross-domain datasets;
-- adapted launch and preprocessing scripts for the evaluated methods;
-- Micro-F1, Macro-F1, P@k and R-Precision evaluation support where applicable;
-- multi-seed aggregation and computational-cost records;
-- historical configurations and candidate result records;
-- explicit provenance, verification status and known limitations.
+There is no single environment for all five methods. The integrations retain
+different research-code dependency stacks and should be set up separately:
 
-## Repository map
-
-```text
-dataset_transfer/          HTC/XMC format conversion
-XMLPreprocessing/          XML preprocessing helpers
-XMLScripts/                XML hierarchy and feature scripts
-XMLmodels/CascadeXML/      Adapted CascadeXML source
-XMLmodels/pecos/           Historical XR-Transformer/PECOS working tree
-htc/hbgl/                  Adapted HBGL source
-integrations/hgclr/        Audited HGCLR study integration
-tests/                     Bounded release-validation tests
-docs/                      Provenance, inventory and release-readiness records
-```
-
-The copied PECOS tree and the older model directories are retained temporarily
-while their study-specific modifications are isolated. Their current layout
-should not be interpreted as the intended final release structure.
-
-## Getting started
-
-There is currently no single environment that supports every evaluated model.
-Several implementations depend on different legacy versions of PyTorch,
-Transformers, fairseq or PECOS. Follow the documentation for the integration you
-want to use:
-
-- [HGCLR integration and status](integrations/hgclr/README.md)
-- [HGCLR usage](integrations/hgclr/USAGE.md)
-- [HTC/XMC dataset conversion](dataset_transfer/README.md)
-- [reproducibility and environment matrix](docs/REPRODUCIBILITY.md)
-- [XR-Transformer integration and status](XMLmodels/pecos/STUDY_INTEGRATION.md)
+- [CascadeXML setup and expected data](XMLmodels/CascadeXML/README.md)
 - [XR-Transformer environment guide](xr_transformer_guide.md)
-- [historical model and preprocessing instructions](docs/LEGACY_USAGE.md)
+- [HBGL setup, preprocessing and launchers](htc/hbgl/README.md)
+- [HGCLR setup and usage](integrations/hgclr/USAGE.md)
+- [HTC/XML dataset conversion](dataset_transfer/README.md)
 
-The legacy instructions are preserved for provenance and still require
-verification and editing. Paths or commands appearing only there should not yet
-be treated as release-tested interfaces.
+The repository does not provide a unified training API. It preserves the study
+integrations and the commands needed to understand and reuse the adaptations.
+More detailed environment notes are available in the
+[reproducibility guide](docs/REPRODUCIBILITY.md).
 
 ## Data
 
-Datasets are not distributed as a complete part of this repository. NYT and
-RCV1-V2 in particular have acquisition or redistribution conditions that users
-must satisfy independently. Dataset-specific instructions should be used to
-obtain the original data and reproduce the derived representations.
+The datasets are not redistributed as part of this repository. Users must obtain
+the original WOS, NYT, RCV1-V2, Wiki10-31K and AmazonCat-13K data under the terms
+of their respective providers.
 
-Generated model inputs (`.bin`, `.idx`, `.pt`), checkpoints, caches and raw
-scheduler logs are intentionally excluded from Git. Taxonomies or label metadata
-retained in the release must be accompanied by their provenance and generation
-procedure.
+The converters under [`dataset_transfer/`](dataset_transfer/README.md) translate
+between the line-oriented XML representation and the JSON Lines HTC
+representation used by the model integrations. Generated datasets, checkpoints,
+caches and scheduler logs are excluded from Git.
 
-## Results and reproducibility
-
-The author-supplied final paper tables are transcribed in
-[`results/paper/table_results.csv`](results/paper/table_results.csv). These are
-authoritative reported values, not a new verification run. Their comparison to
-retained historical aggregates is documented in
-[`docs/RESULT_RECONCILIATION.md`](docs/RESULT_RECONCILIATION.md).
-
-HGCLR candidate five-seed aggregates are retained under
-[`integrations/hgclr/results/candidate`](integrations/hgclr/results/candidate).
-They match all corresponding paper entries within 0.01 percentage point and are
-now paper-reconciled historical records. They remain candidate rather than
-verified results because the deferred empty-gold audit and fresh execution have
-not been completed.
-
-The current repository audit and proposed disposition of historical material are
-documented in [`docs/REPOSITORY_INVENTORY.md`](docs/REPOSITORY_INVENTORY.md).
-
-## Validation
-
-The bounded release checks cover metric and conversion invariants for HGCLR,
-CascadeXML, HBGL and XR-Transformer, as well as release-document links:
-
-```bash
-python -m pip install -r requirements-release.txt
-bash scripts/check_release.sh
-```
-
-Full GPU training is intentionally not part of the local test suite or future
-continuous integration.
-
-## Attribution
+## Citation
 
 If you use this repository, please cite:
 
@@ -129,23 +84,24 @@ If you use this repository, please cite:
 > Classification*. [doi:10.1145/3820755.3832808](https://doi.org/10.1145/3820755.3832808).
 
 Florian Hauss and Tom Speier contributed equally to this research.
-Machine-readable metadata is available in [`CITATION.cff`](CITATION.cff).
+Machine-readable citation metadata is provided in [`CITATION.cff`](CITATION.cff).
 
-Please also cite the original paper for every model used. Per-integration
-provenance and upstream licences or permissions are retained with the
-corresponding code; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
+Please also cite the original publication for each evaluated method. Upstream
+repositories, licences and attribution are listed in
+[`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md).
 
-Substantial implementation and experiment work in this repository was conducted
-as part of a student group project. The Git history is preserved so those
-contributions remain attributable.
+## Limitations
 
-## Known limitations
+- RADAr study code is not currently available.
+- The repository contains adapted research implementations with different
+  environments; it is not a production model library.
+- The complete copied PECOS tree is retained to avoid destabilising the
+  XR-Transformer integration, so that directory contains more than the study
+  itself requires.
+- Some original per-seed experiment outputs are unavailable. The values in
+  [`RESULTS.md`](RESULTS.md) are the authoritative paper results.
 
-- RADAr study code is currently unavailable and its integration is deferred.
-- CascadeXML, XR-Transformer and HBGL have not yet completed fresh-checkout
-  release verification.
-- The historical PECOS tree contains considerably more upstream material than
-  the study needs.
-- Some legacy scripts and raw outputs still require removal or consolidation.
-- The release does not aim to provide a unified production API for the five
-  third-party models.
+## Further documentation
+
+The [documentation index](docs/README.md) separates practical guides, model
+provenance and maintainer-facing release records.

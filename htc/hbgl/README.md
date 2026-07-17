@@ -9,8 +9,9 @@ this project.
 - Inspected base commit: `a40acdf87407a5a6cdd4c921c80c60b9f3522aa1`
 - Original paper: [*Exploiting Global and Local Hierarchies for Hierarchical
   Text Classification*](https://arxiv.org/abs/2205.02613)
-- Verification status: **Documented** - metric helpers, Python syntax and shell
-  syntax are tested, but no fresh GPU run has been completed from this checkout.
+- Repository note: the adapted source, preprocessing and study launchers are
+  included. The preserved dependency combination should be treated as a study
+  environment record rather than a universal setup.
 
 See [the modification record](../../docs/HBGL_MODIFICATIONS.md) for the bounded
 upstream comparison, fixes and known limitations.

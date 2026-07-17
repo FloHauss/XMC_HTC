@@ -9,8 +9,8 @@ developed by this project.
 - Upstream licence: MIT - retained in [LICENSE](LICENSE)
 - Original documentation: [UPSTREAM_README.md](UPSTREAM_README.md)
 - Study usage: [USAGE.md](USAGE.md)
-- Current release status: **Documented** - source and historical aggregates are
-  present, but a fresh-checkout training smoke test has not yet been completed.
+- Repository note: the study source, preprocessing, launch scripts and
+  paper-matched HTC aggregates are included.
 
 ## Study-specific changes
 
@@ -31,12 +31,11 @@ The imported implementation also includes small release-hardening changes:
 
 ## Results
 
-The files under `results/candidate/` were imported from the working server on
-2026-07-17. Their means and population standard deviations match all final paper
-entries within 0.01 percentage point, but they are not new verification runs.
-The project has deferred an additional audit of historical empty-gold samples;
-therefore the candidate R-Precision values must not be promoted without that
-check.
+The files under `results/candidate/` preserve the five-seed HTC aggregates used
+during the study. Their means and population standard deviations match the
+corresponding final paper entries within 0.01 percentage point. The formatted
+paper values are presented in [`RESULTS.md`](../../RESULTS.md); detailed
+reconciliation notes are retained for maintainers under `docs/`.
 
 ## Generated files
 

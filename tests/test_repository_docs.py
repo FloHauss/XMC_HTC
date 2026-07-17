@@ -11,6 +11,8 @@ class DocumentationLinkTests(unittest.TestCase):
     def test_release_facing_relative_links_exist(self):
         documents = [
             REPOSITORY_ROOT / "README.md",
+            REPOSITORY_ROOT / "RESULTS.md",
+            REPOSITORY_ROOT / "AUTHORS.md",
             REPOSITORY_ROOT / "THIRD_PARTY_NOTICES.md",
             REPOSITORY_ROOT / "integrations" / "hgclr" / "README.md",
             REPOSITORY_ROOT / "integrations" / "hgclr" / "USAGE.md",
@@ -29,6 +31,7 @@ class DocumentationLinkTests(unittest.TestCase):
             REPOSITORY_ROOT / "CITATION.cff",
             REPOSITORY_ROOT / "results" / "paper" / "README.md",
             REPOSITORY_ROOT / "docs" / "RESULT_RECONCILIATION.md",
+            REPOSITORY_ROOT / "docs" / "README.md",
         ]
         missing = []
         for document in documents:
