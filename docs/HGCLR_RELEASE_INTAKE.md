@@ -1,17 +1,17 @@
 # HGCLR release intake
 
-This document reconciles the 2026-07-17 server-side audit of the working HGCLR
+This document reconciles the 2026-07-17 audit of the historical HGCLR working
 fork with the XMC/HTC release-readiness audit.
 
 ## Source state
 
-- Working checkout: server-side `contrastive-htc` checkout
+- Working checkout: historical `contrastive-htc` checkout
 - Working branch: `main`
 - Upstream: <https://github.com/wzh9969/contrastive-htc>
 - Upstream reference: `322a7ff2d83c878534bed25bb288cf4479d00363`
 - Licence: MIT
 - Conda environment used historically: `contrastive-htc`
-- Server audit stated that all release changes were uncommitted at intake time.
+- The audited release changes were uncommitted at intake time.
 
 The canonical method abbreviation used in release-facing material is **HGCLR**.
 
@@ -35,7 +35,7 @@ The canonical method abbreviation used in release-facing material is **HGCLR**.
 - `aggregate_seed_results.py`
 - `aggregate_webofscience_results.py`
 - `summarize_seed_sweep.py`
-- bwUniCluster setup, submission and job scripts, after portability review
+- portable cluster setup, submission and job scripts
 - reconciliation notes for the final paper results
 
 These files should not be described as a new HGCLR implementation. They are the
@@ -44,10 +44,11 @@ study.
 
 ## Excluded generated content
 
-- `checkpoints/` - approximately 14 GB
-- binarised `data/*/{Y,tok}.{bin,idx}`
+- trained checkpoints
+- binarised `data/*/{Y,tok}.{bin,idx}` files
 - `slot.pt`, `split.pt` and `bert_value_dict.pt`
-- historical server environment exports and non-authoritative cost aggregates
+- historical machine-specific environment exports and non-authoritative cost
+  aggregates
 - caches, raw scheduler logs and environment-local state
 
 Trained checkpoints may be archived separately if there is a concrete reuse
@@ -94,5 +95,5 @@ The source-only intake is now present and the integration status is
 - no machine-specific path is required.
 
 A full five-seed rerun is not required merely to label the integration
-Smoke-tested. Historical aggregates should remain explicitly distinguished from
-new verification evidence.
+Smoke-tested. Historical aggregate evidence should remain explicitly
+distinguished from new verification evidence.
