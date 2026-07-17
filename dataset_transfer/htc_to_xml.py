@@ -1,123 +1,84 @@
-import sys
-import os
+#!/usr/bin/env python3
+"""Convert HTC JSONL splits to the shared plain-text XML representation."""
 
+import argparse
 import json
-import numpy as np
-import tqdm as tqdm
-    
-def reverse_hierarchy(dataset):
-    path = 'input/htc/' + dataset + '/' + dataset + '.taxonomy'
-    hierarchy = {}
+from pathlib import Path
 
-    with open(path, 'r') as file:
-        for line in file:
-            labels = line.strip().split('\t')
+try:
+    from .common import leaf_only, load_taxonomy, read_jsonl
+except ImportError:  # Direct execution from dataset_transfer/.
+    from common import leaf_only, load_taxonomy, read_jsonl
 
-            parent = labels[0]
-            children = labels[1:]
-            if parent not in hierarchy:
-                hierarchy[parent] = set()
-            hierarchy[parent].update(children)
 
-    precursor_map = {}
-    for parent, children in hierarchy.items():
-        for child in children:
-            if child not in precursor_map:
-                precursor_map[child] = set()
-            precursor_map[child].add(parent)
+def _normalise_text(text):
+    return " ".join(text.splitlines())
 
-    return precursor_map
 
-def filter_labels(datapoint_labels, precursor_map):
-    filtered_labels = set(datapoint_labels)
-    for label in datapoint_labels:
-        if label in precursor_map:
-            precursors = precursor_map[label]
-            for precursor in precursors:
-                if precursor in filtered_labels:
-                    filtered_labels.remove(precursor)
-    return filtered_labels
+def _convert_records(records, hierarchy, leaves_only):
+    converted = []
+    known_labels = set(hierarchy)
+    for children in hierarchy.values():
+        known_labels.update(children)
+    for index, record in enumerate(records):
+        labels = list(dict.fromkeys(record["label"]))
+        if leaves_only:
+            unknown = set(labels) - known_labels
+            if unknown:
+                raise ValueError(f"Example {index} has labels absent from the taxonomy: {sorted(unknown)}")
+            labels = leaf_only(labels, hierarchy)
+        if not labels:
+            raise ValueError(f"Example {index} has no labels after filtering")
+        converted.append((_normalise_text(record["token"]), labels))
+    return converted
 
-def unique_labels(data, r_hiera):
-    unique_labels = set()
-    for line in tqdm.tqdm(data):
-        data_point = json.loads(line)
 
-        labels = data_point['label']
-        labels = filter_labels(labels, r_hiera)
-        for label in labels:
-            unique_labels.add(label)
+def convert(dataset, input_root=Path("input/htc"), output_root=Path("output/htc"), leaves_only=False):
+    input_dir = Path(input_root) / dataset
+    suffix = "_leaves" if leaves_only else ""
+    output_dir = Path(output_root) / f"{dataset}{suffix}"
+    output_dir.mkdir(parents=True, exist_ok=True)
 
-    return unique_labels
+    hierarchy = load_taxonomy(input_dir / f"{dataset}.taxonomy") if leaves_only else {}
+    train = read_jsonl(input_dir / f"{dataset}_train.json")
+    validation = read_jsonl(input_dir / f"{dataset}_val.json")
+    test = read_jsonl(input_dir / f"{dataset}_test.json")
 
-def htc_to_xml(data, id_map, r_hiera):
-    labels_list = []
-    raw_texts_list = []
+    converted_train = _convert_records(train + validation, hierarchy, leaves_only)
+    converted_test = _convert_records(test, hierarchy, leaves_only)
+    label_names = sorted(
+        {label for _, labels in converted_train + converted_test for label in labels},
+        key=lambda value: (value.casefold(), value),
+    )
+    label_to_id = {label: index for index, label in enumerate(label_names)}
 
-    for line in tqdm.tqdm(data):
-        data_point = json.loads(line)
+    (output_dir / "id_map.json").write_text(
+        json.dumps(label_to_id, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"
+    )
+    _write_split(output_dir, "train", converted_train, label_to_id)
+    _write_split(output_dir, "test", converted_test, label_to_id)
+    return output_dir
 
-        labels = data_point['label']
-        labels = filter_labels(labels, r_hiera)
-        labels = [str(id_map[label]) for label in labels if label in id_map]
-        labels_text = ' '.join(labels)
-        
-        labels_list.append(labels_text)
 
-        raw_texts_list.append(data_point['token'].replace('\n', ''))
+def _write_split(output_dir, split, records, label_to_id):
+    texts = "".join(f"{text}\n" for text, _ in records)
+    labels = "".join(
+        ",".join(str(label_to_id[label]) for label in row_labels) + "\n"
+        for _, row_labels in records
+    )
+    (output_dir / f"{split}_raw_texts.txt").write_text(texts, encoding="utf-8")
+    (output_dir / f"{split}_labels.txt").write_text(labels, encoding="utf-8")
 
-    print(len(labels_list))
-    print(len(raw_texts_list))
 
-    return (raw_texts_list, labels_list)
+def parse_arguments():
+    parser = argparse.ArgumentParser()
+    parser.add_argument("dataset")
+    parser.add_argument("--input-root", type=Path, default=Path("input/htc"))
+    parser.add_argument("--output-root", type=Path, default=Path("output/htc"))
+    parser.add_argument("--leaves-only", action="store_true")
+    return parser.parse_args()
 
-def split_train_test(dataset, leaves_only):
-    in_path = 'input/htc/' + dataset + '/' + dataset
-    out_path = 'output/htc/' + dataset + '/' if not leaves_only else 'output/htc/' + dataset + '_leaves/'
 
-    if not os.path.exists(out_path):
-        os.makedirs(out_path)
-
-    data_train = []
-    data_val = []
-    data_test = []
-    with open(in_path + '_train.json') as train, open(in_path + '_val.json') as val, open(in_path + '_test.json') as test:
-        data_train = train.readlines()
-        data_val = val.readlines()
-        data_test = test.readlines()
-    data_train += data_val
-
-    r_hiera = reverse_hierarchy(dataset) if leaves_only else {}
-
-    train_labels = unique_labels(data_train, r_hiera)
-    test_labels = unique_labels(data_test, r_hiera)
-    all_labels = train_labels | test_labels
-    all_labels = sorted(all_labels, key=str.lower)
-    print(f'label count: {len(all_labels)}')
-
-    id_map = dict()
-    for id, label in enumerate(all_labels):
-        id_map[label] = id
-    with open(out_path + 'id_map.json', 'w+') as f:
-        json.dump(id_map, f, indent=4)
-
-    train_raw_texts, train_labels = htc_to_xml(data_train, id_map, r_hiera)
-    test_raw_texts, test_labels = htc_to_xml(data_test, id_map, r_hiera)
-
-    with open(out_path + 'train_labels.txt', 'w+') as f:
-        f.writelines('%s\n' % labels for labels in train_labels)
-    with open(out_path + 'train_raw_texts.txt', 'w+') as f:
-        f.writelines('%s\n' % text for text in train_raw_texts)
-
-    with open(out_path + 'test_labels.txt', 'w+') as f:
-        f.writelines('%s\n' % labels for labels in test_labels)
-    with open(out_path + 'test_raw_texts.txt', 'w+') as f:
-        f.writelines('%s\n' % text for text in test_raw_texts)
-
-    return
-
-if __name__ == '__main__':
-    dataset = sys.argv[1]
-    leaves_only = True if len(sys.argv) > 2 else False
-    split_train_test(dataset, leaves_only)
-    
+if __name__ == "__main__":
+    arguments = parse_arguments()
+    convert(arguments.dataset, arguments.input_root, arguments.output_root, arguments.leaves_only)

@@ -1,53 +1,124 @@
-# How to use:
+# HTC/XMC dataset conversion
 
-## XML to HTC
-### input folder:
-- within a specific dataset folder, e.g. 'input/xml/wiki10-31k', 6 files are required:
-    - the taxonomy file: '{dataset_name}.taxonomy'
-    - the label map: '{dataset_name}_label_map.txt'
-    - the test labels: '{dataset_name}_test_labels.txt'
-    - the test texts: '{dataset_name}_test_texts.txt'
-    - the train labels: '{dataset_name}_train_labels.txt'
-    - the train texts: '{dataset_name}_train_texts.txt'
-- the taxonomy is pre-generated. [Number_Clusterings !](https://drive.google.com/drive/folders/1f9ZoAEzkVxxcBUdYbWfpSY1Cmf8O5ON_)
-- the label maps can be found within the [XMLRepository](http://manikvarma.org/downloads/XC/XMLRepository.html)
-    - they are within the BoW Features for the specific dataset and typically named 'Y.txt'
-- the test and train text files can be found [here](https://github.com/yourh/AttentionXML) under 'Datasets' in the README
-- it is required to rename these files to match the above mentioned file names
+These study-owned converters translate between the JSON Lines representation
+used by the HTC integrations and the plain text/sparse-label input used by the
+XML integrations. They use only the Python standard library.
 
-### transfer:
-- use 'python3 xml_to_htc dataset_name' to convert the XML-format dataset to an HTC-format one
+Dataset content is not included. Users must obtain the source datasets under
+their applicable terms and place them in an input root outside Git or in one of
+the ignored working directories.
 
-### output folder:
-- within a specific dataset folder, e.g. 'output/xml/wiki10-31k', 4 files should have been generated:
-    - the taxonomy file: '{dataset_name}.taxonomy' (Notice that this file is effectivley a copy of the original .taxonomy file)
-    - the train file: '{dataset_name}_train.json'
-    - the val file: '{dataset_name}_val.json'
-    - the test file: '{dataset_name}_test.json'
-- these files can be put into the specific data folders within HBGL
+## HTC JSON Lines format
+
+Each record must contain a string `token` and a non-empty label list:
+
+```json
+{"token": "Example document", "label": ["parent", "child"]}
+```
+
+A taxonomy is tab-separated with one parent followed by its children:
+
+```text
+Root\tparent
+parent\tchild
+```
+
+The converters reject cyclic taxonomies, malformed records, empty gold labels
+and mismatched text/label counts.
 
 ## HTC to XML
-### input folder:
-- wihtin a specific dataset folder, e.g. 'input/htc/wos', 4 files are required:
-    - the taxonomy file: '{dataset_name}.taxonomy'
-    - the train file: '{dataset_name}_train.json'
-    - the val file: '{dataset_name}_val.json'
-    - the test file: '{dataset_name}_test.json'
-- these files can be obtained by following the preprocessing steps for HBGL (described within the initital README.md)
 
-### transfer:
-- use 'python3 htc_to_xml dataset_name' to convert the HTC-format dataset to an XML format one
-- you can give an additional input parameter called 'leaves_only' leading to only the most specific labels of a datapoint being transferred. E.g. a datapoint with label A and label B might only contain label B after the process IF label A is a predecessor of B. 
-    
-    This trimming of the dataset might be interesting in some cases, as it reduces the dataset down to the essential labels. "Lost" predecessor labels can be restored by looking them up in the original hierarchy file.
+Place the following files under `<input-root>/<dataset>/`:
 
-- you can also call 'python3 htc_to_htc_lite dataset_name' to convert the HTC-format dataset to an HTC-format dataset were this modificatin is applied
+```text
+<dataset>.taxonomy
+<dataset>_train.json
+<dataset>_val.json
+<dataset>_test.json
+```
 
-### out folder:
-- within a specific dataset folder, e.g. 'input/xml/wiki10-31k', 5 files should have been generated:
-    - the id map: 'id_map.txt' (this files sorts each label within the dataset alphabetically and maps its position as its id. E.g. the first label of wos 'Addiction' will be mapped to 0)
-    - the test labels: 'test_labels.txt'
-    - the test texts: 'test_texts.txt'
-    - the train labels: 'train_labels.txt'
-    - the train texts: 'train_texts.txt'
-- you can look into the initial README.md on how to include these converted files for the respective XML model
+Then run:
+
+```bash
+cd dataset_transfer
+python htc_to_xml.py wos \
+  --input-root /path/to/input/htc \
+  --output-root /path/to/output/xml
+```
+
+Training and validation records are combined because the historical XML
+workflow has no separate validation input. Output label rows are
+comma-separated zero-based IDs, matching the label syntax used by the release
+CascadeXML and XR-Transformer preprocessors. `id_map.json` records the deterministic
+case-insensitive label ordering.
+
+Use `--leaves-only` to remove every selected label that is an ancestor - direct
+or transitive - of another selected label:
+
+```bash
+python htc_to_xml.py wos --leaves-only \
+  --input-root /path/to/input/htc \
+  --output-root /path/to/output/xml
+```
+
+## XML to HTC
+
+Place these files under `<input-root>/<dataset>/`:
+
+```text
+<dataset>.taxonomy
+<dataset>_label_map.txt
+<dataset>_train_labels.txt
+<dataset>_train_texts.txt
+<dataset>_test_labels.txt
+<dataset>_test_texts.txt
+```
+
+Taxonomy and label files may contain numeric IDs referring to the zero-based
+line positions in the label map. The converter restores ancestor labels and,
+by default, excludes the synthetic `Root` label from examples.
+
+```bash
+python xml_to_htc.py wiki10-31k \
+  --input-root /path/to/input/xml \
+  --output-root /path/to/output/htc \
+  --validation-fraction 0.2 \
+  --random-seed 0
+```
+
+The train/validation split is deterministic and is made once over the complete
+training set. The historical script silently truncated outputs to 30,000 train
+and 5,000 validation records; truncation is now opt-in:
+
+```bash
+python xml_to_htc.py wiki10-31k \
+  --max-train 30000 --max-validation 5000
+```
+
+Record any truncation in the experiment metadata because it changes the study
+dataset.
+
+## HTC leaf-only variant
+
+To retain only the most specific selected labels while staying in HTC format:
+
+```bash
+python htc_to_htc_lite.py wos \
+  --input-root /path/to/input/htc \
+  --output-root /path/to/output/htc-lite
+```
+
+The output taxonomy contracts omitted intermediate nodes and connects each
+retained node to its nearest retained descendants. All retained labels must be
+reachable from `Root`; otherwise conversion fails rather than writing an
+incomplete hierarchy.
+
+## Reproducibility notes
+
+- Input records keep their original order except for the deterministic
+  XML-to-HTC train/validation assignment.
+- Label IDs and taxonomy children are written deterministically.
+- Newlines embedded in HTC text are replaced by spaces for line-oriented XML
+  input.
+- Generated outputs should not be committed unless they are demonstrably
+  redistributable metadata rather than corpus content.

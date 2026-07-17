@@ -25,6 +25,7 @@ class DocumentationLinkTests(unittest.TestCase):
             REPOSITORY_ROOT / "docs" / "XR_TRANSFORMER_MODIFICATIONS.md",
             REPOSITORY_ROOT / "docs" / "REPRODUCIBILITY.md",
             REPOSITORY_ROOT / "xr_transformer_guide.md",
+            REPOSITORY_ROOT / "dataset_transfer" / "README.md",
         ]
         missing = []
         for document in documents:
