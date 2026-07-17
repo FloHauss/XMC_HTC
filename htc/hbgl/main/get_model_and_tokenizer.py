@@ -110,8 +110,11 @@ def get_model_and_tokenizer(args, logger):
         if args.label_cpt:
             # for compare with same seed
             rng_state = torch.get_rng_state()
-            if os.path.exists('trained_label_embeddings.pt'):
-                checkpoint = torch.load('trained_label_embeddings.pt')
+            embedding_checkpoint = os.path.join(
+                args.output_dir, 'trained_label_embeddings.pt'
+            )
+            if os.path.exists(embedding_checkpoint):
+                checkpoint = torch.load(embedding_checkpoint)
                 init_label_emb = checkpoint['embeddings']
             else:
                 from collections import defaultdict
@@ -256,7 +259,7 @@ def get_model_and_tokenizer(args, logger):
                 torch.save({
                     'embeddings': init_label_emb,
                     'label_map': _label_dict
-                }, 'trained_label_embeddings.pt')
+                }, embedding_checkpoint)
 
             # for compare with same seed
             torch.set_rng_state(rng_state)

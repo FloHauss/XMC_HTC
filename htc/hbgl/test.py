@@ -137,9 +137,9 @@ def main(flags=None):
     if args.max_tgt_length >= args.max_seq_length - 2:
         raise ValueError("Maximum tgt length exceeds max seq length - 2.")
 
-    device = torch.device(
-        "cuda" if torch.cuda.is_available() else "cpu")
-    n_gpu = torch.cuda.device_count()
+    use_cuda = torch.cuda.is_available() and not args.no_cuda
+    device = torch.device("cuda" if use_cuda else "cpu")
+    n_gpu = torch.cuda.device_count() if use_cuda else 0
 
     actual_seed = args.seed
     if args.seed > 0:
@@ -156,7 +156,7 @@ def main(flags=None):
         np.random.seed(random_seed)
         torch.manual_seed(random_seed)
         if n_gpu > 0:
-            torch.cuda.manual_seed_all(args.seed)
+            torch.cuda.manual_seed_all(random_seed)
 
     tokenizer = TOKENIZER_CLASSES[args.model_type].from_pretrained(
         args.tokenizer_name, do_lower_case=args.do_lower_case,
@@ -354,35 +354,46 @@ def main(flags=None):
                 fout.write(l)
                 fout.write("\n")
 
-        import pickle
-        from eval import evaluate, evaluate_PK, evaluate_RP
+        from eval import evaluate, evaluate_PK, evaluate_RP, label_token_to_id
+        if not args.add_vocab_file:
+            raise ValueError("--add_vocab_file is required for HBGL evaluation")
+
         def token_to_id(token):
-            token = token.lower()
-            try:
-                token = int(token.replace('[a_', '').replace(']', ''))
-                token = 0 if token >= len(label_map) else token
-                return token
-            except:
-                return 0
+            return label_token_to_id(token, len(label_map))
  
         if args.model_type == 'roberta':
             def roberta_token_to_id(token):
                 token = token.replace("<s>", '').replace('[A_', ' ').replace(']', ' ').split(' ')
-                token = [int(i) for i in token if i != '']
+                token = [int(i) for i in token if i.isdigit()]
+                token = [i for i in token if 0 <= i < len(label_map)]
                 return token
             predict_labels = [roberta_token_to_id(i) for i in output_lines]
         else:
             predict_labels = [i.replace("\n", '').split(' ') for i in output_lines]
           #  predict_labels = [list(set([token_to_id(j) for j  in i])) for i in predict_labels]
-            predict_labels = [list(dict.fromkeys([token_to_id(j) for j in i])) for i in predict_labels]
+            predict_labels = [
+                list(dict.fromkeys(
+                    label_id for label_id in (token_to_id(token) for token in row)
+                    if label_id is not None
+                ))
+                for row in predict_labels
+            ]
         with open(args.input_file) as f:
             gd_labels = [json.loads(i)['tgt'] for i in f]
-            gd_labels = [[token_to_id(j) for j  in i.split(' ')] for i in gd_labels]
+            parsed_gold = []
+            for row, labels in enumerate(gd_labels):
+                parsed = [token_to_id(token) for token in labels.split()]
+                if not parsed or any(label is None for label in parsed):
+                    raise ValueError(f"Invalid or empty gold labels in example {row}")
+                parsed_gold.append(parsed)
+            gd_labels = parsed_gold
             
 
         with open(args.add_vocab_file, 'rb') as f:
             label_map = pickle.load(f)
         id2label = {token_to_id(label_map[k]): k for k in label_map}
+        if None in id2label:
+            raise ValueError("Label map contains malformed or out-of-range tokens")
 
         if (args.ignore_meta_label):
             valid_labels = set()
@@ -394,7 +405,7 @@ def main(flags=None):
             gd_labels = [[label for label in l if label in valid_labels] for l in gd_labels]
             id2label = {k: v for k, v in id2label.items() if k in valid_labels}
 
-        output_dir = "results"
+        output_dir = os.path.join(os.path.dirname(model_recover_path), "results")
         if not os.path.exists(output_dir):
             os.makedirs(output_dir)
 
@@ -405,7 +416,7 @@ def main(flags=None):
 
         # 3. Construct the filename
         # This will result in something like: wos_test_generated_run_1_s42.txt
-        results_filename = f"{dataset_name}_{args.seed}.txt"
+        results_filename = f"{dataset_name}_{args.job_id}_{actual_seed}.txt"
         save_path = os.path.join(output_dir, results_filename)
 
         results_RP = evaluate_RP(predict_labels, gd_labels)

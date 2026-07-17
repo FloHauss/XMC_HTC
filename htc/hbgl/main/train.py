@@ -1,10 +1,12 @@
 from main.prepare_for_training import prepare_for_training
 
 import os
+import math
 import torch
 import shutil
 import tqdm
 import wandb
+from torch.utils.tensorboard import SummaryWriter
 
 # ???
 from torch.utils.data import (DataLoader, SequentialSampler)
@@ -39,12 +41,19 @@ def train(args, training_features, model, tokenizer, logger):
     model.to(args.device)
     model, optimizer = prepare_for_training(args, model, checkpoint_state_dict, amp=amp)
 
-    per_node_train_batch_size = args.per_gpu_train_batch_size * args.n_gpu * args.gradient_accumulation_steps
+    best_macro_f1_path, best_micro_f1_path = None, None
+    per_node_train_batch_size = (
+        args.per_gpu_train_batch_size
+        * max(1, args.n_gpu)
+        * args.gradient_accumulation_steps
+    )
     train_batch_size = per_node_train_batch_size * (torch.distributed.get_world_size() if args.local_rank != -1 else 1)
     global_step = recover_step if recover_step else 0
 
     if args.num_training_steps == -1:
-        args.num_training_steps = args.num_training_epochs * len(training_features) / train_batch_size
+        args.num_training_steps = math.ceil(
+            args.num_training_epochs * len(training_features) / train_batch_size
+        )
 
     scheduler = get_linear_schedule_with_warmup(
         optimizer, num_warmup_steps=args.num_warmup_steps,
@@ -66,7 +75,7 @@ def train(args, training_features, model, tokenizer, logger):
 
 
     logger.info("Check dataset:")
-    for i in range(5):
+    for i in range(min(5, len(train_dataset))):
         source_ids, target_ids = train_dataset.__getitem__(i)[:2]
         logger.info("Instance-%d" % i)
         logger.info("Source tokens = %s" % " ".join(tokenizer.convert_ids_to_tokens(source_ids)))
@@ -114,10 +123,8 @@ def train(args, training_features, model, tokenizer, logger):
 
         tr_loss, logging_loss = 0.0, 0.0
         best_macro_f1, best_micro_f1 = 0, 0
-        best_macro_f1_path, best_micro_f1_path = None, None
-
         for step, batch in enumerate(train_iterator):
-            if global_step > args.num_training_steps:
+            if global_step >= args.num_training_steps:
                 break
             batch = tuple(t.to(args.device) for t in batch)
             if args.mask_way == 'v2':

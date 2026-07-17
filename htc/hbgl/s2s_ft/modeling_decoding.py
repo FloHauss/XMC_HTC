@@ -1246,7 +1246,10 @@ class BertForSeq2SeqDecoder(PreTrainedBertModel):
 
                     _pred_ids = []
                     for i in range(prediction_scores.shape[0]):
-                        pred_ids = torch.arange(prediction_scores.shape[-1], device="cuda")[prediction_scores[i, -1]]
+                        pred_ids = torch.arange(
+                            prediction_scores.shape[-1],
+                            device=prediction_scores.device,
+                        )[prediction_scores[i, -1]]
                         sep_mask = pred_ids == 0
                         pred_ids[sep_mask] = self.eos_id
                         pred_ids[~sep_mask] += lsi - 1

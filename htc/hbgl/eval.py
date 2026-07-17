@@ -2,6 +2,19 @@
 # coding:utf-8
 
 import numpy as np
+import re
+
+
+LABEL_TOKEN = re.compile(r"\[a_(\d+)\]", re.IGNORECASE)
+
+
+def label_token_to_id(token, num_labels):
+    """Return a valid HBGL label ID, or None for malformed/generated text."""
+    match = LABEL_TOKEN.fullmatch(token.strip())
+    if match is None:
+        return None
+    label_id = int(match.group(1))
+    return label_id if 0 <= label_id < num_labels else None
 
 
 def _precision_recall_f1(right, predict, total):
@@ -20,7 +33,7 @@ def _precision_recall_f1(right, predict, total):
         f = p * r * 2 / (p + r)
     return p, r, f
 
-def evaluate(epoch_predicts, epoch_labels, id2label, logger, threshold=0.5, top_k=50, as_sample=False):
+def evaluate(epoch_predicts, epoch_labels, id2label, logger=None, threshold=0.5, top_k=50, as_sample=False):
     """
     :param epoch_labels: List[List[int]], ground truth, label id
     :param epoch_predicts: List[List[Float]], predicted probability list
@@ -60,9 +73,8 @@ def evaluate(epoch_predicts, epoch_labels, id2label, logger, threshold=0.5, top_
             np_sample_predict = np.array(sample_predict, dtype=np.float32)
             sample_predict_descent_idx = np.argsort(-np_sample_predict)
             sample_predict_id_list = []
-            if top_k is None:
-                top_k = len(sample_predict)
-            for j in range(top_k):
+            limit = len(sample_predict) if top_k is None else min(top_k, len(sample_predict))
+            for j in range(limit):
                 if np_sample_predict[sample_predict_descent_idx[j]] > threshold:
                     sample_predict_id_list.append(sample_predict_descent_idx[j])
 
@@ -96,7 +108,8 @@ def evaluate(epoch_predicts, epoch_labels, id2label, logger, threshold=0.5, top_
         #precision_dict[label], recall_dict[label], fscore_dict[label] = _precision_recall_f1(right_count_list[i],
         #                                                                                     predicted_count_list[i],
         #                                                                                     gold_count_list[i])
-        precision_dict[label], recall_dict[label], fscore_dict[label] = _precision_recall_f1(right_count_list.get(i, 0),
+        metric_label = label + '_' + str(i)
+        precision_dict[metric_label], recall_dict[metric_label], fscore_dict[metric_label] = _precision_recall_f1(right_count_list.get(i, 0),
                                                                                              predicted_count_list.get(i, 0),
                                                                                              gold_count_list.get(i, 0))
         right_total += right_count_list.get(i, 0)
@@ -105,9 +118,11 @@ def evaluate(epoch_predicts, epoch_labels, id2label, logger, threshold=0.5, top_
         
 
     # Macro-F1
-    precision_macro = sum([v for _, v in precision_dict.items()]) / len(list(precision_dict.keys()))
-    recall_macro = sum([v for _, v in recall_dict.items()]) / len(list(precision_dict.keys()))
-    macro_f1 = sum([v for _, v in fscore_dict.items()]) / len(list(fscore_dict.keys()))
+    if not precision_dict:
+        raise ValueError("id2label must contain at least one label")
+    precision_macro = sum(precision_dict.values()) / len(precision_dict)
+    recall_macro = sum(recall_dict.values()) / len(recall_dict)
+    macro_f1 = sum(fscore_dict.values()) / len(fscore_dict)
     # Micro-F1
     precision_micro = float(right_total) / predict_total if predict_total > 0 else 0.0
     recall_micro = float(right_total) / gold_total if gold_total > 0 else 0.0
@@ -181,11 +196,15 @@ def evaluate_seq2seq(batch_predicts, batch_labels, id2label):
             }
 
 def evaluate_RP(epoch_predicts, epoch_labels):
+    if len(epoch_predicts) != len(epoch_labels):
+        raise ValueError('mismatch between prediction and ground truth for evaluation')
     r_precision_scores = []
 
     # calculate R-precision for each sample:
     for predicts, labels in zip(epoch_predicts, epoch_labels):
         R = len(labels)
+        if R == 0:
+            raise ValueError("R-Precision is undefined for examples without gold labels")
         set_predictions = set(predicts[:R])
         set_labels = set(labels)
 
@@ -202,6 +221,10 @@ def evaluate_PK(epoch_predicts, epoch_labels, K, as_sample=True):
     assert len(epoch_predicts) == len(epoch_labels), 'Mismatch between prediction and ground truth for evaluation'
 
     #storage:
+    if not epoch_labels:
+        raise ValueError("at least one evaluation example is required")
+    if any(k <= 0 for k in K):
+        raise ValueError("all P@k cutoffs must be positive")
     precision_at_k = {f'P@{k}': 0 for k in K}
     total_correct_counts = {f'P@{k}': 0 for k in K}
 

@@ -56,8 +56,9 @@ The publication release should meet the following minimum standard:
 6. The root README contains stale paths, including `XMLmodels/CascadeXML/src`.
 7. Generated scheduler output, notebook checkpoints and a platform-specific compiled
    PECOS extension are tracked.
-8. Corpus-derived files are tracked under the HBGL data tree. Their redistribution
-   status must be reviewed before release.
+8. The baseline tracked corpus-derived HBGL files. Derived NYT text JSON and raw
+   RCV1/WOS corpora have been removed; retained taxonomies and label vocabularies
+   still require a redistribution review.
 9. No fresh-clone end-to-end execution has yet been recorded for the current tree.
 
 Resolution notes: items 5-7 have been corrected on the release-preparation

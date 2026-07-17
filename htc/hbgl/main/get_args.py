@@ -141,6 +141,5 @@ def get_args():
     parser.add_argument("--job_id", type=str, default="default_run",
                     help="Unique identifier for the current execution run.")
 
-    parser.add_argument
     args = parser.parse_args()
     return args

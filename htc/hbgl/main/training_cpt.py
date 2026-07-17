@@ -15,7 +15,6 @@ def training_cpt(args, tokenizer, input_ids, attention_mask,  position_ids, _ini
     model.cuda()
 
     init_label_emb = _init_label_emb.float().cuda().requires_grad_()
-    torch.save(init_label_emb.cpu(), 'before.pt')
 
     optimizer_grouped_parameters = [
         {'params': [init_label_emb, ], 'weight_decay': 0.0}
@@ -95,5 +94,4 @@ def training_cpt(args, tokenizer, input_ids, attention_mask,  position_ids, _ini
         model.zero_grad()
         init_label_emb.grad = None
       #  print(f'step {step}', masked_lm_loss.item())
-    torch.save(init_label_emb.cpu(), 'after.pt')
     return init_label_emb

@@ -11,7 +11,6 @@ def get_checkpoint_from_transformer_cache(
         cache_dir, force_download, proxies, resume_download,
 ):
     try:
-        print(f"DEBUG: Attempting to download: {archive_file}")
         resolved_archive_file = cached_path(archive_file, cache_dir=cache_dir, force_download=force_download,
                                             proxies=proxies, resume_download=resume_download)
     except EnvironmentError:

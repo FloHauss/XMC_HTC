@@ -26,14 +26,14 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Starting session. Logging to: $LOG_FILE"
 
 # 4. Setup Paths
-OUTPUT_DIR=../models/$RUN_NAME
+OUTPUT_ROOT=../models/$RUN_NAME
 CACHE_DIR=./cache
 TRAIN_FILE=../data/wiki10-31k/wiki10-31k_train_generated_tl.json
 
 # 5. Check for existence of raw data
 if [ ! -f  ../data/wiki10-31k/wiki10-31k_train.json ] || [ ! -f  ../data/wiki10-31k/wiki10-31k_val.json ] || [ ! -f  ../data/wiki10-31k/wiki10-31k_test.json ] ; then
   echo "Please preprocess raw dataset first"
-  exit 0
+  exit 1
 fi
 
 # 6. Run Preprocessing if necessary
@@ -56,8 +56,10 @@ do
   echo " Date: $(date)"
   echo "-------------------------------------------------------"
 
-  if [ -d "$OUTPUT_DIR" ]; then
-    rm -rf "$OUTPUT_DIR"
+  OUTPUT_DIR="${OUTPUT_ROOT}/seed_${current_seed}"
+  if [ -e "$OUTPUT_DIR" ]; then
+    echo "Output already exists: $OUTPUT_DIR. Use a different run name or archive it first."
+    exit 1
   fi
   mkdir -p "$OUTPUT_DIR"
 
@@ -90,11 +92,7 @@ do
       --job_id "${JOB_ID}" \
       --self_attention \
       --ignore_meta_label \
-      --random_label_init \
- #    --label_cpt ../data/wiki10-31k/wiki10-31k.taxonomy \
-  #    --label_cpt_steps 100 \
- #     --label_cpt_use_bce \
-    #  --random_label_init \
+      --random_label_init
 
 
   echo "Run ${run_num} finished. Results saved in ${OUTPUT_DIR}"

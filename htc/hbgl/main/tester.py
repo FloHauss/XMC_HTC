@@ -4,8 +4,11 @@ import wandb
 def tester(args, best_macro_f1_path, best_micro_f1_path):
     from test import main
     bout = None
+    seen_paths = set()
     for i, save_path in enumerate([best_micro_f1_path, best_macro_f1_path]):
         if save_path is None: continue
+        if save_path in seen_paths: continue
+        seen_paths.add(save_path)
         flags = ['--model_type'     , args.model_type                          ,
             '--tokenizer_name'         , args.model_name_or_path             ,
             '--input_file'             , args.test_file                  ,
@@ -21,7 +24,9 @@ def tester(args, best_macro_f1_path, best_micro_f1_path):
             '--mode'                   , 's2s'                           ,
             '--forbid_ignore_word'     , '"."'                           ,
             '--cached_features_file'   , str(os.path.join(args.output_dir, "cached_features_for_test.pt")),
-            '--add_vocab_file'         , args.add_vocab_file]
+            '--add_vocab_file'         , args.add_vocab_file,
+            '--seed'                   , str(args.seed),
+            '--job_id'                 , str(args.job_id)]
 
         if args.softmax_label_only:
             flags.append('--softmax_label_only')
@@ -38,7 +43,7 @@ def tester(args, best_macro_f1_path, best_micro_f1_path):
             flags.append('--ignore_meta_label')
 
         out = main(flags)
-        prefix = 'test' + 'micro' if i == 0 else 'macro'
+        prefix = 'test_micro' if i == 0 else 'test_macro'
         if args.wandb:
             wandb.log({f'{prefix}/macro_f1': out['macro_f1'], f'{prefix}/micro_f1': out['micro_f1']})
             if bout is None or bout['macro_f1'] < out['macro_f1']:

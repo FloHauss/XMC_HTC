@@ -19,6 +19,8 @@ class DocumentationLinkTests(unittest.TestCase):
             REPOSITORY_ROOT / "docs" / "MODEL_PROVENANCE.md",
             REPOSITORY_ROOT / "docs" / "RELEASE_READINESS.md",
             REPOSITORY_ROOT / "docs" / "CASCADEXML_MODIFICATIONS.md",
+            REPOSITORY_ROOT / "htc" / "hbgl" / "README.md",
+            REPOSITORY_ROOT / "docs" / "HBGL_MODIFICATIONS.md",
         ]
         missing = []
         for document in documents:

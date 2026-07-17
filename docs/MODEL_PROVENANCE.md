@@ -13,7 +13,7 @@ of every historical experiment unless explicitly stated.
 | --- | --- | --- | --- | --- |
 | CascadeXML | `xmc-aalto/cascadexml` | Modified source present under `XMLmodels/CascadeXML` | Documented | Capture paper commands/environment and smoke-test a representative GPU path. |
 | XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Reduce or pin the upstream dependency and isolate run scripts and evaluation changes. |
-| HBGL | `kongds/HBGL` | Modified source present under `htc/hbgl` | Documented | Establish the exact upstream base and document cross-domain changes. |
+| HBGL | `kongds/HBGL` | Modified source present under `htc/hbgl` | Documented | Settle redistribution permission, capture the final environment and smoke-test a representative GPU path. |
 | HGCLR | `wzh9969/contrastive-htc` | Source-only working fork imported under `integrations/hgclr` | Documented | Run the empty-gold audit on historical binaries, reconcile candidate aggregates with the paper, then complete a bounded fresh-environment smoke test. |
 | RADAr | `yousef-younes/RADAr` | Working study copy is currently unavailable | Deferred | Credit and link upstream now; add the study integration later if it becomes available. |
 
@@ -47,8 +47,9 @@ of every historical experiment unless explicitly stated.
 - Current upstream reference inspected on 2026-07-17:
   `a40acdf87407a5a6cdd4c921c80c60b9f3522aa1`
 - No top-level licence was detected in the inspected upstream checkout.
-- The local integration contains extensive differences and additional training
-  structure; its historical base revision is not yet established.
+- The large textual diff is mostly line-ending conversion. The substantive
+  refactor, cross-domain changes and fixes have been bounded against this commit
+  and documented in [`HBGL_MODIFICATIONS.md`](HBGL_MODIFICATIONS.md).
 
 ### HGCLR
 

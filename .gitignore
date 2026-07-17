@@ -23,7 +23,10 @@ htc/hbgl/scripts/*
 
 htc/hbgl/data/**/*
 !htc/hbgl/data/**/
-!htc/hbgl/data/*/preprocess/**
+!htc/hbgl/data/*/preprocess/
+!htc/hbgl/data/*/preprocess/*.py
+!htc/hbgl/data/*/preprocess/*.taxonomy
+!htc/hbgl/data/*/preprocess/*.vocab
 htc/hbgl/data/*/preprocess/Meta-data/
 !htc/hbgl/data/*/*.taxonomy
 !htc/hbgl/data/rcv1/rcv1.topics.hier.expanded

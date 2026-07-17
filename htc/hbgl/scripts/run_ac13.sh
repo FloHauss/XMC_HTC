@@ -24,14 +24,14 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Starting session. Logging to: $LOG_FILE"
 
 # 4. Setup Paths
-OUTPUT_DIR=../models/$RUN_NAME
+OUTPUT_ROOT=../models/$RUN_NAME
 CACHE_DIR=./cache
 TRAIN_FILE=../data/amazoncat-13k/amazoncat-13k_train_generated_tl.json
 
 # 5. Check for existence of raw data
 if [ ! -f  ../data/amazoncat-13k/amazoncat-13k_train.json ] || [ ! -f  ../data/amazoncat-13k/amazoncat-13k_val.json ] || [ ! -f  ../data/amazoncat-13k/amazoncat-13k_test.json ] ; then
   echo "Please preprocess raw dataset first"
-  exit 0
+  exit 1
 fi
 
 # 6. Run Preprocessing if necessary
@@ -54,9 +54,10 @@ do
   echo " Date: $(date)"
   echo "-------------------------------------------------------"
 
-  # Clear output directory for each run to avoid conflicts
-  if [ -d "$OUTPUT_DIR" ]; then
-    rm -rf "$OUTPUT_DIR"
+  OUTPUT_DIR="${OUTPUT_ROOT}/seed_${current_seed}"
+  if [ -e "$OUTPUT_DIR" ]; then
+    echo "Output already exists: $OUTPUT_DIR. Use a different run name or archive it first."
+    exit 1
   fi
   mkdir -p "$OUTPUT_DIR"
 
@@ -88,10 +89,7 @@ do
       --job_id "${JOB_ID}" \
       --self_attention \
       --ignore_meta_label \
-      --random_label_init \
-      #--label_cpt ../data/amazoncat-13k/amazoncat-13k.taxonomy \
-     # --label_cpt_steps 100 \
-     # --label_cpt_use_bce
+      --random_label_init
 
   echo "Run ${run_num} finished. Results saved in ${OUTPUT_DIR}"
 done

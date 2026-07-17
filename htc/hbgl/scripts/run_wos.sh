@@ -26,14 +26,14 @@ exec > >(tee -a "$LOG_FILE") 2>&1
 echo "Starting session. Logging to: $LOG_FILE"
 
 # 4. Setup Paths
-OUTPUT_DIR=../models/$RUN_NAME
+OUTPUT_ROOT=../models/$RUN_NAME
 CACHE_DIR=./cache
 TRAIN_FILE=../data/wos/wos_train_generated_tl.json
 
 # 5. Check for existence of raw data
 if [ ! -f  ../data/wos/wos_train.json ] || [ ! -f  ../data/wos/wos_val.json ] || [ ! -f  ../data/wos/wos_test.json ] ; then
   echo "Please preprocess raw dataset first"
-  exit 0
+  exit 1
 fi
 
 # 6. Run Preprocessing if necessary
@@ -57,9 +57,10 @@ do
   echo " Date: $(date)"
   echo "-------------------------------------------------------"
 
-  # Clean the directory inside the loop so the model starts fresh
-  if [ -d "$OUTPUT_DIR" ]; then
-    rm -rf "$OUTPUT_DIR"
+  OUTPUT_DIR="${OUTPUT_ROOT}/seed_${current_seed}"
+  if [ -e "$OUTPUT_DIR" ]; then
+    echo "Output already exists: $OUTPUT_DIR. Use a different run name or archive it first."
+    exit 1
   fi
   mkdir -p "$OUTPUT_DIR"
 

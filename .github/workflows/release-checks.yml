@@ -27,7 +27,7 @@ jobs:
         run: python -m unittest discover -s tests -v
 
       - name: Compile release-facing Python
-        run: python -m compileall -q integrations/hgclr XMLmodels/CascadeXML dataset_transfer tests
+        run: python -m compileall -q integrations/hgclr XMLmodels/CascadeXML htc/hbgl dataset_transfer tests
 
       - name: Check release-facing shell syntax
         shell: bash
@@ -35,3 +35,4 @@ jobs:
           find integrations/hgclr -type f \( -name '*.sh' -o -name '*.sbatch' \) -print0 \
             | xargs -0 -n1 bash -n
           bash -n XMLmodels/pecos/job_*.sh XMLmodels/pecos/run_ensemble/*.sh
+          bash -n htc/hbgl/scripts/*.sh
