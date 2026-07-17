@@ -90,13 +90,18 @@ procedure.
 
 ## Results and reproducibility
 
-Historical outputs are being reduced to compact, machine-readable result files.
-Raw Slurm logs in the current tree are not the intended release interface.
+The author-supplied final paper tables are transcribed in
+[`results/paper/table_results.csv`](results/paper/table_results.csv). These are
+authoritative reported values, not a new verification run. Their comparison to
+retained historical aggregates is documented in
+[`docs/RESULT_RECONCILIATION.md`](docs/RESULT_RECONCILIATION.md).
 
 HGCLR candidate five-seed aggregates are retained under
 [`integrations/hgclr/results/candidate`](integrations/hgclr/results/candidate).
-They are historical records and have not yet been reconciled with the final
-paper tables. They must not be interpreted as new verification runs.
+They match all corresponding paper entries within 0.01 percentage point and are
+now paper-reconciled historical records. They remain candidate rather than
+verified results because the deferred empty-gold audit and fresh execution have
+not been completed.
 
 The current repository audit and proposed disposition of historical material are
 documented in [`docs/REPOSITORY_INVENTORY.md`](docs/REPOSITORY_INVENTORY.md).

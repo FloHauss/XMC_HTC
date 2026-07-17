@@ -12,9 +12,9 @@ of every historical experiment unless explicitly stated.
 | Integration | Original repository | Current repository state | Verification | Provenance work remaining |
 | --- | --- | --- | --- | --- |
 | CascadeXML | `xmc-aalto/cascadexml` | Modified source present under `XMLmodels/CascadeXML` | Documented | Capture paper commands/environment and smoke-test a representative GPU path. |
-| XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Reconcile historical results, record the final environment and smoke-test a representative GPU path; decide whether to reduce the copied tree after publication. |
+| XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Recover paper-run aggregates, record the final environment and smoke-test a representative GPU path; decide whether to reduce the copied tree after publication. |
 | HBGL | `kongds/HBGL` | Modified source present under `htc/hbgl` | Documented | Settle redistribution permission, capture the final environment and smoke-test a representative GPU path. |
-| HGCLR | `wzh9969/contrastive-htc` | Source-only working fork imported under `integrations/hgclr` | Documented | Run the empty-gold audit on historical binaries, reconcile candidate aggregates with the paper, then complete a bounded fresh-environment smoke test. |
+| HGCLR | `wzh9969/contrastive-htc` | Source-only working fork imported under `integrations/hgclr` | Documented | Run the deferred empty-gold audit on historical binaries, then complete a bounded fresh-environment smoke test. |
 | RADAr | `yousef-younes/RADAr` | Working study copy is currently unavailable | Deferred | Credit and link upstream now; add the study integration later if it becomes available. |
 
 ## Known upstream references

@@ -51,6 +51,7 @@ step, checkpoint writing, loading and evaluation, and is labelled accordingly.
 ## Historical results
 
 Existing result files are provenance records rather than fresh verification.
-HGCLR candidate aggregates and XR-Transformer compact averages remain
-unreconciled with the final paper tables. XR-Transformer files with repeated
-per-seed records must be checked against the experiment archive before use.
+HGCLR candidate aggregates match the final paper tables within display
+precision but remain unverified historical records. Most XR-Transformer compact
+averages do not match the paper and files with repeated per-seed records must be
+checked against the experiment archive before use.

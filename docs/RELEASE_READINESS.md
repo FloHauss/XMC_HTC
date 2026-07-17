@@ -122,18 +122,20 @@ Intake and reconciliation status:
 - [x] preserve the untracked source, documentation, aggregation and launch files;
 - [x] exclude `checkpoints/` and generated `data/**/*.bin`, `data/**/*.idx` and
   `data/**/*.pt` files;
-- [ ] decide whether final seed aggregates match the paper tables;
+- [x] reconcile the final seed aggregates with the paper tables;
 - [x] generalise absolute server paths and audit cluster account details;
 - [x] define and unit-test the empty-gold R-Precision policy;
 - [ ] Deferred: the historical empty-gold audit is out of the current scope. The
-  imported aggregates must remain labelled candidate and unreconciled.
+  imported aggregates remain labelled candidate, although they are reconciled
+  with the displayed paper values.
 
 The tracked patch and untracked release files were imported from the validated
 intake archive. The imported release code now defines R-Precision as invalid for
 empty-gold samples and the preprocessing scripts enforce the same invariant.
 Historical binaries must still be audited to confirm that candidate aggregates
-were unaffected if those R-Precision values are promoted to final release
-results. This check does not block the remaining repository clean-up.
+were unaffected if those R-Precision values are promoted from paper-reconciled
+historical records to verified release results. This check does not block the
+remaining repository clean-up.
 
 ### RADAr intake state
 

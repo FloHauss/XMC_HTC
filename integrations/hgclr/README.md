@@ -32,8 +32,8 @@ The imported implementation also includes small release-hardening changes:
 ## Results
 
 The files under `results/candidate/` were imported from the working server on
-2026-07-17. They remain candidate historical aggregates until they have been
-matched against the final paper tables. They are not new verification runs.
+2026-07-17. Their means and population standard deviations match all final paper
+entries within 0.01 percentage point, but they are not new verification runs.
 The project has deferred an additional audit of historical empty-gold samples;
 therefore the candidate R-Precision values must not be promoted without that
 check.

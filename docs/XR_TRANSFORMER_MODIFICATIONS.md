@@ -67,9 +67,10 @@ The release-preparation branch makes these bounded corrections:
   contain five identical per-seed records and zero standard deviations. Several
   HTC datasets contain four identical records out of five. This may reflect
   copied or reused outputs rather than independent runs.
-- The retained compact results are therefore historical and unreconciled. They
-  are not evidence of a new release verification run and must not be promoted
-  to final paper tables without checking the archived experiment records.
+- The retained compact results are historical and do not support most final
+  paper entries. AmazonCat-13K ranking means match, but its retained zero
+  deviations do not. The other supplied paper datasets differ materially; see
+  [`RESULT_RECONCILIATION.md`](RESULT_RECONCILIATION.md).
 - No fresh dependency installation or representative GPU training run has been
   completed for the release tree.
 

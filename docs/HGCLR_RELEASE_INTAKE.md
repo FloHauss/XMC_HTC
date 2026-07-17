@@ -36,8 +36,8 @@ The canonical method abbreviation used in release-facing material is **HGCLR**.
 - `aggregate_webofscience_results.py`
 - `summarize_seed_sweep.py`
 - bwUniCluster setup, submission and job scripts, after portability review
-- final `*_seed_aggregate.csv` and `*_seed_aggregate.json` files, if they are
-  reconciled with the final paper results
+- final `*_seed_aggregate.csv` and `*_seed_aggregate.json` files, now reconciled
+  with the displayed final paper results
 
 These files should not be described as a new HGCLR implementation. They are the
 integration and experimental support needed to apply the original model in this
@@ -67,8 +67,7 @@ Before changing it:
 
 1. establish the intended definition used consistently across all models;
 2. count empty-gold examples in every evaluated split after preprocessing;
-3. determine whether the final aggregate files and paper tables were produced
-   with this implementation;
+3. determine whether empty-gold samples occurred in the historical binaries;
 4. add unit tests for ordinary, variable-cardinality and empty-gold cases;
 5. if results change, regenerate affected aggregates or document why they do not.
 
