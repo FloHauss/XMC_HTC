@@ -17,8 +17,11 @@ upstream comparison, fixes and known limitations.
 
 ## Setup
 
-The preserved student environment specifies PyTorch 2.5.1 and Transformers
-4.17.0. It has not yet been reproduced in a clean environment:
+The preserved student environment specifies Python 3, PyTorch 2.5.1 and
+Transformers 4.17.0. Upstream HBGL instead pinned Transformers 2.10.0 and did
+not pin PyTorch. This substantial version difference is part of the study fork,
+not an upstream recommendation. The student combination has not yet been
+reproduced in a clean environment:
 
 ```bash
 cd htc/hbgl
@@ -26,6 +29,11 @@ python -m venv .venv
 . .venv/bin/activate
 python -m pip install -r requirements.txt
 ```
+
+Install the CUDA-specific PyTorch build appropriate for the target machine if
+the default package is unsuitable. After a successful installation, record
+`python --version`, `python -m pip freeze`, `nvidia-smi` and the exact Git
+commit rather than treating the current requirements as a universal lockfile.
 
 ## Data and preprocessing
 

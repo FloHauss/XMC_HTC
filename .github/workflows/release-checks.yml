@@ -21,18 +21,7 @@ jobs:
           cache: pip
 
       - name: Install bounded-test dependencies
-        run: python -m pip install numpy==2.2.6 scipy scikit-learn
+        run: python -m pip install -r requirements-release.txt
 
-      - name: Run bounded unit tests
-        run: python -m unittest discover -s tests -v
-
-      - name: Compile release-facing Python
-        run: python -m compileall -q integrations/hgclr XMLmodels/CascadeXML htc/hbgl dataset_transfer tests
-
-      - name: Check release-facing shell syntax
-        shell: bash
-        run: |
-          find integrations/hgclr -type f \( -name '*.sh' -o -name '*.sbatch' \) -print0 \
-            | xargs -0 -n1 bash -n
-          bash -n XMLmodels/pecos/job_*.sh XMLmodels/pecos/run_ensemble/*.sh
-          bash -n htc/hbgl/scripts/*.sh
+      - name: Run bounded release checks
+        run: bash scripts/check_release.sh

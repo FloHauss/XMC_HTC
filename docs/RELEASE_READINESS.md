@@ -36,13 +36,13 @@ The publication release should meet the following minimum standard:
 
 - [ ] All currently available model integrations are present or reproducibly retrievable.
 - [ ] Original papers, repositories, authors and licences or permissions are credited.
-- [ ] Study-specific modifications are distinguishable from upstream code.
+- [x] Study-specific modifications are distinguishable from upstream code.
 - [ ] Paper configurations, seeds and evaluation commands are recorded.
 - [ ] Dataset acquisition, preprocessing and redistribution constraints are documented.
-- [ ] Generated files, caches, checkpoints, compiled binaries and debug logs are excluded.
-- [ ] Conversion and evaluation code has focused automated tests.
-- [ ] Each integration has an evidence-backed verification status.
-- [ ] Known limitations and unverified paths are stated explicitly.
+- [x] Generated files, caches, checkpoints, compiled binaries and debug logs are excluded.
+- [x] Conversion and evaluation code has focused automated tests.
+- [x] Each integration has an evidence-backed verification status.
+- [x] Known limitations and unverified paths are stated explicitly.
 - [ ] The final paper artefact is tagged and archived at an immutable commit.
 
 ## Confirmed issues in the audited baseline

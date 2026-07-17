@@ -11,8 +11,8 @@ XMLmodels/pecos/libpecos.egg-info
 XMLmodels/pecos**/__pycache__/
 XMLmodels/pecos/_archive
 XMLmodels/pecos/build
-XMLmodels/pecospecos/core/libpecos_float32.cpython-39-x86_64-linux-gnu.so
-XMLmodels/pecospecos/_version.py
+XMLmodels/pecos/pecos/core/libpecos_float32*.so
+XMLmodels/pecos/pecos/_version.py
 
 # HTC
 htc/hbgl/logs/

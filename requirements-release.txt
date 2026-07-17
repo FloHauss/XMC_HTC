@@ -1,0 +1,5 @@
+# Dependencies for repository-level conversion, metric and documentation checks.
+# These are not a shared training environment for the third-party models.
+numpy==2.2.6
+scipy
+scikit-learn

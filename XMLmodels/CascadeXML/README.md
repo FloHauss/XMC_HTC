@@ -15,6 +15,26 @@ by this project.
 See [the modification record](../../docs/CASCADEXML_MODIFICATIONS.md) for the
 bounded upstream diff, result-affecting changes, fixes, and known limitations.
 
+## Environment
+
+The inspected upstream repository creates a Python 3.10 environment and installs
+PyTorch, Transformers, SciPy, scikit-learn, Cython, tqdm, NLTK, six, fastText
+and `pyxclib` without version pins. The current code imports all of these except
+fastText. [`requirements.txt`](requirements.txt) records that imported package
+set, but is a reconstruction rather than a verified lockfile.
+
+```bash
+conda create -n cascadexml-release python=3.10 pip -y
+conda activate cascadexml-release
+python -m pip install -r requirements.txt
+python -m nltk.downloader stopwords
+```
+
+`pyxclib` includes compiled extensions and the historical upstream installer
+patched deprecated NumPy aliases before building it. Installation against the
+current `pyxclib` default branch has not been confirmed. Preserve the resulting
+package versions and CUDA details if a working environment is established.
+
 ## Expected data layout
 
 Training reads `./data/<dataset>/` relative to the working directory. The
@@ -44,6 +64,7 @@ python main.py --help
 python main_inference.py --help
 ```
 
-The paper-specific dataset commands and a captured environment are not present
-in the historical repository. Do not infer final paper settings from parser
-defaults. These missing records are tracked as release limitations.
+Commands for the original CascadeXML XML benchmarks are available upstream, but
+the exact cross-domain paper commands and environment are not present in the
+historical repository. Do not infer final study settings from parser defaults.
+These missing records are tracked as release limitations.

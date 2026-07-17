@@ -70,14 +70,18 @@ instructions should replace redistributed corpus content.
   stale file has since been removed.
 - Git history shows that `XMLmodels/pecos` was converted from a pinned submodule
   into a normal directory in 2024.
-- CascadeXML has an empty `requirements.txt`.
-- The repository has no shared packaging or environment entry point.
+- At the audited baseline CascadeXML had an empty `requirements.txt`. A
+  clearly labelled, upstream-derived package inventory now replaces it; exact
+  compatible versions remain unverified.
+- At the audited baseline the repository had no shared environment or
+  validation entry point. A bounded root requirements file and release-check
+  command now cover study-owned utilities without imposing one training stack.
 - The five integrations may require different legacy environments; a single
   forced environment is not assumed to be realistic.
 
-Proposed action: use a small common environment only for study-owned conversion
-and evaluation tools, plus a pinned environment description for each model
-integration.
+The small common environment is now recorded in `requirements-release.txt`.
+Model-specific records preserve known constraints and clearly identify the
+remaining unverified dependency stacks.
 
 ## Confirmed code and documentation blockers
 

@@ -23,6 +23,8 @@ class DocumentationLinkTests(unittest.TestCase):
             REPOSITORY_ROOT / "docs" / "HBGL_MODIFICATIONS.md",
             REPOSITORY_ROOT / "XMLmodels" / "pecos" / "STUDY_INTEGRATION.md",
             REPOSITORY_ROOT / "docs" / "XR_TRANSFORMER_MODIFICATIONS.md",
+            REPOSITORY_ROOT / "docs" / "REPRODUCIBILITY.md",
+            REPOSITORY_ROOT / "xr_transformer_guide.md",
         ]
         missing = []
         for document in documents:

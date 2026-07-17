@@ -67,8 +67,9 @@ want to use:
 - [HGCLR integration and status](integrations/hgclr/README.md)
 - [HGCLR usage](integrations/hgclr/USAGE.md)
 - [HTC/XMC dataset conversion](dataset_transfer/README.md)
+- [reproducibility and environment matrix](docs/REPRODUCIBILITY.md)
 - [XR-Transformer integration and status](XMLmodels/pecos/STUDY_INTEGRATION.md)
-- [historical XR-Transformer guide](xr_transformer_guide.md)
+- [XR-Transformer environment guide](xr_transformer_guide.md)
 - [historical model and preprocessing instructions](docs/LEGACY_USAGE.md)
 
 The legacy instructions are preserved for provenance and still require
@@ -106,7 +107,8 @@ The bounded release checks cover metric and conversion invariants for HGCLR,
 CascadeXML, HBGL and XR-Transformer, as well as release-document links:
 
 ```bash
-python -m unittest discover -s tests -v
+python -m pip install -r requirements-release.txt
+bash scripts/check_release.sh
 ```
 
 Full GPU training is intentionally not part of the local test suite or future
