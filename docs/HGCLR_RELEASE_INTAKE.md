@@ -11,7 +11,7 @@ fork with the XMC/HTC release-readiness audit.
 - Upstream reference: `322a7ff2d83c878534bed25bb288cf4479d00363`
 - Licence: MIT
 - Conda environment used historically: `contrastive-htc`
-- Server audit states that all release changes remain uncommitted.
+- Server audit stated that all release changes were uncommitted at intake time.
 
 The canonical method abbreviation used in release-facing material is **HGCLR**.
 
@@ -36,8 +36,7 @@ The canonical method abbreviation used in release-facing material is **HGCLR**.
 - `aggregate_webofscience_results.py`
 - `summarize_seed_sweep.py`
 - bwUniCluster setup, submission and job scripts, after portability review
-- final `*_seed_aggregate.csv` and `*_seed_aggregate.json` files, now reconciled
-  with the displayed final paper results
+- reconciliation notes for the final paper results
 
 These files should not be described as a new HGCLR implementation. They are the
 integration and experimental support needed to apply the original model in this
@@ -48,6 +47,7 @@ study.
 - `checkpoints/` - approximately 14 GB
 - binarised `data/*/{Y,tok}.{bin,idx}`
 - `slot.pt`, `split.pt` and `bert_value_dict.pt`
+- historical server environment exports and non-authoritative cost aggregates
 - caches, raw scheduler logs and environment-local state
 
 Trained checkpoints may be archived separately if there is a concrete reuse

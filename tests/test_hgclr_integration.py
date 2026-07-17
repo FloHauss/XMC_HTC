@@ -1,7 +1,4 @@
 import importlib.util
-import csv
-import json
-import statistics
 import struct
 import tempfile
 import unittest
@@ -90,24 +87,10 @@ class HGCLRBinarizeTests(unittest.TestCase):
 
 
 class HGCLRCandidateResultTests(unittest.TestCase):
-    def test_candidate_aggregates_are_internally_consistent(self):
+    def test_candidate_server_aggregates_are_excluded_from_release(self):
         results_dir = HGCLR_ROOT / "results" / "candidate"
-        for dataset in ("WebOfScience", "nyt", "rcv1"):
-            with (results_dir / f"{dataset}_seed_aggregate.json").open() as f:
-                result = json.load(f)
-            with (results_dir / f"{dataset}_seed_aggregate.csv").open() as f:
-                csv_rows = list(csv.DictReader(f))
-
-            self.assertEqual(result["seeds"], [1, 2, 3, 4, 5])
-            self.assertEqual(len(result["per_seed"]), 5)
-            self.assertEqual(len([r for r in csv_rows if r["row_type"] == "seed"]), 5)
-
-            csv_mean = next(r for r in csv_rows if r["row_type"] == "mean")
-            for metric, aggregate in result["aggregate"].items():
-                values = [row[metric] for row in result["per_seed"]]
-                self.assertAlmostEqual(aggregate["mean"], statistics.mean(values))
-                self.assertAlmostEqual(aggregate["std_sample"], statistics.stdev(values))
-                self.assertAlmostEqual(float(csv_mean[metric]), aggregate["mean"])
+        self.assertTrue((results_dir / "README.md").is_file())
+        self.assertFalse(list(results_dir.glob("*_seed_aggregate.*")))
 
 
 if __name__ == "__main__":

@@ -66,39 +66,12 @@ class PaperResultTests(unittest.TestCase):
                 value = f'{row[f"{metric}_mean"]} ± {row[f"{metric}_std"]}'
                 self.assertIn(value, rendered)
 
-    def test_hgclr_candidates_match_paper_at_display_precision(self):
-        aliases = {"WOS": "WebOfScience", "NYT": "nyt", "RCV1-V2": "rcv1"}
-        candidate_keys = {
-            "r_precision": "r_precision",
-            "p_at_1": "p_at_1",
-            "p_at_3": "p_at_3",
-            "p_at_5": "p_at_5",
-            "f1_micro": "test_micro_f1",
-            "f1_macro": "test_macro_f1",
-        }
-        for dataset, candidate_name in aliases.items():
-            path = (
-                REPOSITORY_ROOT
-                / "integrations"
-                / "hgclr"
-                / "results"
-                / "candidate"
-                / f"{candidate_name}_seed_aggregate.json"
-            )
-            aggregate = json.loads(path.read_text(encoding="utf-8"))["aggregate"]
-            paper = self.by_key[(dataset, "HGCLR")]
-            for metric, candidate_key in candidate_keys.items():
-                self.assertLessEqual(
-                    abs(aggregate[candidate_key]["mean"] * 100 - float(paper[f"{metric}_mean"])),
-                    0.011,
-                )
-                self.assertLessEqual(
-                    abs(
-                        aggregate[candidate_key]["std_population"] * 100
-                        - float(paper[f"{metric}_std"])
-                    ),
-                    0.011,
-                )
+    def test_hgclr_candidate_server_aggregates_are_not_published(self):
+        candidate_dir = (
+            REPOSITORY_ROOT / "integrations" / "hgclr" / "results" / "candidate"
+        )
+        self.assertTrue((candidate_dir / "README.md").is_file())
+        self.assertFalse(list(candidate_dir.glob("*_seed_aggregate.*")))
 
     def test_retained_xr_aggregates_are_not_misidentified_as_paper_runs(self):
         aliases = {

@@ -101,45 +101,12 @@ Both files are written to `checkpoints/{DATA-NAME}/`:
 
 **`log.txt`** — per-epoch Macro-F1 and Micro-F1.
 
-**`cost_metrics.json`** — populated by `train.py` and extended by `test.py`:
+**`cost_metrics.json`** — populated by `train.py` and extended by `test.py`.
+It records run identity, model parameter counts, training timing, inference
+timing and the evaluated test metrics. Treat it as a local audit artifact; do
+not commit run-specific copies to Git.
 
-```jsonc
-{
-  "run_name": "WebOfScience-run1",
-  "dataset": "WebOfScience",
-  "model_params_total": 120869916,
-  "model_params_trainable": 120549705,
-  "training": {
-    "total_time_sec": 3600.0,
-    "epochs_completed": 42,
-    "peak_gpu_memory_mb": 6506.0,
-    "avg_gpu_memory_mb": 5200.0,
-    "per_epoch": [
-      {
-        "epoch": 0,
-        "train_time_sec": 85.2,
-        "val_time_sec": 12.1,
-        "train_throughput_samples_per_sec": 352.4,
-        "gpu_memory_allocated_mb": 5100.0,
-        "macro_f1": 0.52,
-        "micro_f1": 0.55
-      }
-    ]
-  },
-  "inference": {
-    "checkpoint": "_macro",
-    "total_time_sec": 45.2,
-    "num_samples": 9397,
-    "throughput_samples_per_sec": 207.9,
-    "peak_gpu_memory_mb": 3200.0
-  },
-  "test_metrics": {
-    "macro_f1": 0.868, "micro_f1": 0.879,
-    "p@1": 0.95, "p@3": 0.88, "p@5": 0.76, "r_precision": 0.91
-  }
-}
-```
-
-The server environment captured after the historical runs is preserved in
-`environment/environment-server-2026-07-17.yml`. It is an audit record rather
-than a promise that all transitive packages remain installable indefinitely.
+The historical server environment was used during release intake but is not
+published as a lock file, because it contains machine-specific audit detail and
+is not a portable installation promise. Use the reconstruction commands above
+as the release-facing setup record.

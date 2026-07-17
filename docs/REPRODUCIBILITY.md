@@ -27,7 +27,7 @@ and XR-Transformer JSON parameter syntax. It is not an end-to-end model test.
 | CascadeXML | Upstream package list, reconstructed in this repository | Dependencies not freshly installed; no GPU run | [`XMLmodels/CascadeXML/README.md`](../XMLmodels/CascadeXML/README.md) |
 | XR-Transformer | Historical PECOS `setup.py` constraints and student Python 3.9 guide | Source-level checks only; compiled extension and GPU run unverified | [`xr_transformer_guide.md`](../xr_transformer_guide.md) |
 | HBGL | Student requirements preserved; upstream used a substantially older Transformers version | Dependencies not freshly installed; no GPU run | [`htc/hbgl/README.md`](../htc/hbgl/README.md) |
-| HGCLR | Complete server environment export plus a shorter reconstruction command | Historical server environment captured; release checkout not freshly GPU-tested | [`integrations/hgclr/USAGE.md`](../integrations/hgclr/USAGE.md) |
+| HGCLR | Portable reconstruction command derived from the historical server setup | Source-level checks only; release checkout not freshly GPU-tested | [`integrations/hgclr/USAGE.md`](../integrations/hgclr/USAGE.md) |
 | RADAr | Study implementation unavailable | Deferred | Upstream link only in [`MODEL_PROVENANCE.md`](MODEL_PROVENANCE.md) |
 
 ## Verification boundaries

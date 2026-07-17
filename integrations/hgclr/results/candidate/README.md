@@ -1,15 +1,13 @@
-# Candidate historical aggregates
+# Historical aggregate boundary
 
-These files were exported from the working HGCLR server checkout on 2026-07-17.
-They contain five-seed test, validation and cost aggregates for WebOfScience,
-NYT and RCV1.
+Candidate five-seed aggregate files were exported from the working HGCLR
+checkout during release intake and reconciled against the author-supplied final
+paper tables.
 
-They have been reconciled against the author-supplied final paper tables. All
-six reported means and population standard deviations for all three datasets
-match within 0.01 percentage point. They remain historical candidate results,
-not fresh release verification, because the historical empty-gold audit was
-deferred. The cost measurements also predate the CUDA timing synchronisation
-added during release hardening.
+Those candidate files are intentionally not part of the public release tree.
+They contained non-authoritative cost and server-environment audit detail. The
+release-facing source of truth is the paper result table under
+[`results/paper`](../../../../results/paper).
 
 See [`docs/RESULT_RECONCILIATION.md`](../../../../docs/RESULT_RECONCILIATION.md)
 for the comparison boundary.
