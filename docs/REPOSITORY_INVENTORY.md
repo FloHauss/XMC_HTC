@@ -48,9 +48,9 @@ corpus material. These categories must not be treated identically.
 
 - `htc/hbgl/data/rcv1/preprocess/lyrl2004_tokens_train.dat` - approximately
   17.8 MB of RCV1 token data. Removed from the release-preparation tree.
-- `htc/hbgl/data/nyt/preprocess/idnewnyt_{train,val,test}.json` - lists derived
-  from the licensed NYT corpus. These appear to contain document identifiers or
-  paths rather than article text, but should still receive an explicit decision.
+- `htc/hbgl/data/nyt/preprocess/idnewnyt_{train,val,test}.json` - derived lists
+  from the licensed NYT corpus. Removed from the release-preparation tree; they
+  remain recoverable from Git history.
 
 ### Likely release metadata, subject to provenance checks
 

@@ -12,7 +12,7 @@ of every historical experiment unless explicitly stated.
 | Integration | Original repository | Current repository state | Verification | Provenance work remaining |
 | --- | --- | --- | --- | --- |
 | CascadeXML | `xmc-aalto/cascadexml` | Modified source present under `XMLmodels/CascadeXML` | Documented | Capture paper commands/environment and smoke-test a representative GPU path. |
-| XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Reduce or pin the upstream dependency and isolate run scripts and evaluation changes. |
+| XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Reconcile historical results, record the final environment and smoke-test a representative GPU path; decide whether to reduce the copied tree after publication. |
 | HBGL | `kongds/HBGL` | Modified source present under `htc/hbgl` | Documented | Settle redistribution permission, capture the final environment and smoke-test a representative GPU path. |
 | HGCLR | `wzh9969/contrastive-htc` | Source-only working fork imported under `integrations/hgclr` | Documented | Run the empty-gold audit on historical binaries, reconcile candidate aggregates with the paper, then complete a bounded fresh-environment smoke test. |
 | RADAr | `yousef-younes/RADAr` | Working study copy is currently unavailable | Deferred | Credit and link upstream now; add the study integration later if it becomes available. |
@@ -38,8 +38,13 @@ of every historical experiment unless explicitly stated.
 - Git history shows that `XMLmodels/pecos` was previously a submodule pinned to
   `3fccd9af1b287c1cab96a7a16e93c2ff0bfbc903`, before being converted into a
   normal directory in commit `1606f625070fb1ea8977cc1aa610ffa9e6b2bada`.
-- The copied tree contains substantial unrelated upstream material. The exact
-  local diff must be extracted before reducing it.
+- The historical base and all post-conversion changes have been bounded. The
+  conversion commit cannot reveal whether its source submodule had uncommitted
+  edits, so that limitation is retained explicitly.
+- Study adaptations, release fixes and result-affecting caveats are documented
+  in [`XR_TRANSFORMER_MODIFICATIONS.md`](XR_TRANSFORMER_MODIFICATIONS.md).
+- The copied tree still contains substantial unrelated upstream material. A
+  wider reduction is deferred to avoid destabilising the release integration.
 
 ### HBGL
 

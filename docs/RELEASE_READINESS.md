@@ -49,8 +49,11 @@ The publication release should meet the following minimum standard:
 
 1. At the audited baseline, HGCLR and RADAr were described but absent. HGCLR has
    since been imported into the release-preparation branch; RADAr remains absent.
-2. The repository contains a full copied PECOS tree alongside stale submodule declarations.
-3. There is no top-level licence, citation file, third-party notice or automated CI.
+2. The repository contains a full copied PECOS tree. Its former submodule base
+   and study modifications are now documented; broader reduction is deferred.
+3. At the audited baseline there was no top-level licence, citation file,
+   third-party notice or automated CI. A notice and bounded CI now exist; the
+   study licence and final citation metadata remain open.
 4. `XMLmodels/CascadeXML/requirements.txt` is empty.
 5. `XMLmodels/CascadeXML/main_inference.py` imports the absent `Runner_accelerate` module.
 6. The root README contains stale paths, including `XMLmodels/CascadeXML/src`.
@@ -61,10 +64,17 @@ The publication release should meet the following minimum standard:
    still require a redistribution review.
 9. No fresh-clone end-to-end execution has yet been recorded for the current tree.
 
-Resolution notes: items 5-7 have been corrected on the release-preparation
-branch. CascadeXML's missing environment remains open; its bounded upstream diff,
-entry-point fixes and limitations are recorded in
+Resolution notes: the third-party notice and CI portions of item 3 and items 5-7
+have been corrected on the release-preparation branch. CascadeXML's missing
+environment remains open; its bounded upstream diff, entry-point fixes and
+limitations are recorded in
 [`CASCADEXML_MODIFICATIONS.md`](CASCADEXML_MODIFICATIONS.md).
+
+The XR-Transformer former submodule base, post-conversion changes, corrected
+preprocessing/evaluation paths and limitations are recorded in
+[`XR_TRANSFORMER_MODIFICATIONS.md`](XR_TRANSFORMER_MODIFICATIONS.md). Its compact
+historical aggregates remain unreconciled because several datasets contain
+identical per-seed records.
 
 ## Scope boundaries
 

@@ -985,6 +985,8 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall", "r_prec"])):
         assert isinstance(tY, smat.csr_matrix), type(tY)
         assert isinstance(pY, smat.csr_matrix), type(pY)
         assert tY.shape == pY.shape, "tY.shape = {}, pY.shape = {}".format(tY.shape, pY.shape)
+        if tY.shape[0] == 0:
+            raise ValueError("at least one evaluation example is required")
         pY = sorted_csr(pY)
         total_matched = np.zeros(topk, dtype=np.uint64)
 
@@ -996,6 +998,8 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall", "r_prec"])):
             
             # changed: add r_prec
             r = len(truth)
+            if r == 0:
+                raise ValueError("R-Precision is undefined for examples without gold labels")
 
             matched = np.isin(pY.indices[pY.indptr[i] : pY.indptr[i + 1]][:topk], truth)
 
@@ -1010,7 +1014,7 @@ class Metrics(collections.namedtuple("Metrics", ["prec", "recall", "r_prec"])):
             total_matched[: len(cum_matched)] += cum_matched
 
             # changed: add r_prec
-            total_r_prec += cum_matched_r[-1]/r
+            total_r_prec += (cum_matched_r[-1] if len(cum_matched_r) else 0.0) / r
 
             recall[: len(cum_matched)] += cum_matched / max(len(truth), 1)
             if len(cum_matched) != 0:

@@ -41,5 +41,4 @@ python3 ensemble_evaluate.py \
 	-p ${Preds} \
 	--tags ${Tags} \
 	--ens-method ${ens_method} \
-	--dataset ${data_dir}
     |& tee models/${data}/ensemble.log

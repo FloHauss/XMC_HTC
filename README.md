@@ -20,7 +20,7 @@ empirical comparison.
 | Method | Original implementation | Repository integration | Status |
 | --- | --- | --- | --- |
 | CascadeXML | [xmc-aalto/cascadexml](https://github.com/xmc-aalto/cascadexml) | [`XMLmodels/CascadeXML`](XMLmodels/CascadeXML) | Documented |
-| XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos) | Documented |
+| XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos/STUDY_INTEGRATION.md) | Documented |
 | HBGL | [kongds/HBGL](https://github.com/kongds/HBGL) | [`htc/hbgl`](htc/hbgl) | Documented |
 | HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`integrations/hgclr`](integrations/hgclr) | Documented |
 | RADAr | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | Not currently available | Deferred |
@@ -67,7 +67,8 @@ want to use:
 - [HGCLR integration and status](integrations/hgclr/README.md)
 - [HGCLR usage](integrations/hgclr/USAGE.md)
 - [HTC/XMC dataset conversion](dataset_transfer/README.md)
-- [XR-Transformer guide](xr_transformer_guide.md)
+- [XR-Transformer integration and status](XMLmodels/pecos/STUDY_INTEGRATION.md)
+- [historical XR-Transformer guide](xr_transformer_guide.md)
 - [historical model and preprocessing instructions](docs/LEGACY_USAGE.md)
 
 The legacy instructions are preserved for provenance and still require
@@ -101,8 +102,8 @@ documented in [`docs/REPOSITORY_INVENTORY.md`](docs/REPOSITORY_INVENTORY.md).
 
 ## Validation
 
-The bounded release checks currently cover HGCLR metric definitions, mmap data
-generation and internal consistency of candidate aggregates:
+The bounded release checks cover metric and conversion invariants for HGCLR,
+CascadeXML, HBGL and XR-Transformer, as well as release-document links:
 
 ```bash
 python -m unittest discover -s tests -v

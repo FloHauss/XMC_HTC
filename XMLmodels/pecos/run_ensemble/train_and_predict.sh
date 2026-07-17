@@ -1,8 +1,10 @@
-#!/bin/bash
+#!/usr/bin/env bash
+set -euo pipefail
+
 #================= inputs =====================
-data_name=$1
-model_name=$2
-data_dir=$3
+data_name=${1:?usage: train_and_predict.sh DATASET MODEL DATA_DIR}
+model_name=${2:?usage: train_and_predict.sh DATASET MODEL DATA_DIR}
+data_dir=${3:?usage: train_and_predict.sh DATASET MODEL DATA_DIR}
 
 X_trn=${data_dir}/X.trn.txt # training text
 X_tst=${data_dir}/X.tst.txt # test text
@@ -18,22 +20,22 @@ mkdir -p ${model_dir}
 params_dir=params/${data_name}/${model_name}
 
 python3 -m pecos.xmc.xtransformer.train \
-	--trn-text-path ${X_trn} \
-	--trn-feat-path ${X_feat_trn} \
-	--trn-label-path ${Y_trn} \
-	--model-dir ${model_dir} \
-	--params-path ${params_dir}/params.json \
-	2>&1 | tee ${model_dir}/train.log
+	--trn-text-path "${X_trn}" \
+	--trn-feat-path "${X_feat_trn}" \
+	--trn-label-path "${Y_trn}" \
+	--model-dir "${model_dir}" \
+	--params-path "${params_dir}/params.json" \
+	2>&1 | tee "${model_dir}/train.log"
 # |& tee ${model_dir}/train.log
 
 python3 -m pecos.xmc.xtransformer.predict \
-	--feat-path ${X_feat_tst} \
-	--text-path ${X_tst} \
-	--model-folder ${model_dir} \
+	--feat-path "${X_feat_tst}" \
+	--text-path "${X_tst}" \
+	--model-folder "${model_dir}" \
 	--batch-gen-workers 16 \
-	--save-pred-path ${model_dir}/Pt.npz \
+	--save-pred-path "${model_dir}/Pt.npz" \
 	--batch-size 128 \
-	2>&1 | tee ${model_dir}/predict.log
+	2>&1 | tee "${model_dir}/predict.log"
 # |& tee ${model_dir}/predict.log
 
 # command below not needed since the evaluation happens in ensemble_evaluate.py

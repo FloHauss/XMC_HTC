@@ -1,113 +1,76 @@
-#!~/miniconda3/envs/xr_transformer_env/bin/python -u
+#!/usr/bin/env python3
 
-from pecos.utils.smat_util import sorted_csr, CsrEnsembler, load_matrix
 import argparse
-import os
+
 import numpy as np
-from sklearn.metrics import f1_score
+
+from pecos.utils.smat_util import CsrEnsembler, load_matrix, sorted_csr
+
+
+def sparse_f1(y_true, y_pred):
+    """Return micro- and macro-F1 from sparse binary label support."""
+    if y_true.shape != y_pred.shape:
+        raise ValueError(f"shape mismatch: {y_true.shape} != {y_pred.shape}")
+    if y_true.shape[0] == 0 or y_true.shape[1] == 0:
+        raise ValueError("evaluation matrices must be non-empty")
+
+    true = y_true.copy().tocsr()
+    pred = y_pred.copy().tocsr()
+    true.eliminate_zeros()
+    pred.eliminate_zeros()
+    true.data = np.ones_like(true.data, dtype=np.uint8)
+    pred.data = np.ones_like(pred.data, dtype=np.uint8)
+
+    true_per_label = np.asarray(true.sum(axis=0)).ravel()
+    pred_per_label = np.asarray(pred.sum(axis=0)).ravel()
+    tp_per_label = np.asarray(true.multiply(pred).sum(axis=0)).ravel()
+
+    denominator = true_per_label + pred_per_label
+    per_label = np.divide(
+        2.0 * tp_per_label,
+        denominator,
+        out=np.zeros_like(denominator, dtype=np.float64),
+        where=denominator != 0,
+    )
+    micro_denominator = true.nnz + pred.nnz
+    micro = 2.0 * tp_per_label.sum() / micro_denominator if micro_denominator else 0.0
+    return float(micro), float(per_label.mean())
 
 
 def parse_arguments():
     parser = argparse.ArgumentParser()
-
-    parser.add_argument(
-        "-y",
-        "--truth-path",
-        type=str,
-        required=True,
-        metavar="PATH",
-        help="path to the file of with ground truth output (CSR: nr_insts * nr_items)",
-    )
-    parser.add_argument(
-        "-p",
-        "--pred-path",
-        type=str,
-        required=True,
-        nargs="*",
-        metavar="PATH",
-        help="path to the file of predicted output (CSR: nr_insts * nr_items)",
-    )
-    parser.add_argument(
-        "--tags",
-        type=str,
-        required=True,
-        nargs="*",
-        metavar="PATH",
-        help="tags attached to each prediction",
-    )
-    parser.add_argument(
-        "--ens-method",
-        type=str,
-        metavar="STR",
-        default="rank_average",
-        help="prediction ensemble method",
-    )
-    parser.add_argument(
-        "--dataset",
-        type=str,
-        required=True,
-        metavar="PATH",
-        help="path to dataset",
-    )
-
+    parser.add_argument("-y", "--truth-path", required=True, metavar="PATH")
+    parser.add_argument("-p", "--pred-path", required=True, nargs="+", metavar="PATH")
+    parser.add_argument("--tags", required=True, nargs="+", metavar="TAG")
+    parser.add_argument("--ens-method", default="rank_average")
     return parser
 
 
 def do_evaluation(args):
-    """ Evaluate xlinear predictions """
-    assert len(args.tags) == len(args.pred_path)
-    Y_true = sorted_csr(load_matrix(args.truth_path).tocsr())
-    Y_pred = [sorted_csr(load_matrix(pp).tocsr()) for pp in args.pred_path]
+    if len(args.tags) != len(args.pred_path):
+        raise ValueError("--tags and --pred-path must have the same length")
+    y_true = sorted_csr(load_matrix(args.truth_path).tocsr())
+    predictions = [
+        sorted_csr(load_matrix(path).tocsr()) for path in args.pred_path
+    ]
 
-    #if hasattr(args, "threshold") and args.threshold is not None:
-        #thr = float(args.threshold)
-        #print(f"Applying threshold: keeping labels with score ≥ {thr}")
-        #Y_pred = [Yp.multiply(Yp >= thr).astype(bool).astype(int) for Yp in Y_pred]
-        #for Yp in Y_pred:
-            #Yp.eliminate_zeros()
-    print("==== evaluation results ====")
-    
-    CsrEnsembler.print_ens(Y_true, Y_pred, args.tags, ens_method=args.ens_method)
+    print("==== P@k, recall@k and R-Precision ====")
+    CsrEnsembler.print_ens(
+        y_true, predictions, args.tags, ens_method=args.ens_method
+    )
 
-    print("\n==== F1-scores ====")
-    for tag, Yp in zip(args.tags, Y_pred):
-        # Convert sparse matrices to binary dense arrays for sklearn (if feasible)
-        y_true_bin = (Y_true > 0).astype(int).toarray()
-        if args.threshold is not None:
-            thr = float(args.threshold)
-            y_pred_bin = (Yp >= thr).astype(int).toarray()
-        else:
-            y_pred_bin = (Yp > 0).astype(int).toarray()
-        
-        f1_micro = f1_score(y_true_bin, y_pred_bin, average='micro', zero_division=0)
-        f1_macro = f1_score(y_true_bin, y_pred_bin, average='macro', zero_division=0)
-        
-        print(f"[{tag}] F1-micro: {f1_micro:.4f}, F1-macro: {f1_macro:.4f}")
+    print("\n==== F1 over stored prediction support ====")
+    for tag, prediction in zip(args.tags, predictions):
+        micro, macro = sparse_f1(y_true, prediction)
+        print(f"[{tag}] F1-micro: {micro:.4f}, F1-macro: {macro:.4f}")
 
-    if args.ens_method is not None and len(Y_pred) > 1:
-        if args.ens_method.lower() == "softmax_average":
-            # Average scores element-wise
-            Y_ens = sum(Y_pred) / len(Y_pred)
-        elif args.ens_method.lower() in ["max", "vote"]:
-            # Take element-wise maximum (equivalent to union of predicted labels)
-            Y_ens = Y_pred[0].copy()
-            for Yp in Y_pred[1:]:
-                Y_ens = Y_ens.maximum(Yp)
-        else:
-            print(f"Warning: Unknown ensemble method '{args.ens_method}', skipping ensemble F1.")
-            return
+    ensemble = getattr(CsrEnsembler, args.ens_method)(*predictions)
+    micro, macro = sparse_f1(y_true, ensemble)
+    print(
+        f"[Ensemble-{args.ens_method}] F1-micro: {micro:.4f}, "
+        f"F1-macro: {macro:.4f}"
+    )
 
-        # Binarize for F1 computation
-        y_true_bin = (Y_true > 0).astype(int).toarray()
-        y_ens_bin = (Y_ens > 0).astype(int).toarray()
 
-        f1_micro_ens = f1_score(y_true_bin, y_ens_bin, average='micro', zero_division=0)
-        f1_macro_ens = f1_score(y_true_bin, y_ens_bin, average='macro', zero_division=0)
-
-        print(f"[Ensemble-{args.ens_method}] F1-micro: {f1_micro_ens:.4f}, F1-macro: {f1_macro_ens:.4f}")
-        
 if __name__ == "__main__":
-    parser = parse_arguments()
-    args = parser.parse_args()
-    do_evaluation(args)
-
+    do_evaluation(parse_arguments().parse_args())
