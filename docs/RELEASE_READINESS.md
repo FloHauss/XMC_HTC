@@ -60,6 +60,11 @@ The publication release should meet the following minimum standard:
    status must be reviewed before release.
 9. No fresh-clone end-to-end execution has yet been recorded for the current tree.
 
+Resolution notes: items 5-7 have been corrected on the release-preparation
+branch. CascadeXML's missing environment remains open; its bounded upstream diff,
+entry-point fixes and limitations are recorded in
+[`CASCADEXML_MODIFICATIONS.md`](CASCADEXML_MODIFICATIONS.md).
+
 ## Scope boundaries
 
 Release preparation should avoid broad refactoring of upstream model internals.

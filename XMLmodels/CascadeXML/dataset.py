@@ -34,16 +34,6 @@ def get_tokenizer(model_name):
         tokenizer = BertTokenizer.from_pretrained('bert-base-uncased', do_lower_case=True)
     return tokenizer
 
-def batched_retain_topk(matrix, k, batch_size=10000):
-    matrix = matrix.tocsr()
-    parts = []
-    for start in range(0, matrix.shape[0], batch_size):
-        end = min(start + batch_size, matrix.shape[0])
-        part = matrix[start:end]
-        part = retain_topk(part, k)
-        parts.append(part)
-    return sp.vstack(parts)
-
 class InferenceDataset():
     'Not an actual dataset, just a container for clusters'
     def __init__(self, params):
@@ -182,16 +172,9 @@ class MultiXMLGeneral(Dataset):
             print("Avg features", lbl_sparse.nnz / lbl_sparse.shape[0])
 
             if "Amazon-3M" in params.dataset:
-                lbl_sparse = retain_topk(lbl_sparse.tocsr(), k=20).tocsr() #changed from 500
-                print("reached 1")
+                # Study-specific memory reduction: prune before graph propagation.
+                lbl_sparse = retain_topk(lbl_sparse.tocsr(), k=20).tocsr()
                 lbl_sparse = n_gph.dot(lbl_sparse).tocsr()
-                print("reached 2")
-                #lbl_sparse = batched_retain_topk(lbl_sparse, k=1000).tocsr()
-                
-                #min_val = 1e-4
-                #lbl_sparse.data[lbl_sparse.data < min_val] = 0
-                #lbl_sparse.eliminate_zeros()
-                #lbl_sparse = batched_retain_topk(lbl_sparse, k=2000)
             else: 
                 lbl_sparse = n_gph.dot(lbl_sparse).tocsr()
                 lbl_sparse = retain_topk(lbl_sparse.tocsr(), k=1000).tocsr()
@@ -203,7 +186,6 @@ class MultiXMLGeneral(Dataset):
                 lbl_dense = n_gph.dot(normalize(lbl_dense))
                 lbl_sparse = [lbl_sparse, lbl_dense]
 
-            print(f"params: {params}")
             start_time = time.time()   
             print('start fitting the tree...')
                 

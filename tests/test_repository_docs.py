@@ -15,6 +15,10 @@ class DocumentationLinkTests(unittest.TestCase):
             REPOSITORY_ROOT / "integrations" / "hgclr" / "README.md",
             REPOSITORY_ROOT / "integrations" / "hgclr" / "USAGE.md",
             REPOSITORY_ROOT / "integrations" / "hgclr" / "PROVENANCE.md",
+            REPOSITORY_ROOT / "XMLmodels" / "CascadeXML" / "README.md",
+            REPOSITORY_ROOT / "docs" / "MODEL_PROVENANCE.md",
+            REPOSITORY_ROOT / "docs" / "RELEASE_READINESS.md",
+            REPOSITORY_ROOT / "docs" / "CASCADEXML_MODIFICATIONS.md",
         ]
         missing = []
         for document in documents:

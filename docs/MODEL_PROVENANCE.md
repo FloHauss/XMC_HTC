@@ -11,7 +11,7 @@ of every historical experiment unless explicitly stated.
 
 | Integration | Original repository | Current repository state | Verification | Provenance work remaining |
 | --- | --- | --- | --- | --- |
-| CascadeXML | `xmc-aalto/cascadexml` | Modified source present under `XMLmodels/CascadeXML` | Documented | Establish the exact upstream base and produce a study-specific diff. |
+| CascadeXML | `xmc-aalto/cascadexml` | Modified source present under `XMLmodels/CascadeXML` | Documented | Capture paper commands/environment and smoke-test a representative GPU path. |
 | XR-Transformer | `amzn/pecos` | Full modified PECOS tree present under `XMLmodels/pecos` | Documented | Reduce or pin the upstream dependency and isolate run scripts and evaluation changes. |
 | HBGL | `kongds/HBGL` | Modified source present under `htc/hbgl` | Documented | Establish the exact upstream base and document cross-domain changes. |
 | HGCLR | `wzh9969/contrastive-htc` | Source-only working fork imported under `integrations/hgclr` | Documented | Run the empty-gold audit on historical binaries, reconcile candidate aggregates with the paper, then complete a bounded fresh-environment smoke test. |
@@ -25,8 +25,11 @@ of every historical experiment unless explicitly stated.
 - Current upstream reference inspected on 2026-07-17:
   `ce701f688aaf5d5c8abe979d192f9c8f224aec90`
 - No top-level licence was detected in the inspected upstream checkout.
-- Several files in the local integration differ from current upstream; the
-  historical base revision is not yet established.
+- Seven retained Python files match the inspected commit byte-for-byte and the
+  remaining source has a bounded, documented diff. This comparison establishes
+  the inspected base despite the absence of preserved fork history.
+- The detailed comparison, release fixes and result-affecting caveats are in
+  [`CASCADEXML_MODIFICATIONS.md`](CASCADEXML_MODIFICATIONS.md).
 
 ### XR-Transformer / PECOS
 

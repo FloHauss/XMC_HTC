@@ -5,23 +5,22 @@ import scipy.sparse as sp
 
 from transformers import AdamW
 from sklearn.metrics import f1_score, accuracy_score
-from sklearn.preprocessing import MultiLabelBinarizer
 from tqdm import tqdm
 from torch.cuda.amp import GradScaler
 import torch.distributed as dist
-import math
 from training_schedule import ThreePhaseOneCycleLR
 import os
-import sys
 import time
 
 class Runner:
-    def __init__(self, params, train_dl, test_dl, inv_prop, top_k = 20):
+    def __init__(self, params, train_dl, test_dl, inv_prop, top_k=20):
         self.train_dl = train_dl
         self.test_dl = test_dl
         self.num_train, self.num_test = len(train_dl.dataset), len(test_dl.dataset)
         print(self.num_test)
         self.top_k = top_k
+        if self.top_k < 5:
+            raise ValueError("top_k must be at least 5 for the reported CascadeXML metrics")
         self.patience = 0 
         self.best_f1_macro = 0.0
         self.best_f1_micro = 0.0
@@ -32,8 +31,13 @@ class Runner:
             self.filter_test = test_dl.dataset.filter_test
 
     def save_model(self, model, epoch, name):
+        model_to_save = (
+            model.module
+            if isinstance(model, nn.parallel.DistributedDataParallel)
+            else model
+        )
         checkpoint = {
-            'state_dict': model.state_dict(),
+            'state_dict': model_to_save.state_dict(),
             'optimizer': self.optimizer.state_dict(),
             'epoch': epoch,
             'scaler': self.scaler.state_dict()
@@ -42,8 +46,19 @@ class Runner:
 
     def load_model(self, model, name, load_opt=True):
         checkpoint = torch.load(name)
+        model_to_load = (
+            model.module
+            if isinstance(model, nn.parallel.DistributedDataParallel)
+            else model
+        )
+        state_dict = checkpoint['state_dict']
+        if state_dict and all(key.startswith('module.') for key in state_dict):
+            state_dict = {
+                key.removeprefix('module.'): value
+                for key, value in state_dict.items()
+            }
         try:
-            model.load_state_dict(checkpoint['state_dict'], strict=False)
+            model_to_load.load_state_dict(state_dict, strict=False)
         except RuntimeError as E:
             print(E)
 
@@ -111,10 +126,10 @@ class Runner:
 
         
         
-    def predict_at_k(self, preds, y_true, i,  ext_adj = None):
-        ext_adj = [] if ext_adj is None else ext_adj
-        sum = 0
+    def predict_at_k(self, preds, y_true, i):
         for pred, tr in zip(preds, y_true):
+            if len(tr) == 0:
+                raise ValueError("R-Precision is undefined for examples without gold labels")
             match = (pred[:len(tr), None] == tr).any(-1)
             #print(len(tr)/pred[:len(tr)])
             #print(len(pred))
@@ -125,10 +140,10 @@ class Runner:
             #print((torch.cumsum(match, dim=0).to(ext_adj[i].device))/len(tr))
             #match = match/len(tr)
             #print(torch.tensor([len(tr)]))
-            sum = torch.sum(match) / len(tr)
+            score = torch.sum(match) / len(tr)
 
             #ext_adj[i] += torch.cumsum(match, dim=0).to(ext_adj[i].device)
-            self.counts_adj[i] += sum
+            self.counts_adj[i] += score
             
 #################################     
     def psp(self, preds, y_true, num=None, den=None):
@@ -218,7 +233,12 @@ class Runner:
         if params.distributed:
             dist.barrier()
 
-        self.test(model, params, device, epoch)
+        should_stop = self.test(model, params, device, epoch)
+        if params.distributed:
+            stop = torch.tensor(int(should_stop), device=device)
+            dist.broadcast(stop, src=0)
+            should_stop = bool(stop.item())
+        return should_stop
 
     def train(self, model, params, device):
         # test only on one process
@@ -286,13 +306,16 @@ class Runner:
         for epoch in range(init, params.num_epochs):
             if params.distributed:
                 self.train_dl.sampler.set_epoch(epoch)
-            self.fit_one_epoch(model, params, device, epoch+1)
+            if self.fit_one_epoch(model, params, device, epoch+1):
+                if params.local_rank == 0:
+                    print("Early stopping: micro-F1 did not improve within patience.")
+                break
 
 
     @torch.no_grad()
     def test(self, model, params, device, epoch=0):
         if not params.dist_eval and params.local_rank != 0:
-            return
+            return False
         
         model.eval()
         if isinstance(model,  nn.parallel.DistributedDataParallel):
@@ -313,8 +336,8 @@ class Runner:
             self.counts_adj = [0 for _ in range(len(model.clusters)+1)]
             self.weighted_counts = [torch.zeros(self.top_k, dtype=int).to(device) for _ in range(len(model.clusters)+1)]
         
-        self.num = torch.zeros(self.top_k).cuda()
-        self.den = torch.zeros(self.top_k).cuda()
+        self.num = torch.zeros(self.top_k, device=device)
+        self.den = torch.zeros(self.top_k, device=device)
 
         if params.local_rank==0:
             pbar = tqdm(self.test_dl, desc=f"Epoch {epoch}",disable = True)
@@ -458,7 +481,10 @@ class Runner:
             else: 
                 self.patience += 1
 
-            print(f"Patience: {self.patience}/{model.max_patience}")
+            model_module = model.module if isinstance(
+                model, nn.parallel.DistributedDataParallel
+            ) else model
+            print(f"Patience: {self.patience}/{model_module.max_patience}")
             """
             if sk_f1_macro > self.best_f1_macro: 
                 self.best_f1_macro = sk_f1_macro
@@ -522,9 +548,11 @@ class Runner:
 
             if(score > self.best_test_acc and not params.test):
                 self.best_test_acc = score
-                #self.save_model(model, epoch, params.model_name + "/model_best_test.pth")
-        if self.patience >= model.max_patience:         
-            sys.exit(f"Early stopping. No improvement in micro-f1 for {self.patience} epochs")
+                self.save_model(model, epoch, params.model_name + "/model_best_test.pth")
+
+            return self.patience >= model_module.max_patience
+
+        return False
     
     def test_ensemble(self, params):
         

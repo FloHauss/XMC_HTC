@@ -11,6 +11,7 @@ import re
 from nltk.corpus import stopwords
 from multiprocessing import Pool, cpu_count
 from tqdm.contrib.concurrent import process_map
+from io_utils import make_csr_labels, make_csr_tfidf
 # from xclib.data import data_utils as du
 
 
@@ -56,59 +57,6 @@ def get_inv_prop(dataset, Y):
     
     np.save(os.path.join(dataset, 'inv_prop.npy'), inv_prop)
     return inv_prop
-
-def make_csr_tfidf(dataset, LF_data):
-    file_name = f'{dataset}/tfidf.npz'
-    if os.path.exists(file_name):
-        print(f"Loading {file_name}")
-        tfidf_mat = sp.load_npz(file_name)
-    else:
-        with open(f'{dataset}/train.txt') as fil:
-            if LF_data:
-                data = fil.readlines()[1:]
-            row_idx, col_idx, val_idx = [], [], []
-            for i, data in enumerate(fil.readlines()[1:]): #changed
-                data = data.split()[1:]
-                for tfidf in data:
-                    try:
-                        token, weight = tfidf.split(':')
-                    except: 
-                        print(f'Issue with token at line number {i}: {tfidf}')
-                        continue
-                    row_idx.append(i)
-                    col_idx.append(int(token))
-                    val_idx.append(float(weight))
-            m = max(row_idx) + 1
-            n = max(col_idx) + 1
-            tfidf_mat = sp.csr_matrix((val_idx, (row_idx, col_idx)), shape=(m, n))
-            print(f"Created {file_name}")
-            sp.save_npz(file_name, tfidf_mat)
-    return tfidf_mat
-
-def make_csr_labels(num_labels, file_name, LF_data):
-    if os.path.exists(file_name):
-        print(f"Loading {file_name}")
-        Y = sp.load_npz(file_name)
-    else:
-        with open(os.path.splitext(file_name)[0]+'.txt') as fil:
-            if LF_data:
-                data = fil.readlines()[1:] 
-            row_idx, col_idx = [], []
-            for i, lab in enumerate(fil.readlines()):
-                if LF_data:
-                    l_list = [int(l) for l in lab.split()[0].split(',')]
-                else:
-                    l_list = [int(l) for l in lab.replace('\n', '').split(',')]
-                col_idx.extend(l_list)
-                row_idx.extend([i]*len(l_list))
-
-            m = max(row_idx) + 1
-            n = num_labels
-            val_idx = [1]*len(row_idx)
-            Y = sp.csr_matrix((val_idx, (row_idx, col_idx)), shape=(m, n))
-            print(f"Created {file_name}")
-            sp.save_npz(file_name, Y)
-    return Y
 
 def encode(text):
     return sp_token.encode(text, add_special_tokens=False)
@@ -170,7 +118,7 @@ def create_data(dataset, model, LF_data=False):
     sp_token = tokenizer
 
     if LF_data:
-        train_texts, test_texts = read_lf_dataset(dataset)
+        train_texts, test_texts = read_lf_datasets(dataset)
     else:
         train_texts, test_texts = read_dataset(dataset)
     

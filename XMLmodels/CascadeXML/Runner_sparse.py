@@ -395,7 +395,7 @@ class SparseRunner:
     def return_embeddings(self, model, params):
         model.eval()
         train_feats, test_feats = [], []
-        print(f'\Creating learnt feature embeddings')
+        print('Creating learnt feature embeddings')
         pbar = tqdm(self.train_dl, desc=f"Creating train data embeddings")
         
         for step, sample in enumerate(pbar): 
