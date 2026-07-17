@@ -13,10 +13,12 @@ PATH_TO_DATASET="xmc-base"
 
 NOW=$(date "+%Y-%m-%d %H:%M:%S")
 
-source /home/ul/ul_student/ul_ruw26/.bashrc
+if [[ -f "${HOME}/.bashrc" ]]; then
+  source "${HOME}/.bashrc"
+fi
 conda activate xr_transformer_env
 
-cd /home/ul/ul_student/ul_ruw26/XMC_HTC/XMLmodels/pecos/run_ensemble
+cd "$(dirname "${BASH_SOURCE[0]}")"
 
 echo "------- Ensemble run at $NOW for $DATASET ----------"
 

@@ -1,111 +1,134 @@
-# XML models
-## CascadeXML
-CascadeXML requires five input files to run:
-- **train_raw_texts.txt** - This file contains all the texts used for training. Texts are seperated by a newline character.
-- **test_raw_texts.txt** - This file contains all the texts used for testing. Texts are seperated by a newline character.
-- **Y.trn.txt** - This file contains all the labels used for training. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the train_raw_texts file.
-- **Y.tst.txt** - This file contains all the labels used for testing. Each line contains a set of numbers. These are the numbers of the labels, which are relevant for the text, situated in the same line in the test_raw_texts file.
-- **train.txt** - An additional input file used for clustering. For each data point, it contains the numbers of all relevant labels, followed by TFIDF feature representations of the input text.
+# Cross-domain evaluation of XMC and HTC models
 
-For datasets from the world of XML, the first four files can be downloaded from [here](https://github.com/yourh/AttentionXML). The train.txt file can be downloaded from [The Extreme Classification Repository](http://manikvarma.org/downloads/XC/XMLRepository.html), by selecting the "BOW Features" mirror for the desired dataset. Installation instructions can be obtained from the [original git repository](https://github.com/xmc-aalto/cascadexml). The adjusted source code can be found at XMLmodels/CascadeXML/src
+This repository accompanies a study of how established hierarchical text
+classification (HTC) and extreme multi-label classification (XMC) models behave
+when applied to datasets from the other domain.
 
-The NYT, RCV1-V2 and [WoS](https://data.mendeley.com/datasets/9rw3vkcfy4/6) datasets, must be downloaded and parsed into the format described above to obtain the first four files. The train.txt files for each dataset can be dowloaded from [here](https://drive.google.com/drive/folders/1dHqrKTVkjPvZ0ozlOu9UUOJykW64tVXW?usp=sharing). Note that the dimensions of the dataset must fit the dimension of the train.txt file.
+The evaluated models were developed by their respective original authors. This
+project does **not** claim ownership of CascadeXML, XR-Transformer, HBGL, HGCLR
+or RADAr. Its contribution is the cross-domain integration: dataset conversion,
+hierarchy preparation, configurations, evaluation, cost measurement and
+empirical comparison.
 
-Alternatively, for custom datasets, these train.txt files can be created manually by untilising the scripts in the XMLPreprocessing/CascadeXML folder. To do this, donwload the folder, place the train_raw_texts.txt file and Y.trn.txt files for your dataset in the same folder and then run the xml_prepocessor.py file. This should create 2 more files named text_preprocessed.txt and vocab.txt. When these are created, run the vectorizer.py file. This should then create the train.txt file for your dataset. Note that the vectorizer.py script may take several hours to terminate. 
+> **Release status:** preparation in progress. Historical code and results are
+> being consolidated into an honest research artefact. A component marked
+> **Documented** is present but has not necessarily completed a new end-to-end
+> run from a fresh checkout.
 
-## XR-Transformer
-XR-Transformer requires six input files:
-- **X.trn.txt** - This file contains the texts used for training. Texts are seperated by a newline character.
-- **X.trn.npz** - This file is a CSR npz or Row-majored npy file and contains the training feature matrix with shape N x d (N: number of training intances, d: number of feauture dimensions).
-- **Y.trn.npz** - This file is a CSR npz file with the training label matrix containing the ground truth label assignment for the training. Shape: N x L (L: number of labels in label space).
-- **X.tst.txt** - This file contains the texts used for testing/prediction. Texts are seperated by a newline character.
-- **X.tst.npz** - This file is a CSR npz or Row-majored npy file containing the testing feature matrix with shape N x d.
-- **Y.tst.npz** - This file is a CSR npz files of the testing label matrix containing the ground truth label assignment for the test data. Shape N x L.
+## Evaluated methods
 
-The datasets from the XML world are provided by the authors of XR-Transformer and can be downloaded [here](https://ia902308.us.archive.org/21/items/pecos-dataset/xmc-base/).
+| Method | Original implementation | Repository integration | Status |
+| --- | --- | --- | --- |
+| CascadeXML | [xmc-aalto/cascadexml](https://github.com/xmc-aalto/cascadexml) | [`XMLmodels/CascadeXML`](XMLmodels/CascadeXML) | Documented |
+| XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos) | Documented |
+| HBGL | [kongds/HBGL](https://github.com/kongds/HBGL) | [`htc/hbgl`](htc/hbgl) | Documented |
+| HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`integrations/hgclr`](integrations/hgclr) | Documented |
+| RADAr | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | Not currently available | Deferred |
 
-#### Preprocessing of foreign datasets 
+The status definitions and evidence requirements are recorded in
+[`docs/RELEASE_READINESS.md`](docs/RELEASE_READINESS.md). Model provenance is
+tracked in [`docs/MODEL_PROVENANCE.md`](docs/MODEL_PROVENANCE.md).
 
-The HTC datasets (NYT, RCV1-V2 and WoS) can be preprocessed using the provided XR-Transformer [preprocessing.py](https://github.com/FloHauss/XMC_HTC/blob/main/XMLPreprocessing/XR-Transformer/preprocess.py) script in /XMLPreprocessing/XR-Transformer. The script needs the following input files: "train_raw_texts.txt" and "test_raw_texts.txt" containing the raw text train and test data, as well as "train_labels.txt" and "test_labels.txt" containing the train and test labels. Note, that these files are similar to the inputs of the CascadeXML model ("train_labels.txt" = "Y.trn.txt", "test_labels.txt" = "Y.tst.txt"). The outputs of the preprocessing script are the .npz files required for the execution of XR-Transformer. They need to be renamed and structured as described below.
+## What this repository provides
 
-In order to use the scripts we provided, the datasets need to be stored in XMLmodels/pecos like this:
+- conversion between the HTC JSONL and XMC text/label representations;
+- hierarchy and taxonomy preparation used for cross-domain datasets;
+- adapted launch and preprocessing scripts for the evaluated methods;
+- Micro-F1, Macro-F1, P@k and R-Precision evaluation support where applicable;
+- multi-seed aggregation and computational-cost records;
+- historical configurations and candidate result records;
+- explicit provenance, verification status and known limitations.
+
+## Repository map
+
+```text
+dataset_transfer/          HTC/XMC format conversion
+XMLPreprocessing/          XML preprocessing helpers
+XMLScripts/                XML hierarchy and feature scripts
+XMLmodels/CascadeXML/      Adapted CascadeXML source
+XMLmodels/pecos/           Historical XR-Transformer/PECOS working tree
+htc/hbgl/                  Adapted HBGL source
+integrations/hgclr/        Audited HGCLR study integration
+tests/                     Bounded release-validation tests
+docs/                      Provenance, inventory and release-readiness records
 ```
-|-- xmc-base
-|   |-- tfidf-attnxml
-|   |   |-- X.trn.npz
-|   |   |-- X.tst.npz
-|   |-- X.trn.txt
-|   |-- X.tst.txt
-|   |-- Y.trn.txt
-|   |-- Y.tst.txt
-````
-#### Start experiments
 
-First XR-Transformer needs to be installed ([see xr_transformer_guide](https://github.com/FloHauss/XMC_HTC/blob/main/xr_transformer_guide.md)). To conduct our experiments we used [run_ensemble/run.sh](https://github.com/FloHauss/XMC_HTC/blob/main/XMLmodels/pecos/run_ensemble/run.sh). It can be called like this:
-```sh
-bash run.sh ${DATASET} ${PATH_TO_DATASET}
+The copied PECOS tree and the older model directories are retained temporarily
+while their study-specific modifications are isolated. Their current layout
+should not be interpreted as the intended final release structure.
 
-# DATASET: name of the dataset (e.g. "wiki10-31k"). Used to identify data and parameter files.
-# PATH_TO_DATASET: folder in which the dataset folder is stored (e.g. "xmc-base" or "htc-base")
+## Getting started
+
+There is currently no single environment that supports every evaluated model.
+Several implementations depend on different legacy versions of PyTorch,
+Transformers, fairseq or PECOS. Follow the documentation for the integration you
+want to use:
+
+- [HGCLR integration and status](integrations/hgclr/README.md)
+- [HGCLR usage](integrations/hgclr/USAGE.md)
+- [HTC/XMC dataset conversion](dataset_transfer/README.md)
+- [XR-Transformer guide](xr_transformer_guide.md)
+- [historical model and preprocessing instructions](docs/LEGACY_USAGE.md)
+
+The legacy instructions are preserved for provenance and still require
+verification and editing. Paths or commands appearing only there should not yet
+be treated as release-tested interfaces.
+
+## Data
+
+Datasets are not distributed as a complete part of this repository. NYT and
+RCV1-V2 in particular have acquisition or redistribution conditions that users
+must satisfy independently. Dataset-specific instructions should be used to
+obtain the original data and reproduce the derived representations.
+
+Generated model inputs (`.bin`, `.idx`, `.pt`), checkpoints, caches and raw
+scheduler logs are intentionally excluded from Git. Taxonomies or label metadata
+retained in the release must be accompanied by their provenance and generation
+procedure.
+
+## Results and reproducibility
+
+Historical outputs are being reduced to compact, machine-readable result files.
+Raw Slurm logs in the current tree are not the intended release interface.
+
+HGCLR candidate five-seed aggregates are retained under
+[`integrations/hgclr/results/candidate`](integrations/hgclr/results/candidate).
+They are historical records and have not yet been reconciled with the final
+paper tables. They must not be interpreted as new verification runs.
+
+The current repository audit and proposed disposition of historical material are
+documented in [`docs/REPOSITORY_INVENTORY.md`](docs/REPOSITORY_INVENTORY.md).
+
+## Validation
+
+The bounded release checks currently cover HGCLR metric definitions, mmap data
+generation and internal consistency of candidate aggregates:
+
+```bash
+python -m unittest discover -s tests -v
 ```
 
-#### Results
-The logs and results of our experiments can be found in [run_ensemble/results/](https://github.com/FloHauss/XMC_HTC/tree/main/XMLmodels/pecos/run_ensemble/results).
+Full GPU training is intentionally not part of the local test suite or future
+continuous integration.
 
-#### Adjustments of the model
-The changes we made in comparison to the XR-Tranformer model by amazon are mainly due to introducing the R-Precision metric, introduced in [precos/utils/smat_util.py](https://github.com/FloHauss/XMC_HTC/blob/main/XMLmodels/pecos/pecos/utils/smat_util.py). They are marked in the code with comments in the format "changed: ...". 
+## Attribution
 
-# HTC models
+Please cite the original paper for every model used. Per-integration provenance
+and upstream licences or permissions will be retained with the corresponding
+code; see [`THIRD_PARTY_NOTICES.md`](THIRD_PARTY_NOTICES.md). A citation for the
+cross-domain study will be added when the publication metadata is final.
 
-### XML datasets for HTC
-As HGCLR does not support larger datasets without heavy modifications, only HBGL makes use of the larger XML datasets.
-Of these, even with modifications within the HBGL source code to accomodate for larger datasets, only Wiki10-31k and Ammazoncat-13k are small enough to effectively run on them.
+Substantial implementation and experiment work in this repository was conducted
+as part of a student group project. The Git history is preserved so those
+contributions remain attributable.
 
-So while our frameworks supports conversion for these larger datasets the model wills not effectively run on them.
+## Known limitations
 
-## HBGL 
-HBGL requires 4 input files to run:
-- {dataset_name}.taxonomy
-- {dataset name}_test.json
-- {dataset_name}_train.json
-- {dataset_name}_val.json
-
-It is required that these files are located within a folder named {dataset_name} within the data folder of HBGL.
-Each dataset also requires a corresponding script file named {dataset_name}.sh within the scripts folder of HBGL. HBGL runs are also started from within this folder.
-
-### HTC datasets for HBGL
-We follow the same preprocessing procedure as described by [HBGL](https://github.com/kongds/HBGL).
-Use the respective preprocessing files within the corresponding dataset folder.
-We made some minor adjustments, as otherwise the preprocessing will not work:
-- For WoS this includes an additional preprocessing file that has to run before the actual preprocess. This is because the seperator within the dataset file is not recognized properly
-- For NYT no additional changes were required
-- For RCV1 we adjusted the preprocessing file to properly work with the respective file paths
-
-### XML datasets for HBGL
-Within the data_transfer folder the specific XML dataset has to be inserted within the specific input/xml/{dataset_name} folder.
-6 files are required:
-- {dataset_name}.taxonomy
-- {dataset_name}_label_map.txt
-- {dataset_name}_test_labels.txt
-- {dataset_name}_test_texts.txt
-- {dataset_name}_train_labels.txt
-- {dataset_name}_train_texts.txt
-
-The test and train files are the same files used in Cascade XML just renamed.
-The taxonomies can be found [here](https://drive.google.com/drive/folders/18qnFBX67E1lldpJNPXZa8_I0Tylpl_cU). The labels are clustered using k-means and these clusters then provide the hierachical structure.
-The label map file contains all labels sorted alphabetically. This [repository](http://manikvarma.org/downloads/XC/XMLRepository.html) contains most the relevant XML datasets where this file is typically named something like 'Y.txt'.
-
-## HGCLR
-HGCLR requires 2 input files to run:\
-tok.txt: This file contains tokenized text data. Each number in the file represents a token ID corresponding to words or subwords from the original dataset.\
-Y.txt: This file contains all hierarchical labels. Each line contains the label vector for a single instance. 
-
-It is necessary that the files for each dataset are located in their respective directories. For example, files for the WoS dataset should be stored in the wos folder, and files for the RCV1 dataset should be stored in the rcv1 folder. This ensures that the scripts can correctly access the required data.\
-The optimal training parameters for each dataset can be found in the [here](https://github.com/wzh9969/contrastive-htc). 
-
-## RADAr
-RADAr follows HBGL regarding the input format. However it requires a slightly different preprocessing that splits the texts from labels into separate files.
-Follow the instructions of the [RADAr](https://github.com/yousef-younes/RADAr) source code.
-
-# Guides
-- install and run XR-Transformer: [guide here](xr_transformer_guide.md)
+- RADAr study code is currently unavailable and its integration is deferred.
+- CascadeXML, XR-Transformer and HBGL have not yet completed fresh-checkout
+  release verification.
+- The historical PECOS tree contains considerably more upstream material than
+  the study needs.
+- Some legacy scripts and raw outputs still require removal or consolidation.
+- The release does not aim to provide a unified production API for the five
+  third-party models.

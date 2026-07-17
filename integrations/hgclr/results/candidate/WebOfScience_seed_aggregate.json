@@ -1,0 +1,229 @@
+{
+  "dataset": "WebOfScience",
+  "seeds": [
+    1,
+    2,
+    3,
+    4,
+    5
+  ],
+  "per_seed": [
+    {
+      "dataset": "WebOfScience",
+      "seed": 1,
+      "test_macro_f1": 0.808362,
+      "test_micro_f1": 0.866559,
+      "p_at_1": 0.909226,
+      "p_at_3": 0.59817,
+      "p_at_5": 0.371736,
+      "r_precision": 0.861977,
+      "train_total_time_sec": 18476.745,
+      "epochs_completed": 19,
+      "train_peak_gpu_memory_mb": 16591.83,
+      "train_avg_gpu_memory_mb": 1397.06,
+      "inference_total_time_sec": 56.796,
+      "inference_throughput_samples_per_sec": 165.45,
+      "inference_peak_gpu_memory_mb": 1647.77,
+      "best_val_macro_f1": 0.808789,
+      "best_val_micro_f1": 0.869992
+    },
+    {
+      "dataset": "WebOfScience",
+      "seed": 2,
+      "test_macro_f1": 0.811438,
+      "test_micro_f1": 0.869286,
+      "p_at_1": 0.910397,
+      "p_at_3": 0.600333,
+      "p_at_5": 0.374247,
+      "r_precision": 0.864159,
+      "train_total_time_sec": 18449.602,
+      "epochs_completed": 19,
+      "train_peak_gpu_memory_mb": 16591.83,
+      "train_avg_gpu_memory_mb": 1397.06,
+      "inference_total_time_sec": 57.189,
+      "inference_throughput_samples_per_sec": 164.32,
+      "inference_peak_gpu_memory_mb": 1647.77,
+      "best_val_macro_f1": 0.808052,
+      "best_val_micro_f1": 0.870981
+    },
+    {
+      "dataset": "WebOfScience",
+      "seed": 3,
+      "test_macro_f1": 0.808281,
+      "test_micro_f1": 0.867534,
+      "p_at_1": 0.910823,
+      "p_at_3": 0.602107,
+      "p_at_5": 0.374715,
+      "r_precision": 0.863627,
+      "train_total_time_sec": 15537.841,
+      "epochs_completed": 16,
+      "train_peak_gpu_memory_mb": 16591.83,
+      "train_avg_gpu_memory_mb": 1397.06,
+      "inference_total_time_sec": 57.202,
+      "inference_throughput_samples_per_sec": 164.28,
+      "inference_peak_gpu_memory_mb": 1647.77,
+      "best_val_macro_f1": 0.807731,
+      "best_val_micro_f1": 0.873577
+    },
+    {
+      "dataset": "WebOfScience",
+      "seed": 4,
+      "test_macro_f1": 0.810691,
+      "test_micro_f1": 0.868041,
+      "p_at_1": 0.908588,
+      "p_at_3": 0.601256,
+      "p_at_5": 0.374226,
+      "r_precision": 0.864318,
+      "train_total_time_sec": 18452.551,
+      "epochs_completed": 19,
+      "train_peak_gpu_memory_mb": 16591.83,
+      "train_avg_gpu_memory_mb": 1397.06,
+      "inference_total_time_sec": 57.379,
+      "inference_throughput_samples_per_sec": 163.77,
+      "inference_peak_gpu_memory_mb": 1647.77,
+      "best_val_macro_f1": 0.809013,
+      "best_val_micro_f1": 0.874603
+    },
+    {
+      "dataset": "WebOfScience",
+      "seed": 5,
+      "test_macro_f1": 0.814948,
+      "test_micro_f1": 0.870061,
+      "p_at_1": 0.913057,
+      "p_at_3": 0.601043,
+      "p_at_5": 0.374886,
+      "r_precision": 0.865649,
+      "train_total_time_sec": 16527.51,
+      "epochs_completed": 17,
+      "train_peak_gpu_memory_mb": 16591.83,
+      "train_avg_gpu_memory_mb": 1397.06,
+      "inference_total_time_sec": 57.284,
+      "inference_throughput_samples_per_sec": 164.04,
+      "inference_peak_gpu_memory_mb": 1647.77,
+      "best_val_macro_f1": 0.811395,
+      "best_val_micro_f1": 0.87158
+    }
+  ],
+  "aggregate": {
+    "test_macro_f1": {
+      "n": 5,
+      "mean": 0.810744,
+      "std_sample": 0.002733969367055883,
+      "std_population": 0.0024453365412556113,
+      "min": 0.808281,
+      "max": 0.814948
+    },
+    "test_micro_f1": {
+      "n": 5,
+      "mean": 0.8682962,
+      "std_sample": 0.001392673938867243,
+      "std_population": 0.0012456454391198168,
+      "min": 0.866559,
+      "max": 0.870061
+    },
+    "p_at_1": {
+      "n": 5,
+      "mean": 0.9104182,
+      "std_sample": 0.0017247138023452114,
+      "std_population": 0.0015426309215104115,
+      "min": 0.908588,
+      "max": 0.913057
+    },
+    "p_at_3": {
+      "n": 5,
+      "mean": 0.6005817999999999,
+      "std_sample": 0.00148930913513615,
+      "std_population": 0.0013320785862703406,
+      "min": 0.59817,
+      "max": 0.602107
+    },
+    "p_at_5": {
+      "n": 5,
+      "mean": 0.373962,
+      "std_sample": 0.0012773783699436883,
+      "std_population": 0.0011425219472727844,
+      "min": 0.371736,
+      "max": 0.374886
+    },
+    "r_precision": {
+      "n": 5,
+      "mean": 0.863946,
+      "std_sample": 0.0013287855357430745,
+      "std_population": 0.0011885019141759964,
+      "min": 0.861977,
+      "max": 0.865649
+    },
+    "train_total_time_sec": {
+      "n": 5,
+      "mean": 17488.8498,
+      "std_sample": 1374.619153403116,
+      "std_population": 1229.4967480730313,
+      "min": 15537.841,
+      "max": 18476.745
+    },
+    "epochs_completed": {
+      "n": 5,
+      "mean": 18,
+      "std_sample": 1.4142135623730951,
+      "std_population": 1.2649110640673518,
+      "min": 16,
+      "max": 19
+    },
+    "train_peak_gpu_memory_mb": {
+      "n": 5,
+      "mean": 16591.83,
+      "std_sample": 0.0,
+      "std_population": 0.0,
+      "min": 16591.83,
+      "max": 16591.83
+    },
+    "train_avg_gpu_memory_mb": {
+      "n": 5,
+      "mean": 1397.06,
+      "std_sample": 0.0,
+      "std_population": 0.0,
+      "min": 1397.06,
+      "max": 1397.06
+    },
+    "inference_total_time_sec": {
+      "n": 5,
+      "mean": 57.17,
+      "std_sample": 0.2224511182260044,
+      "std_population": 0.19896632880967532,
+      "min": 56.796,
+      "max": 57.379
+    },
+    "inference_throughput_samples_per_sec": {
+      "n": 5,
+      "mean": 164.37199999999999,
+      "std_sample": 0.6414592738436262,
+      "std_population": 0.5737386164448004,
+      "min": 163.77,
+      "max": 165.45
+    },
+    "inference_peak_gpu_memory_mb": {
+      "n": 5,
+      "mean": 1647.77,
+      "std_sample": 0.0,
+      "std_population": 0.0,
+      "min": 1647.77,
+      "max": 1647.77
+    },
+    "best_val_macro_f1": {
+      "n": 5,
+      "mean": 0.8089959999999999,
+      "std_sample": 0.0014395919560764407,
+      "std_population": 0.0012876101894595251,
+      "min": 0.807731,
+      "max": 0.811395
+    },
+    "best_val_micro_f1": {
+      "n": 5,
+      "mean": 0.8721466,
+      "std_sample": 0.001897492108020495,
+      "std_population": 0.0016971685361212804,
+      "min": 0.869992,
+      "max": 0.874603
+    }
+  }
+}

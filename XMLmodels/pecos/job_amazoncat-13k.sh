@@ -6,7 +6,9 @@
 #SBATCH --gres=gpu:2
 #SBATCH --dependency=singleton
 
-source /home/ul/ul_student/ul_ruw26/.bashrc
+if [[ -f "${HOME}/.bashrc" ]]; then
+  source "${HOME}/.bashrc"
+fi
 conda activate xr_transformer_env
 rm trained-models/xr_model_amazoncat-13k
 

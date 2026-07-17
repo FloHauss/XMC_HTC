@@ -9,11 +9,9 @@ import torch
 import torch.distributed as dist
 import torch.nn as nn
 import argparse
+import traceback
 from dataset import *
 from data_utils import load_data
-# from Runner import Runner
-from Runner_sparse import SparseRunner
-from Runner_accelerate import Runner
 from dist_eval_sampler import DistributedEvalSampler
 
 NUM_LABELS = {'Amazon-670K': 670091, 'Amazon-3M': 2812281, 'Wiki-500K' : 501070, 'AmazonCat-13K': 13330, 'Wiki10-31K': 30938, 'Eurlex': 3993, 'AT670': 670091, 'WT500': 501070, 'WSAT350': 352072}
@@ -87,8 +85,9 @@ def main(params):
             text = f.read()
         text = text.replace('\n', ' ')
     
-    if os.path.exists(params.label_map):
-        label_map = json.load(open(params.label_map, 'r'))
+    if params.label_map and os.path.exists(params.label_map):
+        with open(params.label_map, 'r') as label_map_file:
+            label_map = json.load(label_map_file)
     text_tokens = torch.tensor(tokenizer.encode(text)[:params.max_len])
     attn_mask = torch.ones_like(text_tokens)
 
@@ -104,9 +103,9 @@ def main(params):
     # Meta labels discarde for inference
     actual_labels = all_preds[-1][0]
 
-    if os.path.exists(params.label_map):
+    if params.label_map and os.path.exists(params.label_map):
         # turn label idx to text -> missing label remapping + label text querying
-        print([label_map[i]['title'] for i in actual_labels])
+        print([label_map[int(i)]['title'] for i in actual_labels])
     else:
         print(actual_labels)
 
@@ -127,7 +126,7 @@ if __name__ == '__main__':
     parser.add_argument('--bert', type=str, required=False, default='bert-base')
     parser.add_argument('--max_len', type=int, required=False, default=128)
     parser.add_argument('--topk', required=False, type=int, default=[128, 256, 512], nargs='+')
-    parser.add_argument('--eval_scheme', type=str, choices=['weighted, level'], default='level')
+    parser.add_argument('--eval_scheme', type=str, choices=['weighted', 'level'], default='level')
     #Parabel Cluster params
     parser.add_argument('--cluster_name', default='Eclusters_1865.pkl')
     parser.add_argument('--tree_depth', type=int, nargs='+', default=[10, 13, 16])

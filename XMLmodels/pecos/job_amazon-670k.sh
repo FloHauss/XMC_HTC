@@ -19,7 +19,9 @@ ens_models="bert1 bert2 bert3"
 NOW=$(date "+%Y-%m-%d %H:%M:%S")
 UUID=$(date "+%Y-%m-%d-%H-%M-%S")
 
-source /home/ul/ul_student/ul_ruw26/.bashrc
+if [[ -f "${HOME}/.bashrc" ]]; then
+  source "${HOME}/.bashrc"
+fi
 conda activate xr_transformer_env
 
 rm -rf trained-models/$dataset

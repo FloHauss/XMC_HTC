@@ -38,3 +38,31 @@ ENV/
 # Global Python Cache (Ignores __pycache__ in any directory)
 __pycache__/
 *.py[cod]
+
+# Build and packaging artefacts
+build/
+dist/
+*.egg-info/
+*.so
+
+# Experiment and scheduler artefacts
+**/.ipynb_checkpoints/
+**/wandb/
+**/checkpoints/
+**/outputs/
+*.log
+*.out
+slurm-*
+
+# Generated model-specific dataset artefacts
+**/data/**/*.bin
+**/data/**/*.idx
+**/data/**/*.pt
+
+# Local caches and editor state
+**/.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.idea/
+.DS_Store
