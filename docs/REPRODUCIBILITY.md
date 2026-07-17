@@ -27,7 +27,7 @@ and XR-Transformer JSON parameter syntax. It is not an end-to-end model test.
 | CascadeXML | Upstream package list, reconstructed in this repository | Dependencies not freshly installed; no GPU run | [`XMLmodels/CascadeXML/README.md`](../XMLmodels/CascadeXML/README.md) |
 | XR-Transformer | Historical PECOS `setup.py` constraints and student Python 3.9 guide | Source-level checks only; compiled extension and GPU run unverified | [`xr_transformer_guide.md`](../xr_transformer_guide.md) |
 | HBGL | Student requirements preserved; upstream used a substantially older Transformers version | Dependencies not freshly installed; no GPU run | [`htc/hbgl/README.md`](../htc/hbgl/README.md) |
-| HGCLR | Portable reconstruction command derived from the historical server setup | Source-level checks only; release checkout not freshly GPU-tested | [`integrations/hgclr/USAGE.md`](../integrations/hgclr/USAGE.md) |
+| HGCLR | Portable reconstruction command derived from the historical working setup | Source-level checks only; release checkout not freshly GPU-tested | [`integrations/hgclr/USAGE.md`](../integrations/hgclr/USAGE.md) |
 | RADAr | Study implementation unavailable | Deferred | Upstream link only in [`MODEL_PROVENANCE.md`](MODEL_PROVENANCE.md) |
 
 ## Verification boundaries
@@ -51,7 +51,8 @@ step, checkpoint writing, loading and evaluation, and is labelled accordingly.
 ## Historical results
 
 Existing result files are provenance records rather than fresh verification.
-HGCLR candidate aggregates match the final paper tables within display
-precision but remain unverified historical records. Most XR-Transformer compact
+HGCLR candidate aggregates reviewed during release intake matched the final
+paper tables within display precision, but those aggregate files are not
+published and do not constitute a fresh run. Most XR-Transformer compact
 averages do not match the paper and files with repeated per-seed records must be
 checked against the experiment archive before use.
