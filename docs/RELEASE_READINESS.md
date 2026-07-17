@@ -16,7 +16,7 @@ that every historical experiment has been rerun during release preparation.
 - Default branch: `main`
 - Audited commit: `d011395f43e44177b0e82541edf98522e088c634`
 - Audit date: 2026-07-17
-- Release-preparation branch: `release-preparation` (local until reviewed)
+- Release-preparation branch: `release-preparation` (pushed for review)
 
 ## Verification vocabulary
 
@@ -92,50 +92,48 @@ otherwise be preserved. Effort should concentrate on:
 - bounded smoke tests;
 - honest documentation of limitations.
 
-## Server implementation intake
+## Historical implementation intake
 
-The working HGCLR and RADAr directories must be preserved before cleaning. For
-each directory, capture:
+Recovered working copies should be preserved before cleaning. For each available
+integration, the release record should capture:
 
-- absolute server path and host;
 - Git remote, current commit and working-tree status, if available;
 - a patch of uncommitted changes;
-- Python, CUDA and dependency environment information;
+- relevant dependency and compatibility information;
 - launch scripts and experiment configurations;
-- locations of paper-result outputs;
+- locations or descriptions of paper-result evidence;
 - a file inventory excluding datasets, checkpoints, caches and credentials.
 
-The untouched server copies should remain available until their cleaned release
+Untouched working copies should remain available until their cleaned release
 integrations have passed the selected verification level.
 
 ### HGCLR intake state
 
-An independent server-side audit was received on 2026-07-17 for the working
-`contrastive-htc` checkout. It establishes the upstream reference,
+An independent audit was received on 2026-07-17 for the historical
+`contrastive-htc` working checkout. It establishes the upstream reference,
 modified tracked files, untracked source additions, environment adaptations and
-large generated artefacts. The reviewed source-only intake has been imported
+excluded generated artefacts. The reviewed source-only intake has been imported
 under `integrations/hgclr`.
 
 Intake and reconciliation status:
 
-- [x] preserve `git diff --binary` for the four modified tracked files;
+- [x] preserve the tracked modifications for the four changed upstream files;
 - [x] preserve the untracked source, documentation, aggregation and launch files;
 - [x] exclude `checkpoints/` and generated `data/**/*.bin`, `data/**/*.idx` and
   `data/**/*.pt` files;
 - [x] reconcile the final seed aggregates with the paper tables;
-- [x] generalise absolute server paths and audit cluster account details;
+- [x] generalise machine-specific paths and remove account-specific details;
 - [x] define and unit-test the empty-gold R-Precision policy;
 - [ ] Deferred: the historical empty-gold audit is out of the current scope. The
-  imported aggregates remain labelled candidate, although they are reconciled
-  with the displayed paper values.
+  candidate aggregates were used for reconciliation during intake but are not
+  published as release results.
 
 The tracked patch and untracked release files were imported from the validated
-intake archive. The imported release code now defines R-Precision as invalid for
+intake material. The imported release code now defines R-Precision as invalid for
 empty-gold samples and the preprocessing scripts enforce the same invariant.
-Historical binaries must still be audited to confirm that candidate aggregates
-were unaffected if those R-Precision values are promoted from paper-reconciled
-historical records to verified release results. This check does not block the
-remaining repository clean-up.
+Historical binaries would still need to be audited before the old aggregate
+evidence could be treated as independently verified. This check does not block
+the remaining repository clean-up.
 
 ### RADAr intake state
 
