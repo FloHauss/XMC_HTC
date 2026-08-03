@@ -1,0 +1,102 @@
+# CascadeXML study integration
+
+This directory contains the CascadeXML implementation adapted for the
+cross-domain HTC/XMC evaluation. CascadeXML was developed by Siddhant Kharbanda,
+Atmadeep Banerjee, Erik Schultheis and Rohit Babbar; it is not a model introduced
+by this project.
+
+- Original repository: <https://github.com/xmc-aalto/cascadexml>
+- Inspected base commit: `ce701f688aaf5d5c8abe979d192f9c8f224aec90`
+- Original paper: *CascadeXML: Rethinking Transformers for End-to-end
+  Multi-resolution Training in Extreme Multi-label Classification* (2022)
+- Repository note: the adapted source and conversion helpers are included; the
+  exact historical runtime environment was not preserved.
+
+## Upstream and provenance
+
+The local source was added in commit `68e2c77` and compared file by file with
+upstream commit `ce701f688aaf5d5c8abe979d192f9c8f224aec90` (2024-02-23).
+Seven retained files match that commit byte-for-byte, and the remaining bounded
+diff supports it as the inspected base. The original student fork history was
+not preserved, so this is provenance by comparison rather than a complete
+editing history. No top-level licence was found in the inspected upstream
+checkout; attribution is retained, but licence or redistribution permission
+remains unresolved.
+
+## Study-specific changes
+
+The integration adds DeBERTa base/large and BERT-large encoders, two- and
+five-level transformer schedules, cross-domain datasets and tokenisers,
+configurable P@k through 20, R-Precision, thresholded micro/macro/sample F1,
+exact-match accuracy, training-time reporting and saved prediction matrices.
+It also adds dependency-light label/TF-IDF conversion and an Amazon-3M
+top-20-label feature shortcut before graph propagation. Early stopping selects
+micro-F1.
+
+Repository-specific correctness fixes restore best-checkpoint saving, make
+early stopping cooperative under DDP, save/load unwrapped DDP weights, validate
+metric inputs, and repair stale inference construction, tokeniser, label-map,
+and dataset handling. LF parsing and a conversion-call typo were also fixed.
+
+## Known limitations
+
+Thresholded F1 is computed only on the returned top-k shortlist, not over a
+dense label score matrix. The Amazon-3M shortcut changes graph features from
+upstream without a recorded validation, and the inverse-propensity constants
+for cross-domain datasets lack an in-repository rationale. With `--dist_eval`,
+F1 inputs are not gathered across ranks, so F1 and F1-based early stopping are
+valid only for single-process evaluation.
+
+## Environment
+
+The inspected upstream repository creates a Python 3.10 environment and installs
+PyTorch, Transformers, SciPy, scikit-learn, Cython, tqdm, NLTK, six, fastText
+and `pyxclib` without version pins. The current code imports all of these except
+fastText. [`requirements.txt`](requirements.txt) records that imported package
+set, but is a reconstruction rather than a verified lockfile.
+
+```bash
+conda create -n cascadexml-release python=3.10 pip -y
+conda activate cascadexml-release
+python -m pip install -r requirements.txt
+python -m nltk.downloader stopwords
+```
+
+`pyxclib` includes compiled extensions and the historical upstream installer
+patched deprecated NumPy aliases before building it. Installation against the
+current `pyxclib` default branch has not been confirmed. Preserve the resulting
+package versions and CUDA details if a working environment is established.
+
+## Expected data layout
+
+Training reads `./data/<dataset>/` relative to the working directory. The
+directory is expected to contain:
+
+```text
+train_raw_texts.txt
+test_raw_texts.txt
+Y.trn.txt or Y.trn.npz
+Y.tst.txt or Y.tst.npz
+train.txt
+```
+
+The label files contain comma-separated zero-based label IDs. `train.txt` is the
+XML repository sparse feature format with a shape header. Generated tokenisation,
+label, TF-IDF, graph, cluster and inverse-propensity files are intentionally
+ignored by Git.
+
+## Entry points
+
+Run commands from this directory so the historical local imports and `./data`
+path resolve correctly:
+
+```bash
+cd XMLmodels/CascadeXML
+python main.py --help
+python main_inference.py --help
+```
+
+Commands for the original CascadeXML XML benchmarks are available upstream, but
+the exact cross-domain paper commands and environment are not present in the
+historical repository. Do not infer final study settings from parser defaults.
+

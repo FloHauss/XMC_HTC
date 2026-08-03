@@ -1,0 +1,59 @@
+# --- Experiment Setup ---
+name: 'radar, htc, default, greedy'
+dataset: 'wos'
+model_variant: 'radar' # radar | baseline
+tokenization_mode: 'htc' # 'htc' | 'xml'
+expansion: 'expand' # 'default' | 'expand' | 'reduce'
+sequence_order: 'root_leaf' # leaf_root | root_leaf
+decoding_strategy: 'greedy' # greedy | beam # beam increases the inference time by a factor of the beam size!
+
+
+beam_size: 5 # if beam_search
+length_penalty: 1.0 # if beam_search
+
+fts: False
+
+Desc: 'Experiment Description'
+
+# --- Model Configuration ---
+encoder: 'roberta-base'
+max_length: 512 # max length for encdoer input/output
+#num_labels: 166 # we may load this dynamically in later versions
+hidden_dim: 768
+dropout: 0.2 # 0.2
+
+#max_seq_len: 50 # Maximum length of decoder sequences
+embedding_size: 768 # currently same as hidden_dim
+forward_expansion: 4 # forward expansion in the decoder (factors the embedding_size)
+nhead: 8 # number of attention heads within a decoder layer
+decoder_layers: 2
+
+# --- Special Vocab ---
+#special_indices: 4 # number of indices below
+#start_idx: 0 # start index for seq
+#end_idx: 1 # end index for seq
+#padding_idx: 2 # padding index for seq
+#level_idx: 3 # hierarchical separator for seq. In RADAr seqs can be separated by level or path. For now only level
+
+# --- Training Parameters ---
+batch_size: 32
+epochs: 50
+accumulation_steps: 2 # gradient accumulation
+shuffle: False
+sample_factor: 1.0 # for validation steps between epochs we will only use a subset
+num_workers: 8 # Careful
+
+# --- Optimization and Scheduling ---
+loss: 'focal' # focal | _
+lr_encoder: 0.000035 #3.5e-5
+lr_decoder: 0.0003 #3e-4
+warmup: 0.1 # currently not used
+lr_patience: 3
+patience: 10 # number of epochs
+
+# --- Evaluation Configuration ---
+threshold: 0.5 # classification threshold for baseline logits
+
+# --- Focal Loss Configuration ---
+gamma: 2.0
+label_smoothing: 0.1 # 0.1 | 0.5

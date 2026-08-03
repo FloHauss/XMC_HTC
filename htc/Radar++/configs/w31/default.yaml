@@ -1,0 +1,46 @@
+# --- Experiment Setup ---
+name: 'w31 default'
+
+# --- Dataset ---
+dataset: 'w31'
+mixed_precision: False
+
+f1_validation: True
+
+# --- Model Variant ---
+model_variant: 'radar'
+tokenization_mode: 'htc'
+loss: 'focal'
+gamma: 2.0
+label_smoothing: 0.1
+decoding_strategy: 'greedy'
+expansion: 'default'
+
+# --- Model Configuration ---
+# Encoder
+encoder: 'roberta-base'
+lr_encoder: 0.0001 #1e-4
+max_length: 256
+hidden_dim: 768
+dropout: 0.2
+
+# Decoder Settings
+lr_decoder: 0.001 #1e-3
+embedding_size: 768 # for token embeddings
+forward_expansion: 4 # decoder forward_expansion
+nhead: 8 # number of attention heads within a decoder layer
+decoder_layers: 2 
+
+# --- Training Parameters ---
+batch_size: 64
+epochs: 15
+accumulation_steps: 4 # gradient accumulation
+
+# Dataloading
+shuffle: False
+sample_factor: 1.0 # for validation steps between epochs we will only use a subset
+num_workers: 8 # Careful
+
+lr_patience: 3
+patience: 3 # number of epochs
+

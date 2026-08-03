@@ -1,0 +1,27 @@
+==== softmax_average ensemble results ====
+prec(@1 @2 @3 @5 @10)   = 49.17 46.12 43.75 39.91 26.83
+r_prec = 40.52
+
+==== softmax_average ensemble results ====
+prec(@1 @2 @3 @5 @10)   = 49.17 46.12 43.75 39.91 26.83
+r_prec = 40.52
+
+==== softmax_average ensemble results ====
+prec(@1 @2 @3 @5 @10)   = 49.17 46.12 43.75 39.91 26.83
+r_prec = 40.52
+
+==== softmax_average ensemble results ====
+prec(@1 @2 @3 @5 @10)   = 49.17 46.12 43.75 39.91 26.83
+r_prec = 40.52
+
+==== softmax_average ensemble results ====
+prec(@1 @2 @3 @5 @10)   = 49.17 46.12 43.75 39.91 26.83
+r_prec = 40.52
+
+
+p@1:    49.17   +/- 0.00
+p@2:    46.12   +/- 0.00
+p@3:    43.75   +/- 0.00
+p@5:    39.91   +/- 0.00
+p@10:   26.83   +/- 0.00
+r_prec: 40.52   +/- 0.00

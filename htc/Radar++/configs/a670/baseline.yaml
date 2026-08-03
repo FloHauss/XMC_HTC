@@ -1,0 +1,39 @@
+# --- Experiment Setup ---
+name: 'radar, htc, default, greedy'
+
+# Dataset
+dataset: 'a670'
+
+use_mixed_precision: True
+
+# Model Variant and Relevant Loss
+model_variant: 'roberta'
+loss: 'bce' # focal 
+decoding_strategy: 'threshold'
+threshold: 0.5
+
+tokenization_mode: 'htc'
+expansion: 'default'
+
+
+# --- Model Configuration ---
+# Encoder
+encoder: 'roberta-base'
+lr_encoder: 0.000035 #3.5e-5
+max_length: 128
+hidden_dim: 768
+dropout: 0.2
+
+# --- Training Parameters ---
+batch_size: 32
+epochs: 15
+accumulation_steps: 2 # gradient accumulation
+
+# --- Data Loading ---
+shuffle: False
+sample_factor: 0.2 # for validation steps between epochs we will only use a subset
+num_workers: 8 # Careful
+
+# --- Optimization and Scheduling ---
+lr_patience: 3
+patience: 3

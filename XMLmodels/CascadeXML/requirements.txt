@@ -1,0 +1,12 @@
+# Reconstructed from the inspected upstream install.sh and current imports.
+# This is a package inventory, not a tested or fully pinned lockfile.
+numpy
+scipy
+scikit-learn
+torch
+transformers
+cython
+tqdm
+nltk
+six
+xclib @ git+https://github.com/kunaldahiya/pyxclib.git

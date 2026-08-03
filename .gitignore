@@ -1,0 +1,71 @@
+# XML
+XMLmodels/pecos/xmc-base
+XMLmodels/pecos/htc-base
+XMLmodels/pecos/pytorch/
+XMLmodels/pecos/test
+XMLmodels/pecos/run_ensemble/models
+XMLmodels/pecos/predictions
+XMLmodels/pecos/trained-models
+XMLmodels/pecos/.eggs
+XMLmodels/pecos/libpecos.egg-info
+XMLmodels/pecos**/__pycache__/
+XMLmodels/pecos/_archive
+XMLmodels/pecos/build
+XMLmodels/pecos/pecos/core/libpecos_float32*.so
+XMLmodels/pecos/pecos/_version.py
+
+# HTC
+htc/hbgl/logs/
+htc/hbgl/models/
+
+htc/hbgl/scripts/*
+!htc/hbgl/scripts/*.sh
+
+htc/hbgl/data/**/*
+!htc/hbgl/data/**/
+!htc/hbgl/data/*/preprocess/
+!htc/hbgl/data/*/preprocess/*.py
+!htc/hbgl/data/*/preprocess/*.taxonomy
+!htc/hbgl/data/*/preprocess/*.vocab
+htc/hbgl/data/*/preprocess/Meta-data/
+!htc/hbgl/data/*/*.taxonomy
+!htc/hbgl/data/rcv1/rcv1.topics.hier.expanded
+
+# Python Virtual Environments
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# Global Python Cache (Ignores __pycache__ in any directory)
+__pycache__/
+*.py[cod]
+
+# Build and packaging artefacts
+build/
+dist/
+*.egg-info/
+*.so
+
+# Experiment and scheduler artefacts
+**/.ipynb_checkpoints/
+**/wandb/
+**/checkpoints/
+**/outputs/
+*.log
+*.out
+slurm-*
+
+# Generated model-specific dataset artefacts
+**/data/**/*.bin
+**/data/**/*.idx
+**/data/**/*.pt
+
+# Local caches and editor state
+**/.cache/
+.pytest_cache/
+.ruff_cache/
+.mypy_cache/
+.idea/
+.DS_Store

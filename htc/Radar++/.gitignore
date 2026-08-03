@@ -1,0 +1,22 @@
+# Ignore virtual environments
+venv/
+
+# Ignore Python cache files
+__pycache__/
+*.py[cod]
+
+# Ignore all contents of any folder named 'data'
+**/data/
+**/data/**
+
+**/saved_models/
+**/saved_models/**
+
+**/saved_results/
+**/saved_results/**
+
+# Ignore VS Code settings
+.vscode/
+
+# Ignore Git metadata (just for safety – though this doesn't affect your repo itself)
+.git/
