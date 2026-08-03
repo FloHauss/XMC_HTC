@@ -28,12 +28,7 @@ The complete values, including deviations over runs, are presented in
 | RADAr (RADAr++ in this study) | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | [`htc/Radar++`](htc/Radar++/README.md) |
 
 All evaluated models were introduced by their original authors. This repository
-contains study-specific dataset conversion, adaptations, evaluation and the
-authoritative paper results. The paper tables use the method name **RADAr**;
-[`htc/Radar++`](htc/Radar++/README.md) is the local RADAr++ adaptation for
-larger XML label spaces, not a claim that it is identical to an upstream RADAr
-release.
-
+contains study-specific dataset conversion, adaptations, evaluation and the paper results.
 
 ## Using the repository
 
