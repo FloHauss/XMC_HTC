@@ -5,10 +5,6 @@ Between Extreme Multi-Label and Hierarchical Text Classification*. Values are
 shown as mean ± standard deviation over runs, in percentage points. The best
 mean for each dataset and metric is shown in **bold**.
 
-These tables are the authoritative result record for this repository. They
-should not be replaced by older compact logs retained alongside individual
-integrations.
-
 ## HTC datasets
 
 ### WOS
@@ -41,10 +37,6 @@ integrations.
 | HBGL | 85.48 ± 0.16 | 92.90 ± 0.57 | 80.39 ± 0.25 | 54.32 ± 0.10 | 87.00 ± 0.05 | **70.48 ± 0.29** |
 | RADAr | 86.80 ± 0.02 | 96.61 ± 0.09 | 81.46 ± 0.03 | 54.70 ± 0.03 | **87.26 ± 0.05** | 69.07 ± 0.54 |
 
-Across the HTC datasets, the transferred XML methods remain competitive with
-native HTC methods. CascadeXML is particularly strong on ranking metrics, while
-HBGL and RADAr obtain several of the best F1 scores.
-
 ## XML datasets
 
 ### Wiki10-31K
@@ -71,14 +63,5 @@ HBGL and RADAr obtain several of the best F1 scores.
 representations in dense matrices, which becomes prohibitively memory-intensive
 at XML label-set sizes.
 
-On both XML datasets, XR-Transformer achieves the strongest ranking results and
-CascadeXML the strongest Micro-F1. CascadeXML leads Macro-F1 on AmazonCat-13K,
-while RADAr narrowly leads Macro-F1 on Wiki10-31K. Overall, the native XML
-methods outperform the transferred HTC methods, especially on ranking metrics.
-
-## Result sources
-
 The compact transcription used to check these tables is stored in
-[`results/paper/table_results.csv`](results/paper/table_results.csv). Retained
-integration outputs are historical records and do not reliably reproduce every
-final table entry; the tables in this file are authoritative.
+[`results/paper/table_results.csv`](results/paper/table_results.csv).
