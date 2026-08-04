@@ -24,7 +24,7 @@ The complete values, including deviations over runs, are presented in
 | CascadeXML | [xmc-aalto/cascadexml](https://github.com/xmc-aalto/cascadexml) | [`XMLmodels/CascadeXML`](XMLmodels/CascadeXML/README.md) |
 | XR-Transformer | [amzn/pecos](https://github.com/amzn/pecos) | [`XMLmodels/pecos`](XMLmodels/pecos/STUDY_INTEGRATION.md) |
 | HBGL | [kongds/HBGL](https://github.com/kongds/HBGL) | [`htc/hbgl`](htc/hbgl/README.md) |
-| HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`integrations/hgclr`](integrations/hgclr/README.md) |
+| HGCLR | [wzh9969/contrastive-htc](https://github.com/wzh9969/contrastive-htc) | [`htc/hgclr`](htc/hgclr/README.md) |
 | RADAr (RADAr++ in this study) | [yousef-younes/RADAr](https://github.com/yousef-younes/RADAr) | [`htc/Radar++`](htc/Radar++/README.md) |
 
 All evaluated models were introduced by their original authors. This repository
@@ -38,7 +38,7 @@ different research-code dependency stacks and should be set up separately:
 - [CascadeXML setup and expected data](XMLmodels/CascadeXML/README.md)
 - [XR-Transformer environment guide](xr_transformer_guide.md)
 - [HBGL setup, preprocessing and launchers](htc/hbgl/README.md)
-- [HGCLR setup and usage](integrations/hgclr/USAGE.md)
+- [HGCLR setup and usage](htc/hgclr/USAGE.md)
 - [RADAr++ setup and usage](htc/Radar++/README.md)
 - [HTC/XML dataset conversion](dataset_transfer/README.md)
 

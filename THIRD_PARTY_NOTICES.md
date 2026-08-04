@@ -11,7 +11,7 @@ follow the terms of each upstream project and cite the corresponding papers.
 - Upstream: <https://github.com/wzh9969/contrastive-htc>
 - Integrated base: `322a7ff2d83c878534bed25bb288cf4479d00363`
 - Licence: MIT
-- Retained licence: [`integrations/hgclr/LICENSE`](integrations/hgclr/LICENSE)
+- Retained licence: [`htc/hgclr/LICENSE`](htc/hgclr/LICENSE)
 
 ## XR-Transformer / PECOS
 
